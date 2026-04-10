@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\.vsconfig" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\MyProject.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\MyProject.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\MyProjectEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Source\MyProjectEditor">
+      <UniqueIdentifier>{9F124871-7079-3C63-8D09-5BA83F21B480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyProjectEditor\.vs">
+      <UniqueIdentifier>{5B5EBE21-9832-3715-A3E9-95C57E165DCC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyProjectEditor\.vs\MyProjectEditor">
+      <UniqueIdentifier>{826C302C-7DED-3D28-BA2A-BCD32FC76C8B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyProjectEditor\.vs\MyProjectEditor\FileContentIndex">
+      <UniqueIdentifier>{9F2935B8-49C1-3F36-991C-989F6E9FEA7C}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\MyProjectEditor\.vs\MyProjectEditor\FileContentIndex\e07b047b-f11c-473e-a96e-c2c7f1a5ae70.vsidx">
+      <Filter>Source\MyProjectEditor\.vs\MyProjectEditor\FileContentIndex</Filter>
+    </None>
+    <Filter Include="Source\MyProjectEditor\.vs\MyProjectEditor\v17">
+      <UniqueIdentifier>{EAD7B2A5-8D82-3209-90C5-0E9A74C6F1D6}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\MyProjectEditor\.vs\MyProjectEditor\v17\.wsuo">
+      <Filter>Source\MyProjectEditor\.vs\MyProjectEditor\v17</Filter>
+    </None>
+    <None Include="..\..\Source\MyProjectEditor\.vs\MyProjectEditor\v17\Browse.VC.db">
+      <Filter>Source\MyProjectEditor\.vs\MyProjectEditor\v17</Filter>
+    </None>
+    <None Include="..\..\Source\MyProjectEditor\.vs\MyProjectEditor\v17\DocumentLayout.json">
+      <Filter>Source\MyProjectEditor\.vs\MyProjectEditor\v17</Filter>
+    </None>
+    <Filter Include="Source\MyProjectEditor\.vs\MyProjectEditor\v17\ipch">
+      <UniqueIdentifier>{4510E4C4-BCAF-380B-ACC4-23B26D7673BF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyProjectEditor\.vs\MyProjectEditor\v17\ipch\AutoPCH">
+      <UniqueIdentifier>{498F0EF4-BF50-336A-8F09-3460087DA5D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyProjectEditor\.vs\MyProjectEditor\v17\ipch\AutoPCH\cdffa2ca554d87ba">
+      <UniqueIdentifier>{976322DA-253C-3162-816C-8825F79B2495}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\MyProjectEditor\.vs\MyProjectEditor\v17\ipch\AutoPCH\cdffa2ca554d87ba\MYPROJECTEDITOR.ipch">
+      <Filter>Source\MyProjectEditor\.vs\MyProjectEditor\v17\ipch\AutoPCH\cdffa2ca554d87ba</Filter>
+    </None>
+    <None Include="..\..\Source\MyProjectEditor\.vs\ProjectSettings.json">
+      <Filter>Source\MyProjectEditor\.vs</Filter>
+    </None>
+    <None Include="..\..\Source\MyProjectEditor\.vs\slnx.sqlite">
+      <Filter>Source\MyProjectEditor\.vs</Filter>
+    </None>
+    <None Include="..\..\Source\MyProjectEditor\.vs\VSWorkspaceState.json">
+      <Filter>Source\MyProjectEditor\.vs</Filter>
+    </None>
+    <None Include="..\..\Source\MyProjectEditor\MyProjectEditor.Build.cs">
+      <Filter>Source\MyProjectEditor</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\MyProjectEditor\MyProjectEditor.cpp">
+      <Filter>Source\MyProjectEditor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProjectEditor\MyProjectEditor.h">
+      <Filter>Source\MyProjectEditor</Filter>
+    </ClInclude>
+    <Filter Include="Source\MyProjectEditor\Private">
+      <UniqueIdentifier>{2297F21D-142C-387F-9152-B92B4D18E32F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\MyProjectEditor\Private\ActivityBaseActorBlueprintCompiler.cpp">
+      <Filter>Source\MyProjectEditor\Private</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProjectEditor\Private\ActivityBaseActorBlueprintCompiler.h">
+      <Filter>Source\MyProjectEditor\Private</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProjectEditor\Private\ComponentNameSelectCustomization.cpp">
+      <Filter>Source\MyProjectEditor\Private</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProjectEditor\Private\ComponentNameSelectCustomization.h">
+      <Filter>Source\MyProjectEditor\Private</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProjectEditor\Private\CustomFunction_Customization.cpp">
+      <Filter>Source\MyProjectEditor\Private</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProjectEditor\Private\CustomFunction_Customization.h">
+      <Filter>Source\MyProjectEditor\Private</Filter>
+    </ClInclude>
+    <Filter Include="Source\MyProjectEditor\Style">
+      <UniqueIdentifier>{81830C0D-15FD-385E-B6A6-AB1E575CF27F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\MyProjectEditor\Style\MyProjectEditorStyle.cpp">
+      <Filter>Source\MyProjectEditor\Style</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProjectEditor\Style\MyProjectEditorStyle.h">
+      <Filter>Source\MyProjectEditor\Style</Filter>
+    </ClInclude>
+    <Filter Include="Source\MyProjectEditor\Tools">
+      <UniqueIdentifier>{AD28A496-6857-3D1B-8412-62DCD322EA9F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\MyProjectEditor\Tools\MyProjectEditorTool.cpp">
+      <Filter>Source\MyProjectEditor\Tools</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProjectEditor\Tools\MyProjectEditorTool.h">
+      <Filter>Source\MyProjectEditor\Tools</Filter>
+    </ClInclude>
+    <Filter Include="Source\MyProjectEditor\UI">
+      <UniqueIdentifier>{35F290FD-9F6F-3EB2-B953-8E6B5BC997A5}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\MyProjectEditor\UI\SMyProjectEditorWindow.cpp">
+      <Filter>Source\MyProjectEditor\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProjectEditor\UI\SMyProjectEditorWindow.h">
+      <Filter>Source\MyProjectEditor\UI</Filter>
+    </ClInclude>
+    <Filter Include="Source\MyProject">
+      <UniqueIdentifier>{E24959B1-EBAF-399D-9D3A-65ADD2D94AF5}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\MyProject\ActivityStateInterface.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\ActivityStateInterface.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <Filter Include="Source\MyProject\CustomActor">
+      <UniqueIdentifier>{7C09C4B7-649B-3C27-BE1B-0F40E68AAA8B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\MyProject\CustomActor\CustomTypeDefine.cpp">
+      <Filter>Source\MyProject\CustomActor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\CustomActor\CustomTypeDefine.h">
+      <Filter>Source\MyProject\CustomActor</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\MyActivityActor.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\MyActivityActor.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\MyCharacter.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\MyCharacter.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\MyClickActorComponent.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\MyClickActorComponent.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\MyPlayerController.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\MyPlayerController.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\MyProject\MyProject.Build.cs">
+      <Filter>Source\MyProject</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\MyProject\MyProject.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\MyProject.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\PersistBaseComponent.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\PersistBaseComponent.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\PersistEffect.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\PersistEffect.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\PersistEffectWithState.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\PersistEffectWithState.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
