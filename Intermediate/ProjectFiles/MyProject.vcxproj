@@ -537,6 +537,8 @@
     <ClCompile_ForcedIncludeFiles_1>$(ProjectForcedIncludeFiles);$(SolutionDir)Intermediate\Build\Win64\x64\UnrealEditor\Development\MyProjectEditor\Definitions.MyProjectEditor.h</ClCompile_ForcedIncludeFiles_1>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\.gitattributes"/>
+    <None Include="..\..\.gitignore"/>
     <None Include="..\..\.vsconfig"/>
     <None Include="..\..\Config\DefaultEditor.ini"/>
     <None Include="..\..\Config\DefaultEngine.ini"/>
