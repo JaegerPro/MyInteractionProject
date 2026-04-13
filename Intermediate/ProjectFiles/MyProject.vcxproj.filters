@@ -107,33 +107,6 @@
     <ClInclude Include="..\..\Source\MyProjectEditor\Private\CustomFunction_Customization.h">
       <Filter>Source\MyProjectEditor\Private</Filter>
     </ClInclude>
-    <Filter Include="Source\MyProjectEditor\Style">
-      <UniqueIdentifier>{81830C0D-15FD-385E-B6A6-AB1E575CF27F}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\MyProjectEditor\Style\MyProjectEditorStyle.cpp">
-      <Filter>Source\MyProjectEditor\Style</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\MyProjectEditor\Style\MyProjectEditorStyle.h">
-      <Filter>Source\MyProjectEditor\Style</Filter>
-    </ClInclude>
-    <Filter Include="Source\MyProjectEditor\Tools">
-      <UniqueIdentifier>{AD28A496-6857-3D1B-8412-62DCD322EA9F}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\MyProjectEditor\Tools\MyProjectEditorTool.cpp">
-      <Filter>Source\MyProjectEditor\Tools</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\MyProjectEditor\Tools\MyProjectEditorTool.h">
-      <Filter>Source\MyProjectEditor\Tools</Filter>
-    </ClInclude>
-    <Filter Include="Source\MyProjectEditor\UI">
-      <UniqueIdentifier>{35F290FD-9F6F-3EB2-B953-8E6B5BC997A5}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\MyProjectEditor\UI\SMyProjectEditorWindow.cpp">
-      <Filter>Source\MyProjectEditor\UI</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\MyProjectEditor\UI\SMyProjectEditorWindow.h">
-      <Filter>Source\MyProjectEditor\UI</Filter>
-    </ClInclude>
     <Filter Include="Source\MyProject">
       <UniqueIdentifier>{E24959B1-EBAF-399D-9D3A-65ADD2D94AF5}</UniqueIdentifier>
     </Filter>
@@ -183,6 +156,18 @@
       <Filter>Source\MyProject</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\MyProject\MyProject.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\PawnState.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\PawnState.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\PawnStateComponent.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\PawnStateComponent.h">
       <Filter>Source\MyProject</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\MyProject\PersistBaseComponent.cpp">

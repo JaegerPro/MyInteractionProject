@@ -576,21 +576,6 @@
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_1)</ForcedIncludeFiles>
     </ClCompile>
     <ClInclude Include="..\..\Source\MyProjectEditor\Private\CustomFunction_Customization.h"/>
-    <ClCompile Include="..\..\Source\MyProjectEditor\Style\MyProjectEditorStyle.cpp">
-      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories_1)</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_1)</ForcedIncludeFiles>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\MyProjectEditor\Style\MyProjectEditorStyle.h"/>
-    <ClCompile Include="..\..\Source\MyProjectEditor\Tools\MyProjectEditorTool.cpp">
-      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories_1)</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_1)</ForcedIncludeFiles>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\MyProjectEditor\Tools\MyProjectEditorTool.h"/>
-    <ClCompile Include="..\..\Source\MyProjectEditor\UI\SMyProjectEditorWindow.cpp">
-      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories_1)</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_1)</ForcedIncludeFiles>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\MyProjectEditor\UI\SMyProjectEditorWindow.h"/>
     <ClCompile Include="..\..\Source\MyProject\ActivityStateInterface.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -627,6 +612,16 @@
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <ClInclude Include="..\..\Source\MyProject\MyProject.h"/>
+    <ClCompile Include="..\..\Source\MyProject\PawnState.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\PawnState.h"/>
+    <ClCompile Include="..\..\Source\MyProject\PawnStateComponent.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\PawnStateComponent.h"/>
     <ClCompile Include="..\..\Source\MyProject\PersistBaseComponent.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>

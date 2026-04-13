@@ -4,12 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "PawnStateComponent.h"
 #include "MyCharacter.generated.h"
 
 UCLASS()
 class MYPROJECT_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
+public:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPawnStateComponent* StateComponent;
 
 public:
 	// Sets default values for this character's properties
@@ -26,4 +31,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void Jump() override;
+	virtual void Landed(const FHitResult& Hit) override;
 };

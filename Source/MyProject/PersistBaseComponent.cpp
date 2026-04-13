@@ -11,6 +11,7 @@ UPersistBaseComponent::UPersistBaseComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	PrimaryComponentTick.bStartWithTickEnabled = false;
+	SetIsReplicatedByDefault(true);
 	// ...
 }
 
@@ -19,7 +20,6 @@ UPersistBaseComponent::UPersistBaseComponent()
 void UPersistBaseComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	SetIsReplicated(true);
 }
 
 

@@ -1,2 +1,3 @@
-2026/04/10-16:46:13.702 9c8c Creating DB D:\UnrealProjects\MyProject\Saved\webcache_6613\Default\shared_proto_db\metadata since it was missing.
-2026/04/10-16:46:13.707 9c8c Reusing MANIFEST D:\UnrealProjects\MyProject\Saved\webcache_6613\Default\shared_proto_db\metadata/MANIFEST-000001
+2026/04/13-17:57:40.295 15f90 Reusing MANIFEST D:\UnrealProjects\MyProject\Saved\webcache_6613\Default\shared_proto_db\metadata/MANIFEST-000001
+2026/04/13-17:57:40.296 15f90 Recovering log #3
+2026/04/13-17:57:40.296 15f90 Reusing old log D:\UnrealProjects\MyProject\Saved\webcache_6613\Default\shared_proto_db\metadata/000003.log 

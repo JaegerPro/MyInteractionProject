@@ -10,7 +10,8 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Engine",
-				"UMG"
+				"UMG",
+				"CoreUObject"
 			]
 		},
 		{
@@ -28,8 +29,8 @@
 			]
 		},
 		{
-      			"Name": "ActorSequence",
-      			"Enabled": true
-    		}
+			"Name": "ActorSequence",
+			"Enabled": true
+		}
 	]
 }

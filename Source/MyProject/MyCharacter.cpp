@@ -9,6 +9,7 @@ AMyCharacter::AMyCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	bReplicateUsingRegisteredSubObjectList = true;
+	StateComponent = CreateDefaultSubobject<UPawnStateComponent>(TEXT("PawnStateComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -30,5 +31,17 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AMyCharacter::Jump()
+{
+	Super::Jump();
+	StateComponent->EnterState(EPawnState::Jump);
+}
+
+void AMyCharacter::Landed(const FHitResult& Hit)
+{
+	Super::Landed(Hit);
+	StateComponent->LeaveState(EPawnState::Jump);
 }
 
