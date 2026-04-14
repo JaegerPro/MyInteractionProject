@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,8 +19,8 @@ UENUM(BlueprintType)
 enum class EUnPossessReason : uint8
 {
 	None = 0 		UMETA(Hidden),
-	Interrupt = 1          UMETA(DisplayName = "´ò¶Ï"),
-	Finished = 2				UMETA(DisplayName = "Õı³£½áÊø"),
+	Interrupt = 1          UMETA(DisplayName = "æ‰“æ–­"),
+	Finished = 2				UMETA(DisplayName = "æ­£å¸¸ç»“æŸ"),
 	MaxInvalid					UMETA(Hidden)
 };
 
@@ -37,14 +37,11 @@ struct  FRegistPossessValue
 {
 	GENERATED_BODY()
 
-	//possessÊ±³¢ÊÔ½øÈëµÄ×´Ì¬£¬½øÈëÊ§°ÜÔòpossessÊ§°Ü
-	//µ±possessµÄÊ±ºò»á½ûÓÃÕâĞ©×´Ì¬
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "½ûÓÃÈËÎï×´Ì¬"))
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "ç¦æ­¢çš„çŠ¶æ€"))
 	TArray<EPawnState> DisablePawnState;
-	//µ±¼àÌıµ½ÕâĞ©pawnstateµÄÊ±ºò»áµ¯³ö
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "´ò¶Ï½»»¥µÄÈËÎï×´Ì¬"))
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "æ‰“æ–­äº¤äº’çš„çŠ¶æ€"))
 	TArray<EPawnState> RejectPawnState;
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "²»ÄÜ½øÈëµÄÈËÎï×´Ì¬"))
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "ä¸èƒ½è¿›å…¥çš„çŠ¶æ€"))
 	TArray<EPawnState> CantPossessState;
 };
 USTRUCT(BlueprintType)
@@ -165,15 +162,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AMyCharacter* GetCurrentPossesser() { return CurrentPossessCharacter; };
 
-
-	//ÓÃÓÚ½â¾öµİ¹éÎÊÌâ£¬½ûÖ¹Íâ²¿Ê¹ÓÃ
 	FFakePossessHookDelegate PossessHook;
 	FFakePossessHookDelegate PossessHookAttach;
 	FFakeUnPossessHookDelegate UnpossessHook;
 	FFakeUnPossessHookDelegate UnpossessHookDetach;
 protected:
-	//µ±possessµÄÊ±ºò»á½ûÓÃÕâĞ©×´Ì¬
-	UPROPERTY(BlueprintReadWrite, meta = (DisplayName = "×¢²á×´Ì¬"))
+	UPROPERTY(BlueprintReadWrite, meta = (DisplayName = "æ³¨å†ŒçŠ¶æ€"))
 	FRegistPossessValue PossessValue;
 
 protected:
