@@ -13,8 +13,8 @@ void UPawnStateComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    // Initialize from config if available
-    if (StateConfig)
+    // Initialize from config if available (server authority only)
+    if (GetOwner()->HasAuthority() && StateConfig)
     {
         for (const auto& RelationConfig : StateConfig->StateRelations)
         {
@@ -118,6 +118,11 @@ bool UPawnStateComponent::CanEnterState(EPawnState State) const
 
 bool UPawnStateComponent::EnterState(EPawnState State)
 {
+    if (!GetOwner()->HasAuthority())
+    {
+        return false;
+    }
+
     if (!CanEnterState(State))
     {
         return false;
@@ -152,6 +157,11 @@ bool UPawnStateComponent::EnterState(EPawnState State)
 
 bool UPawnStateComponent::LeaveState(EPawnState State)
 {
+    if (!GetOwner()->HasAuthority())
+    {
+        return false;
+    }
+
     if (!CurrentStates.Has(State))
     {
         return false;
@@ -165,6 +175,11 @@ bool UPawnStateComponent::LeaveState(EPawnState State)
 
 void UPawnStateComponent::LeaveAllStates()
 {
+    if (!GetOwner()->HasAuthority())
+    {
+        return;
+    }
+
     TArray<EPawnState> ActiveStates = GetActiveStates();
     for (EPawnState State : ActiveStates)
     {
@@ -177,6 +192,11 @@ void UPawnStateComponent::LeaveAllStates()
 
 void UPawnStateComponent::SetStateDisabled(EPawnState State, bool bDisabled)
 {
+    if (!GetOwner()->HasAuthority())
+    {
+        return;
+    }
+
     int32 FoundIndex = INDEX_NONE;
 
     for (int32 i = 0; i < DisabledStates.Num(); ++i)
@@ -229,6 +249,11 @@ bool UPawnStateComponent::IsStateDisabled(EPawnState State) const
 
 void UPawnStateComponent::ResetStateDisabled(EPawnState State)
 {
+    if (!GetOwner()->HasAuthority())
+    {
+        return;
+    }
+
     for (int32 i = DisabledStates.Num() - 1; i >= 0; --i)
     {
         if (DisabledStates[i].State == State)
@@ -243,17 +268,32 @@ void UPawnStateComponent::ResetStateDisabled(EPawnState State)
 
 void UPawnStateComponent::SetStateConfig(USimpleStateConfig* InConfig)
 {
+    if (!GetOwner()->HasAuthority())
+    {
+        return;
+    }
+
     StateConfig = InConfig;
 }
 
 void UPawnStateComponent::AddStateRelation(EPawnState StateA, EPawnState StateB, EPawnStateRelation Relation)
 {
+    if (!GetOwner()->HasAuthority())
+    {
+        return;
+    }
+
     // Store bidirectional mapping for quick lookup
     StateRelations.Add(MakeRelationKey(StateA, StateB), Relation);
 }
 
 void UPawnStateComponent::ClearStateRelations()
 {
+    if (!GetOwner()->HasAuthority())
+    {
+        return;
+    }
+
     StateRelations.Empty();
 }
 

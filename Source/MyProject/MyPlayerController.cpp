@@ -11,6 +11,30 @@ void AMyPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME(AMyPlayerController, ClickRepInfo);
 }
 
+bool AMyPlayerController::IsLocalController() const
+{
+	const ENetMode NetMode = GetNetMode();
+
+	if (NetMode == NM_Standalone)
+	{
+		// Not networked.
+		return true;
+	}
+
+	if (NetMode == NM_Client && GetLocalRole() == ROLE_AutonomousProxy)
+	{
+		// Networked client in control.
+		return true;
+	}
+
+	if (GetRemoteRole() != ROLE_AutonomousProxy && GetLocalRole() == ROLE_Authority)
+	{
+		// Local authority in control.
+		return true;
+	}
+
+	return false;
+}
 void AMyPlayerController::AddRepValidInfo(UMyClickActorComponent* Compoent, FClick_ValidInfo& VaildInfo)
 {
 	if (!Compoent || !HasAuthority())

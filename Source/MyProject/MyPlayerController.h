@@ -22,6 +22,7 @@ private:
 	TArray<FClick_ValidInfo_Rep> LocalClickRepInfo;
 
 public:
+	bool IsLocalController() const;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void AddRepValidInfo(UMyClickActorComponent* Compoent, FClick_ValidInfo& VaildInfo) override;
 	virtual void RemoveRepValidInfo(UMyClickActorComponent* Compoent, FClick_ValidInfo& VaildInfo) override;

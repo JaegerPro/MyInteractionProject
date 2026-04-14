@@ -85,26 +85,29 @@ public:
     uint64 GetCurrentStatesBits() const { return CurrentStates.Bits; }
 
     // ==================== State Modification ====================
+    // NOTE: These functions are server-authority only.
+    // Clients must use RPCs to request state changes from the server.
 
     // Check if state can be entered (mutex check)
     UFUNCTION(BlueprintCallable, Category = "State")
     bool CanEnterState(EPawnState State) const;
 
-    // Enter a state (returns true if successful)
+    // Enter a state (returns true if successful) - Server only
     UFUNCTION(BlueprintCallable, Category = "State")
     bool EnterState(EPawnState State);
 
-    // Leave a state (returns true if successful)
+    // Leave a state (returns true if successful) - Server only
     UFUNCTION(BlueprintCallable, Category = "State")
     bool LeaveState(EPawnState State);
 
-    // Leave all states
+    // Leave all states - Server only
     UFUNCTION(BlueprintCallable, Category = "State")
     void LeaveAllStates();
 
     // ==================== State Disable ====================
+    // NOTE: These functions are server-authority only.
 
-    // Disable a state (prevents entering)
+    // Disable a state (prevents entering) - Server only
     UFUNCTION(BlueprintCallable, Category = "State")
     void SetStateDisabled(EPawnState State, bool bDisabled);
 
@@ -112,21 +115,22 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintPure, Category = "State")
     bool IsStateDisabled(EPawnState State) const;
 
-    // Reset disabled state
+    // Reset disabled state - Server only
     UFUNCTION(BlueprintCallable, Category = "State")
     void ResetStateDisabled(EPawnState State);
 
     // ==================== Configuration ====================
+    // NOTE: These functions are server-authority only.
 
-    // Set state configuration
+    // Set state configuration - Server only
     UFUNCTION(BlueprintCallable, Category = "State")
     void SetStateConfig(USimpleStateConfig* InConfig);
 
-    // Add a state relation
+    // Add a state relation - Server only
     UFUNCTION(BlueprintCallable, Category = "State")
     void AddStateRelation(EPawnState StateA, EPawnState StateB, EPawnStateRelation Relation);
 
-    // Clear all state relations
+    // Clear all state relations - Server only
     UFUNCTION(BlueprintCallable, Category = "State")
     void ClearStateRelations();
 

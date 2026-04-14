@@ -10,6 +10,7 @@ AMyCharacter::AMyCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	bReplicateUsingRegisteredSubObjectList = true;
 	StateComponent = CreateDefaultSubobject<UPawnStateComponent>(TEXT("PawnStateComponent"));
+	PersistComponent = CreateDefaultSubobject<UPersistBaseComponent>(TEXT("PersistComponent"));
 }
 
 // Called when the game starts or when spawned

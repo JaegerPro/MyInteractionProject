@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "PawnStateComponent.h"
+#include "PersistBaseComponent.h"
 #include "MyCharacter.generated.h"
 
 UCLASS()
@@ -15,7 +16,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UPawnStateComponent* StateComponent;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPersistBaseComponent* PersistComponent;
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
