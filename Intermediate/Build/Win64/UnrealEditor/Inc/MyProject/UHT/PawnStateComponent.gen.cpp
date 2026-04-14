@@ -288,11 +288,11 @@ struct Z_Construct_UFunction_UPawnStateComponent_AddStateRelation_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "State" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Add a state relation\n" },
+		{ "Comment", "// Add a state relation - Server only\n" },
 #endif
 		{ "ModuleRelativePath", "PawnStateComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Add a state relation" },
+		{ "ToolTip", "Add a state relation - Server only" },
 #endif
 	};
 #endif // WITH_METADATA
@@ -429,11 +429,11 @@ struct Z_Construct_UFunction_UPawnStateComponent_ClearStateRelations_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "State" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Clear all state relations\n" },
+		{ "Comment", "// Clear all state relations - Server only\n" },
 #endif
 		{ "ModuleRelativePath", "PawnStateComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Clear all state relations" },
+		{ "ToolTip", "Clear all state relations - Server only" },
 #endif
 	};
 #endif // WITH_METADATA
@@ -476,11 +476,11 @@ struct Z_Construct_UFunction_UPawnStateComponent_EnterState_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "State" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Enter a state (returns true if successful)\n" },
+		{ "Comment", "// Enter a state (returns true if successful) - Server only\n" },
 #endif
 		{ "ModuleRelativePath", "PawnStateComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Enter a state (returns true if successful)" },
+		{ "ToolTip", "Enter a state (returns true if successful) - Server only" },
 #endif
 	};
 #endif // WITH_METADATA
@@ -1009,11 +1009,11 @@ struct Z_Construct_UFunction_UPawnStateComponent_LeaveAllStates_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "State" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Leave all states\n" },
+		{ "Comment", "// Leave all states - Server only\n" },
 #endif
 		{ "ModuleRelativePath", "PawnStateComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Leave all states" },
+		{ "ToolTip", "Leave all states - Server only" },
 #endif
 	};
 #endif // WITH_METADATA
@@ -1056,11 +1056,11 @@ struct Z_Construct_UFunction_UPawnStateComponent_LeaveState_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "State" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Leave a state (returns true if successful)\n" },
+		{ "Comment", "// Leave a state (returns true if successful) - Server only\n" },
 #endif
 		{ "ModuleRelativePath", "PawnStateComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Leave a state (returns true if successful)" },
+		{ "ToolTip", "Leave a state (returns true if successful) - Server only" },
 #endif
 	};
 #endif // WITH_METADATA
@@ -1252,11 +1252,11 @@ struct Z_Construct_UFunction_UPawnStateComponent_ResetStateDisabled_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "State" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Reset disabled state\n" },
+		{ "Comment", "// Reset disabled state - Server only\n" },
 #endif
 		{ "ModuleRelativePath", "PawnStateComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Reset disabled state" },
+		{ "ToolTip", "Reset disabled state - Server only" },
 #endif
 	};
 #endif // WITH_METADATA
@@ -1313,11 +1313,11 @@ struct Z_Construct_UFunction_UPawnStateComponent_SetStateConfig_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "State" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Set state configuration\n" },
+		{ "Comment", "// Set state configuration - Server only\n" },
 #endif
 		{ "ModuleRelativePath", "PawnStateComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Set state configuration" },
+		{ "ToolTip", "Set state configuration - Server only" },
 #endif
 	};
 #endif // WITH_METADATA
@@ -1372,11 +1372,11 @@ struct Z_Construct_UFunction_UPawnStateComponent_SetStateDisabled_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "State" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Disable a state (prevents entering)\n" },
+		{ "Comment", "// Disable a state (prevents entering) - Server only\n" },
 #endif
 		{ "ModuleRelativePath", "PawnStateComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Disable a state (prevents entering)" },
+		{ "ToolTip", "Disable a state (prevents entering) - Server only" },
 #endif
 	};
 #endif // WITH_METADATA
@@ -1581,10 +1581,10 @@ struct Z_Construct_UClass_UPawnStateComponent_Statics
 	};
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UPawnStateComponent_AddStateRelation, "AddStateRelation" }, // 2412675077
+		{ &Z_Construct_UFunction_UPawnStateComponent_AddStateRelation, "AddStateRelation" }, // 784383942
 		{ &Z_Construct_UFunction_UPawnStateComponent_CanEnterState, "CanEnterState" }, // 3535268107
-		{ &Z_Construct_UFunction_UPawnStateComponent_ClearStateRelations, "ClearStateRelations" }, // 3410997971
-		{ &Z_Construct_UFunction_UPawnStateComponent_EnterState, "EnterState" }, // 1313836120
+		{ &Z_Construct_UFunction_UPawnStateComponent_ClearStateRelations, "ClearStateRelations" }, // 1584673804
+		{ &Z_Construct_UFunction_UPawnStateComponent_EnterState, "EnterState" }, // 1867298703
 		{ &Z_Construct_UFunction_UPawnStateComponent_GetActiveStates, "GetActiveStates" }, // 275944790
 		{ &Z_Construct_UFunction_UPawnStateComponent_GetCurrentStatesBits, "GetCurrentStatesBits" }, // 203006475
 		{ &Z_Construct_UFunction_UPawnStateComponent_GetStateDebugString, "GetStateDebugString" }, // 2559542991
@@ -1592,13 +1592,13 @@ struct Z_Construct_UClass_UPawnStateComponent_Statics
 		{ &Z_Construct_UFunction_UPawnStateComponent_HasAnyStates, "HasAnyStates" }, // 142104380
 		{ &Z_Construct_UFunction_UPawnStateComponent_HasState, "HasState" }, // 3494061987
 		{ &Z_Construct_UFunction_UPawnStateComponent_IsStateDisabled, "IsStateDisabled" }, // 2568730520
-		{ &Z_Construct_UFunction_UPawnStateComponent_LeaveAllStates, "LeaveAllStates" }, // 3010956208
-		{ &Z_Construct_UFunction_UPawnStateComponent_LeaveState, "LeaveState" }, // 4277335766
+		{ &Z_Construct_UFunction_UPawnStateComponent_LeaveAllStates, "LeaveAllStates" }, // 2199096570
+		{ &Z_Construct_UFunction_UPawnStateComponent_LeaveState, "LeaveState" }, // 2355669980
 		{ &Z_Construct_UFunction_UPawnStateComponent_OnlyHasStates, "OnlyHasStates" }, // 1266143711
 		{ &Z_Construct_UFunction_UPawnStateComponent_OnRep_CurrentStates, "OnRep_CurrentStates" }, // 3473728610
-		{ &Z_Construct_UFunction_UPawnStateComponent_ResetStateDisabled, "ResetStateDisabled" }, // 1450864287
-		{ &Z_Construct_UFunction_UPawnStateComponent_SetStateConfig, "SetStateConfig" }, // 2409728021
-		{ &Z_Construct_UFunction_UPawnStateComponent_SetStateDisabled, "SetStateDisabled" }, // 4148751800
+		{ &Z_Construct_UFunction_UPawnStateComponent_ResetStateDisabled, "ResetStateDisabled" }, // 2773882631
+		{ &Z_Construct_UFunction_UPawnStateComponent_SetStateConfig, "SetStateConfig" }, // 624062270
+		{ &Z_Construct_UFunction_UPawnStateComponent_SetStateDisabled, "SetStateDisabled" }, // 3992515575
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -1688,10 +1688,10 @@ struct Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_PawnS
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
 		{ Z_Construct_UClass_USimpleStateConfig, USimpleStateConfig::StaticClass, TEXT("USimpleStateConfig"), &Z_Registration_Info_UClass_USimpleStateConfig, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USimpleStateConfig), 1969322892U) },
-		{ Z_Construct_UClass_UPawnStateComponent, UPawnStateComponent::StaticClass, TEXT("UPawnStateComponent"), &Z_Registration_Info_UClass_UPawnStateComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UPawnStateComponent), 3797003828U) },
+		{ Z_Construct_UClass_UPawnStateComponent, UPawnStateComponent::StaticClass, TEXT("UPawnStateComponent"), &Z_Registration_Info_UClass_UPawnStateComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UPawnStateComponent), 2014290365U) },
 	};
 }; // Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_PawnStateComponent_h__Script_MyProject_Statics 
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_PawnStateComponent_h__Script_MyProject_3271500564{
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_PawnStateComponent_h__Script_MyProject_1950007526{
 	TEXT("/Script/MyProject"),
 	Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_PawnStateComponent_h__Script_MyProject_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_PawnStateComponent_h__Script_MyProject_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_PawnStateComponent_h__Script_MyProject_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_PawnStateComponent_h__Script_MyProject_Statics::ScriptStructInfo),

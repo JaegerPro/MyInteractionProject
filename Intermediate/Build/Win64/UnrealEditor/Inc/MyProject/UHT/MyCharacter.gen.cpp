@@ -16,6 +16,7 @@ ENGINE_API UClass* Z_Construct_UClass_ACharacter();
 MYPROJECT_API UClass* Z_Construct_UClass_AMyCharacter();
 MYPROJECT_API UClass* Z_Construct_UClass_AMyCharacter_NoRegister();
 MYPROJECT_API UClass* Z_Construct_UClass_UPawnStateComponent_NoRegister();
+MYPROJECT_API UClass* Z_Construct_UClass_UPersistBaseComponent_NoRegister();
 UPackage* Z_Construct_UPackage__Script_MyProject();
 // ********** End Cross Module References **********************************************************
 
@@ -62,10 +63,16 @@ struct Z_Construct_UClass_AMyCharacter_Statics
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "MyCharacter.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PersistComponent_MetaData[] = {
+		{ "Category", "MyCharacter" },
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "MyCharacter.h" },
+	};
 #endif // WITH_METADATA
 
 // ********** Begin Class AMyCharacter constinit property declarations *****************************
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_StateComponent;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_PersistComponent;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 // ********** End Class AMyCharacter constinit property declarations *******************************
 	static UObject* (*const DependentSingletons[])();
@@ -77,8 +84,10 @@ struct Z_Construct_UClass_AMyCharacter_Statics
 
 // ********** Begin Class AMyCharacter Property Definitions ****************************************
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMyCharacter_Statics::NewProp_StateComponent = { "StateComponent", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMyCharacter, StateComponent), Z_Construct_UClass_UPawnStateComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_StateComponent_MetaData), NewProp_StateComponent_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMyCharacter_Statics::NewProp_PersistComponent = { "PersistComponent", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMyCharacter, PersistComponent), Z_Construct_UClass_UPersistBaseComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PersistComponent_MetaData), NewProp_PersistComponent_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AMyCharacter_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMyCharacter_Statics::NewProp_StateComponent,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMyCharacter_Statics::NewProp_PersistComponent,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_AMyCharacter_Statics::PropPointers) < 2048);
 // ********** End Class AMyCharacter Property Definitions ******************************************
@@ -121,10 +130,10 @@ AMyCharacter::~AMyCharacter() {}
 struct Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_MyCharacter_h__Script_MyProject_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AMyCharacter, AMyCharacter::StaticClass, TEXT("AMyCharacter"), &Z_Registration_Info_UClass_AMyCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMyCharacter), 1074262632U) },
+		{ Z_Construct_UClass_AMyCharacter, AMyCharacter::StaticClass, TEXT("AMyCharacter"), &Z_Registration_Info_UClass_AMyCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMyCharacter), 3030867990U) },
 	};
 }; // Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_MyCharacter_h__Script_MyProject_Statics 
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_MyCharacter_h__Script_MyProject_1255756810{
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_MyCharacter_h__Script_MyProject_313236418{
 	TEXT("/Script/MyProject"),
 	Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_MyCharacter_h__Script_MyProject_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_UnrealProjects_MyProject_Source_MyProject_MyCharacter_h__Script_MyProject_Statics::ClassInfo),
 	nullptr, 0,

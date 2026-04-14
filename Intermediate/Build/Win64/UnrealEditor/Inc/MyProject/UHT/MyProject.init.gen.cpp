@@ -8,10 +8,16 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeMyProject_init() {}
 static_assert(!UE_WITH_CONSTINIT_UOBJECT, "This generated code can only be compiled with !UE_WITH_CONSTINIT_OBJECT");	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_ActivityChangeState__DelegateSignature();
+	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_FakeCurrentPossesserChangeDelegate__DelegateSignature();
+	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_FakePossesseIncludingAIDelegate__DelegateSignature();
+	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_FakePossesserChangeDelegate__DelegateSignature();
+	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_FakeUnPossessDelegate__DelegateSignature();
+	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_FakeUnPossessIncludingAIDelegate__DelegateSignature();
 	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_OnClickButton__DelegateSignature();
 	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_OnPawnStateEnter__DelegateSignature();
 	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_OnPawnStateInterrupt__DelegateSignature();
 	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_OnPawnStateLeave__DelegateSignature();
+	MYPROJECT_API UFunction* Z_Construct_UDelegateFunction_MyProject_PreUnPossesseDelegate__DelegateSignature();
 	static FPackageRegistrationInfo Z_Registration_Info_UPackage__Script_MyProject;
 	FORCENOINLINE UPackage* Z_Construct_UPackage__Script_MyProject()
 	{
@@ -19,23 +25,29 @@ static_assert(!UE_WITH_CONSTINIT_UOBJECT, "This generated code can only be compi
 		{
 		static UObject* (*const SingletonFuncArray[])() = {
 			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_ActivityChangeState__DelegateSignature,
+			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_FakeCurrentPossesserChangeDelegate__DelegateSignature,
+			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_FakePossesseIncludingAIDelegate__DelegateSignature,
+			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_FakePossesserChangeDelegate__DelegateSignature,
+			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_FakeUnPossessDelegate__DelegateSignature,
+			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_FakeUnPossessIncludingAIDelegate__DelegateSignature,
 			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_OnClickButton__DelegateSignature,
 			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_OnPawnStateEnter__DelegateSignature,
 			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_OnPawnStateInterrupt__DelegateSignature,
 			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_OnPawnStateLeave__DelegateSignature,
+			(UObject* (*)())Z_Construct_UDelegateFunction_MyProject_PreUnPossesseDelegate__DelegateSignature,
 		};
 		static const UECodeGen_Private::FPackageParams PackageParams = {
 			"/Script/MyProject",
 			SingletonFuncArray,
 			UE_ARRAY_COUNT(SingletonFuncArray),
 			PKG_CompiledIn | 0x00000000,
-			0x3665467E,
-			0xDECFB41D,
+			0xC6111B13,
+			0x8E93F06B,
 			METADATA_PARAMS(0, nullptr)
 		};
 		UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_MyProject.OuterSingleton, PackageParams);
 	}
 	return Z_Registration_Info_UPackage__Script_MyProject.OuterSingleton;
 }
-static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_MyProject(Z_Construct_UPackage__Script_MyProject, TEXT("/Script/MyProject"), Z_Registration_Info_UPackage__Script_MyProject, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x3665467E, 0xDECFB41D));
+static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_MyProject(Z_Construct_UPackage__Script_MyProject, TEXT("/Script/MyProject"), Z_Registration_Info_UPackage__Script_MyProject, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xC6111B13, 0x8E93F06B));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
