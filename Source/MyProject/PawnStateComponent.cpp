@@ -1,4 +1,4 @@
-// SimplePawnStateComponent.cpp
+﻿// SimplePawnStateComponent.cpp
 
 #include "PawnStateComponent.h"
 #include "Net/UnrealNetwork.h"

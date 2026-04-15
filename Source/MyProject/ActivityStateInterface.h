@@ -30,7 +30,7 @@ struct FActivityLink
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FName LinkConditionFunctionName;
 
-	//�Ƿ������ȡ��
+	//是否对条件取非
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	bool bNotCondition = false;
 
@@ -88,7 +88,7 @@ struct FActivityState
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General", meta = (AllowedClasses = "/Script/Engine.LevelSequence"))
 	FSoftObjectPath LevelSequencePath;
 
-	//-1��������ѭ����0�����һ�Σ�1���������
+	//-1代表无限循环，0代表播一次，1代表播两次
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General", meta = (UIMin = -1, DisplayName = "Loop"))
 	int32 LoopCount = 0;
 
@@ -111,7 +111,7 @@ struct FActivityStateRep
 	UPROPERTY()
 	int32 StateIndex = NullStateIndex;
 
-	//һ����ҵ�����ֵ��һ����ʱ����������<0.5 (gamestate��һ�θ���ʱ����ʱ),��entertimeΪsequence����ת����
+	//一个是业务传入的值，一个是时间戳，当误差<0.5 (gamestate的一次复制时间内时),以entertime为sequence的跳转依据
 	UPROPERTY()
 	float EnterTime = 0;
 

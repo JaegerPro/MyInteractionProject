@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "FakePossessComponent.h"
@@ -295,7 +295,7 @@ bool UFakePossessComponent::HasAuthority()
 {
 	AActor* Owner = GetOwner();
 
-	//²»¸´ÖÆµÄÒ²ËãÖ÷¶ËÂß¼­
+	//ä¸å¤åˆ¶çš„ä¹Ÿç®—ä¸»ç«¯é€»è¾‘
 	if (!Owner || !Owner->IsValidLowLevelFast() || !(Owner->HasAuthority() || Owner->GetLocalRole() == ROLE_None))
 	{
 		return false;
@@ -501,7 +501,7 @@ void UFakePossessComponent::RefreshPawnStateSettingProperties(const FRegistPosse
 	FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
 	PropertyModule.UpdatePropertyViews({ this });
 
-	// ÐÞ¸ÄµØÍ¼ÖÐµÄÊµÀý
+	// ä¿®æ”¹åœ°å›¾ä¸­çš„å®žä¾‹
 	TArray<UObject*> ArchetypeInstances;
 	GetArchetypeInstances(ArchetypeInstances);
 	if (ArchetypeInstances.Num() > 0)

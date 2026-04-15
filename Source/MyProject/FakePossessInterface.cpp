@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 #include "FakePossessInterface.h"
 #include "MyCharacter.h"
 #include "MyPlayerController.h"
@@ -199,7 +199,7 @@ bool UActivityFakePossessCore::CanBePossess(AMyCharacter* Character)
 
 	for (auto& Var : PossessValue.CantPossessState)
 	{
-		//ÕæÕýpossessÊ±×öÒ»±éºÏ·¨¼ì²â
+		//çœŸæ­£possessæ—¶åšä¸€éåˆæ³•æ£€æµ‹
 		if (Character->StateComponent->HasState(Var))
 		{
 			if (ActivityFakePossessCoreCVars::ShowActivityFakePossessLog)

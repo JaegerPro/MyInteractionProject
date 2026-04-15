@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "PersistEffectWithState.h"
@@ -85,7 +85,7 @@ void UPersistEffectWithState::LeaveState(int32 Index)
 {
 	if (Index == NullStateIndex || !StateMachineInfo.IsValidIndex(Index))
 	{
-		//ÒòÎª³õÊ¼×´Ì¬ÊÇNullState£¬ËùÒÔ²»check
+		//å› ä¸ºåˆå§‹çŠ¶æ€æ˜¯NullStateï¼Œæ‰€ä»¥ä¸check
 		return;
 	}
 

@@ -1,4 +1,4 @@
-// SimplePawnStateComponent.h - State Management Component
+﻿// SimplePawnStateComponent.h - State Management Component
 
 #pragma once
 

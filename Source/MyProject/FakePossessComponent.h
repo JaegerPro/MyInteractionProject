@@ -36,37 +36,37 @@ public:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	//ֻ�ܱ�һ����possess�����Ҫ���˽�����Ū���childactor����һ����Ļactor������
+	//只能被一个人possess，如果要多人交互，弄多个childactor，用一个大的活动actor来管理
 	/* UGC
-	 * ��Ч��Χ��S
-	 * ��һ��PlayerController�������Actor
-	 * @param PC ��ÿ���Ȩ��PlayerController
+	 * 生效范围：S
+	 * 让一个PlayerController控制这个Actor
+	 * @param PC 获得控制权的PlayerController
 	 */
 	UFUNCTION(BlueprintCallable)
 	bool FakePossess(AController* PC);
 
 	/* UGC
-	 * ��Ч��Χ��S
-	 * ������Actor�ϵ�PC�Ŀ���Ȩ
-	 * @param Reason �������Ȩ��ԭ��
+	 * 生效范围：S
+	 * 解除这个Actor上的PC的控制权
+	 * @param Reason 解除控制权的原因
 	 */
 	UFUNCTION(BlueprintCallable)
 	void FakeUnPossess(EUnPossessReason Reason = EUnPossessReason::Finished);
 
 	/* UGC
-	 * ��Ч��Χ��S
-	 * ��һ��PlayerController�������Actor��������ǰ���ƵĽ�ɫAttach�����Actor��
-	 * @param PC ��ÿ���Ȩ��PlayerController
-	 * @param AttachScene Attach�������
-	 * @param SocketName Attach����Socket
+	 * 生效范围：S
+	 * 让一个PlayerController控制这个Actor，并将当前控制的角色Attach到这个Actor上
+	 * @param PC 获得控制权的PlayerController
+	 * @param AttachScene Attach到的组件
+	 * @param SocketName Attach到的Socket
 	 */
 	UFUNCTION(BlueprintCallable, meta = (AdvancedDisplay = "bMulticastToClient"))
 	bool FakePossessWithAttach(AController* PC, USceneComponent* AttachScene, FName SocketName, bool bMulticastToClient = false);
 
 	/* UGC
-	 * ��Ч��Χ��S
-	 * ������Actor�ϵ�PC�Ŀ���Ȩ��������ɫ�����Actor��Detach
-	 * @param Reason �������Ȩ��ԭ��
+	 * 生效范围：S
+	 * 解除这个Actor上的PC的控制权，并将角色从这个Actor上Detach
+	 * @param Reason 解除控制权的原因
 	 */
 	UFUNCTION(BlueprintCallable)
 	void FakeUnPossessWithDettach(EUnPossessReason Reason = EUnPossessReason::Finished);
@@ -79,31 +79,31 @@ public:
 	void	SetDoNotSwitchWeaponWhenRecover(bool Setup);
 
 	/* UGC
-	 * ��Ч��Χ��S
-	 * ��ȡ�Ƿ���������Character���Ƶ�ǰActor
-	 * @param Character	Ҫ����Character
+	 * 生效范围：S
+	 * 获取是否可以由这个Character控制当前Actor
+	 * @param Character	要检查的Character
 	 */
 	UFUNCTION(BlueprintCallable)
 	bool CanBePossess(AMyCharacter* Character);
 
 	/* UGC
-	* ��ȡ����Ȩ�¼��¼�ί��
-	* @param PC ��ȡ�����Actor����Ȩ��PC
+	* 获取控制权事件事件委托
+	* @param PC 获取到这个Actor控制权的PC
 	*/
 	UPROPERTY(BlueprintReadWrite, BlueprintAssignable)
 	FFakePossesserChangeDelegate OnPossess;
 
 	/* UGC
-	* �������Ȩ�¼�ί��
-	* @param PC ������Actor����Ȩ��PC
+	* 解除控制权事件委托
+	* @param PC 解除这个Actor控制权的PC
 	*/
 	UPROPERTY(BlueprintReadWrite, BlueprintAssignable)
 	FFakePossesserChangeDelegate OnUnPossess;
 
 	/* UGC
-	* �������Ȩ�¼�ί��
-	* @param PC ������Actor����Ȩ��PC
-	* @param Reason �������Ȩ��ԭ��
+	* 解除控制权事件委托
+	* @param PC 解除这个Actor控制权的PC
+	* @param Reason 解除控制权的原因
 	*/
 	UPROPERTY(BlueprintReadWrite, BlueprintAssignable)
 	FFakeUnPossessDelegate OnUnPossessWithReason;
@@ -135,21 +135,21 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Attach)
 	bool bOnDettachedRecoverMovement = true;
-	//�Ƿ���possessʱ������attach
+	//是否在possess时进行了attach
 	bool bIsAttachPossess = false;
 
 protected:
 	UPROPERTY(ReplicatedUsing = OnRep_Possesser)
 	AMyCharacter* CurrentPossessCharacter;
 
-	//��possess��ʱ��������Щ״̬
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "��������״̬", EditCondition = "bAllowEditPawnStateProperty"))
+	//当possess的时候会禁用这些状态
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "禁用人物状态", EditCondition = "bAllowEditPawnStateProperty"))
 	TArray<EPawnState> DisablePawnState;
-	//����������Щpawnstate��ʱ��ᵯ��
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "��Ͻ���������״̬", EditCondition = "bAllowEditPawnStateProperty"))
+	//当监听到这些pawnstate的时候会弹出
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "打断交互的人物状态", EditCondition = "bAllowEditPawnStateProperty"))
 	TArray<EPawnState> RejectPawnState;
-	//��possess��ʱ��,ִ��һЩ����������߼�
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "���ܽ��������״̬", EditCondition = "bAllowEditPawnStateProperty"))
+	//当possess的时候,执行一些人物的清理逻辑
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "不能进入的人物状态", EditCondition = "bAllowEditPawnStateProperty"))
 	TArray<EPawnState> CantPossessState;
 
 #if WITH_EDITORONLY_DATA
@@ -157,9 +157,9 @@ protected:
 	bool bAllowEditPawnStateProperty = true;
 #endif
 
-	UPROPERTY(BlueprintReadOnly, AdvancedDisplay, EditDefaultsOnly, meta = (DisplayName = "�Ƿ�����Owner"))
+	UPROPERTY(BlueprintReadOnly, AdvancedDisplay, EditDefaultsOnly, meta = (DisplayName = "是否设置Owner"))
 	bool bSetOwnerToPC;
-	UPROPERTY(BlueprintReadOnly, AdvancedDisplay, EditDefaultsOnly, meta = (DisplayName = "������Ƿ�����"))
+	UPROPERTY(BlueprintReadOnly, AdvancedDisplay, EditDefaultsOnly, meta = (DisplayName = "结算后是否启用"))
 	bool bOpenAfterResult = false;
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FName SubInstanceSlotName;
