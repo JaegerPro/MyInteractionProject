@@ -8,6 +8,9 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GameplayEffect.h"
+#include <GameplayCueManager.h>
+#include"AbilitySystemGlobals.h"
+#include "MyProject/GAS/GASLearnGameplayTags.h"
 
 AFireballProjectile::AFireballProjectile()
 {
@@ -40,24 +43,7 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
 
     // 找目标 ASC
     UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor);
-    if (TargetASC && DamageEffectClass && SourceASC.IsValid())
-    {
-        // 做 Context
-        FGameplayEffectContextHandle Ctx = SourceASC->MakeEffectContext();
-        Ctx.AddSourceObject(this);
-        Ctx.AddHitResult(Hit);
-
-        // 做 Spec
-        FGameplayEffectSpecHandle Spec = SourceASC->MakeOutgoingSpec(DamageEffectClass, /*Level=*/1.f, Ctx);
-        if (Spec.IsValid())
-        {
-            static const FGameplayTag DamageTag = FGameplayTag::RequestGameplayTag(FName("Data.Damage"));
-            UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Spec, DamageTag, DamageAmount);
-            // SourceASC 对 TargetASC 应用伤害 —— 标准姿势
-            SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), TargetASC);
-        }
-    }
-    if (SourceASC.IsValid())
+    if (TargetASC && DamageEffectClass )
     {
         FGameplayCueParameters CueParams;
         CueParams.Location = Hit.ImpactPoint;
@@ -65,10 +51,32 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
         CueParams.Instigator = GetInstigator();
         CueParams.EffectCauser = this;
         CueParams.SourceObject = this;
+        if (SourceASC.IsValid())
+        {
+            SourceASC->ExecuteGameplayCue(GASTags::Cue_Fireball_Explode, CueParams);
+            // 做 Context
+            FGameplayEffectContextHandle Ctx = SourceASC->MakeEffectContext();
+            Ctx.AddSourceObject(this);
+            Ctx.AddHitResult(Hit);
 
-        static const FGameplayTag ExplodeTag = FGameplayTag::RequestGameplayTag(FName("GameplayCue.Fireball.Explode"));
-        SourceASC->ExecuteGameplayCue(ExplodeTag, CueParams);
+            // 做 Spec
+            FGameplayEffectSpecHandle Spec = SourceASC->MakeOutgoingSpec(DamageEffectClass, /*Level=*/1.f, Ctx);
+            if (Spec.IsValid())
+            {
+                static const FGameplayTag DamageTag = FGameplayTag::RequestGameplayTag(FName("Data.Damage"));
+                UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Spec, DamageTag, DamageAmount);
+                // SourceASC 对 TargetASC 应用伤害 —— 标准姿势
+                SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), TargetASC);
+            }
+        }
+        else
+        {
+            UGameplayCueManager* Mgr = UAbilitySystemGlobals::Get().GetGameplayCueManager();
+            Mgr->HandleGameplayCue(OtherActor, GASTags::Cue_Fireball_Explode,
+                EGameplayCueEvent::Executed, CueParams);
+        }
     }
+
 
     Destroy();
 }

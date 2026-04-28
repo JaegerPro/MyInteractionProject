@@ -15,8 +15,7 @@ UGA_Fireball::UGA_Fireball()
     InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
     NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
     // 给这个 Ability 本身打上标签（其他系统可以查"谁在放火球"）
-    AbilityTags.AddTag(GASTags::Ability_Fireball);
-
+    SetAssetTags(FGameplayTagContainer(GASTags::Ability_Fireball));
     // 如果身上有这些 Tag，就不能激活
     // 比如死了、被眩晕了，不能放技能
     ActivationBlockedTags.AddTag(GASTags::State_Dead);
@@ -33,7 +32,7 @@ void UGA_Fireball::ActivateAbility(
     CachedHandle = Handle;
     CachedActorInfo = ActorInfo;
     CachedActivationInfo = ActivationInfo;
-    if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
+    if (!CommitAbilityCooldown(Handle, ActorInfo, ActivationInfo,true))
     {
         EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
         return;
@@ -44,7 +43,19 @@ void UGA_Fireball::ActivateAbility(
     ChargeStartTime = GetWorld()->GetTimeSeconds();
 
     // 播蓄力动画（循环 Montage）
-
+    if (UAbilitySystemComponent* ASC = ActorInfo->AbilitySystemComponent.Get())
+    {
+        FGameplayCueParameters Params;
+        AActor* Avatar = ActorInfo->AvatarActor.Get();
+        Params.Instigator = Avatar;     // Actor 型 Cue 默认从这里取 Attach Target
+        Params.EffectCauser = Avatar;
+        Params.SourceObject = Avatar;
+        if (Avatar)
+        {
+            Params.Location = Avatar->GetActorLocation();  // 出生位置兜底
+        }
+        ASC->AddGameplayCue(GASTags::Cue_Fireball_Charging);
+    }
     // 等待输入松开
     UAbilityTask_WaitInputRelease* ReleaseTask = UAbilityTask_WaitInputRelease::WaitInputRelease(this, false);
     ReleaseTask->OnRelease.AddDynamic(this, &UGA_Fireball::OnInputReleased);
@@ -61,7 +72,10 @@ void UGA_Fireball::OnInputReleased(float TimeHeld)
     // TimeHeld 是 GAS 自己算的"按下到松开"的时长
     const float ChargeDuration = FMath::Clamp(TimeHeld, 0.f, MaxChargeTime);
     const float ChargeRatio = ChargeDuration / MaxChargeTime;   // 0~1
-
+    if (UAbilitySystemComponent* ASC = CachedActorInfo->AbilitySystemComponent.Get())
+    {
+        ASC->RemoveGameplayCue(GASTags::Cue_Fireball_Charging);
+    }
     // 现在才真正扣蓝
     if (!CommitAbilityCost(CachedHandle, CachedActorInfo, CachedActivationInfo))
     {
