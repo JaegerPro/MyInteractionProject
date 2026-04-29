@@ -42,9 +42,6 @@ void AMyActivityActor::EnsureStateInfoInit()
 void AMyActivityActor::EnterState(const FActivityStateRep& IndexInfo)
 {
 	int32 Index = IndexInfo.StateIndex;
-	float EnterTime = IndexInfo.EnterTime;
-	bool bPause = IndexInfo.bPause;
-	float ServeEnterSequenceTime = IndexInfo.ServeEnterSequenceTime;
 
 	if (Index == NullStateIndex || !StateMachineInfo.IsValidIndex(Index))
 	{
@@ -56,8 +53,6 @@ void AMyActivityActor::EnterState(const FActivityStateRep& IndexInfo)
 	if (HasAuthority())
 	{
 		CurrentIndex.StateIndex = Index;
-		CurrentIndex.EnterTime = EnterTime;
-		CurrentIndex.bPause = bPause;
 
 		ForceNetUpdate();
 	}
@@ -75,7 +70,7 @@ void AMyActivityActor::EnterState(const FActivityStateRep& IndexInfo)
 	}
 
 	LocalPreIndex = Index;
-	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:EnterState ActorName [%s], StateName[%s], EnterTime=[%f], ServeEnterSequenceTime=[%f]"), *GetFullName(), *StatInfo.StateName.ToString(), CurrentIndex.EnterTime, CurrentIndex.ServeEnterSequenceTime);
+	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:EnterState ActorName [%s], StateName[%s]"), *GetFullName(), *StatInfo.StateName.ToString());
 
 	if (StatInfo.StateEnterFunction)
 	{
@@ -87,8 +82,6 @@ void AMyActivityActor::EnterState(int32 Index, float EnterTime, bool bPause)
 {
 	FActivityStateRep Rep;
 	Rep.StateIndex = Index;
-	Rep.EnterTime = EnterTime;
-	Rep.bPause = bPause;
 	EnterState(Rep);
 }
 
@@ -121,7 +114,7 @@ void AMyActivityActor::OnRep_CurrentTransform()
 void AMyActivityActor::OnRep_CurrentStateIndexInfo(const FActivityStateRep& PreCurrentIndex)
 {
 
-	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:OnRep_CurrentStateIndexInfo PreIndex[%d] CurrentIndex=[%d], EnterTime=[%f], Pause=[%d], ServeEnterSequenceTime=[%f]"), PreCurrentIndex.StateIndex, CurrentIndex.StateIndex, CurrentIndex.EnterTime, (int32)CurrentIndex.bPause, CurrentIndex.ServeEnterSequenceTime);
+	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:OnRep_CurrentStateIndexInfo PreIndex[%d] CurrentIndex=[%d]"), PreCurrentIndex.StateIndex, CurrentIndex.StateIndex);
 
 	LeaveState(LocalPreIndex);
 	EnterState(CurrentIndex);

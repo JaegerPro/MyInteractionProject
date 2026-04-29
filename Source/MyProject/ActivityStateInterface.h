@@ -68,38 +68,7 @@ struct FActivityState
 	int32  StateIndex;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	TArray<FActivityLink> LinkArray;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	bool bStateMachineEntry = false;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	ESequenceBindingType SequenceType = ESequenceBindingType::None;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	int32 TlogStatisticsID = -1;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	FName StateSequenceName;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	class ULevelSequence* LevelSequence = nullptr;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General", meta = (AllowedClasses = "/Script/Engine.LevelSequence"))
-	FSoftObjectPath LevelSequencePath;
-
-	//-1代表无限循环，0代表播一次，1代表播两次
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General", meta = (UIMin = -1, DisplayName = "Loop"))
-	int32 LoopCount = 0;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General", meta = (Units = Multiplier))
-	float PlayRate = 1.0f;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (EditCondition = "LoopCount==0"))
-	bool ShouldPauseAtLastFrame = false;
-
-	UPROPERTY(Transient)
-	class UActorSequenceComponent* StateSequence = nullptr;
 
 };
 
@@ -111,22 +80,12 @@ struct FActivityStateRep
 	UPROPERTY()
 	int32 StateIndex = NullStateIndex;
 
-	//一个是业务传入的值，一个是时间戳，当误差<0.5 (gamestate的一次复制时间内时),以entertime为sequence的跳转依据
-	UPROPERTY()
-	float EnterTime = 0;
-
-	UPROPERTY()
-	float ServeEnterSequenceTime = 0;
-
-	UPROPERTY()
-	bool bPause = false;
-
 	UPROPERTY()
 	int32 PredictID = 0;
 
 	bool operator==(const FActivityStateRep b)
 	{
-		return this->StateIndex == b.StateIndex && this->bPause == b.bPause && this->EnterTime == b.EnterTime && this->ServeEnterSequenceTime == b.ServeEnterSequenceTime;
+		return this->StateIndex == b.StateIndex;
 	}
 };
 // This class does not need to be modified.

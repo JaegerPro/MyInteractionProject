@@ -249,28 +249,6 @@ void FActivityBaseActorBlueprintCompilerContext::CopyAutoStatePropetyToInstance(
 	Instance.StateEnterFunctionName = Template.StateEnterFunctionName;
 	Instance.StateLeaveFunctionName = Template.StateLeaveFunctionName;
 	Instance.StateIndex = Template.StateIndex;
-	if (Template.SequenceType == ESequenceBindingType::GenerateActorSequence)
-	{
-		Instance.StateSequenceName = Template.StateSequenceName;
-	}
-
-	TArray<FActivityLink>& TemlateLink = Template.LinkArray;
-	TArray<FActivityLink>& InstanceLink = Instance.LinkArray;
-
-	for (int32 i = 0; i < InstanceLink.Num(); i++)
-	{
-		if (!TemlateLink.IsValidIndex(i))
-		{
-			continue;
-		}
-		//子类再派生的，不允许再修改状态机
-// 		if (!TemlateLink.IsValidIndex(i) || !TemlateLink[i].LinkConditionFunctionName.IsEqual(InstanceLink[i].LinkConditionFunctionName) || !TemlateLink[i].LinkStateName.IsEqual(InstanceLink[i].LinkStateName))
-// 		{
-// 			Results.Error(*FString::Printf(TEXT("ActivityBaseActor ReAssignPropertyToInstance  ChildClass State %s Link %s Has Modify,Not Allow Modify In ChildClass "), *(Instance.StateName.ToString()), *(InstanceLink[i].LinkName.ToString())));
-// 		}
-		InstanceLink[i].LinkStateIndex = TemlateLink[i].LinkStateIndex;
-		InstanceLink[i].LinkName = TemlateLink[i].LinkName;
-	}
 }
 
 bool FActivityBaseActorBlueprintCompilerContext::CheckParentClassHaveSameNameFunction(FName FunctionName)

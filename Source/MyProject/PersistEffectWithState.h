@@ -26,7 +26,7 @@ private:
 	int32 FindEntry();
 
 	//客户端不保证所有状态都会执行，但保证enter和leave匹配，DS所有状态流的Enter和Leave保证都会执行
-	void EnterState(int32 Index, float EnterTime, bool bPause);
+	void EnterState(int32 Index);
 
 	void LeaveState(int32 Index);
 	void EnsureStateInfoInit();
@@ -42,7 +42,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FName GetCurrentStateName();
 	UFUNCTION(BlueprintCallable)
-	virtual void JumpToState(FName StateName, float EnterTime = 0.0f, bool bPause = false);
+	virtual void JumpToState(FName StateName);
 	FActivityChangeState OnPersistEffectChangeState;
 	FActivityChangeState& GetChangeStateDelegate() { return OnPersistEffectChangeState; }
 

@@ -37,7 +37,6 @@ public:
 	{
 		if (Info.PassID != PassID)
 		{
-			// 这边check一下， 理论上判断的时候 PassID是相等的
 			check(0);
 			return false;
 		}
@@ -83,7 +82,6 @@ struct FClickUIInfo
 {
 	GENERATED_BODY()
 
-	//是否对条件取非
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	FName ButtonName = TEXT("Click");
 
@@ -92,9 +90,6 @@ struct FClickUIInfo
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, AdvancedDisplay, Category = "Config")
 	FString  MountWidgetName = TEXT("VerticalBox_GISVerticalContainer");
-
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
-	float ClientCD = -1;
 
 	//需要长按的时间
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
@@ -123,17 +118,6 @@ struct FClickUIInfo
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	float RenderOpacity = 1.0f;
-
-	// 全局CD结束时间戳
-	UPROPERTY(BlueprintReadWrite)
-	float GlobalCDEndTimeStamp = -1;
-
-	UPROPERTY(BlueprintReadWrite)
-	float GlobalCDBeginTimeStamp = -1;
-
-	// 默认情况下 按钮音效在 0,0,0 ，在使用AKRoom 的情况下可能会导致听不到声音
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
-	bool BisPostEventAtPlayerLocation = false;
 
 };
 
@@ -190,7 +174,7 @@ struct FClickInfo
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	FClick_ExecuteFunctionName ExcuteFunction;
-	//是否对条件取非
+
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	FClickUIInfo UIInfo;
 

@@ -10,7 +10,7 @@ void UPersistEffectWithState::OnApply(AActor* Character)
 
 	if (CurrentIndex.StateIndex == NullStateIndex)
 	{
-		EnterState(FindEntry(), 0.0f, false);
+		EnterState(FindEntry());
 		if (CurrentIndex.StateIndex == -1)
 		{
 			return;
@@ -43,7 +43,7 @@ int32 UPersistEffectWithState::FindEntry()
 #endif
 	return -1;
 }
-void UPersistEffectWithState::EnterState(int32 Index, float EnterTime, bool bPause)
+void UPersistEffectWithState::EnterState(int32 Index)
 {
 	if (Index == NullStateIndex || !StateMachineInfo.IsValidIndex(Index))
 	{
@@ -63,8 +63,6 @@ void UPersistEffectWithState::EnterState(int32 Index, float EnterTime, bool bPau
 	if (HasAuthority())
 	{
 		CurrentIndex.StateIndex = Index;
-		CurrentIndex.EnterTime = EnterTime;
-		CurrentIndex.bPause = bPause;
 	}
 
 	LocalPreIndex = Index;
@@ -109,7 +107,7 @@ FName UPersistEffectWithState::GetCurrentStateName()
 
 	return StateMachineInfo[CurrentIndex.StateIndex].StateName;
 }
-void UPersistEffectWithState::JumpToState(FName StateName, float EnterTime /*= 0.0f*/, bool bPause /*= false*/)
+void UPersistEffectWithState::JumpToState(FName StateName)
 {
 	if (!HasAuthority())
 	{
@@ -121,7 +119,7 @@ void UPersistEffectWithState::JumpToState(FName StateName, float EnterTime /*= 0
 		if (StateMachineInfo[i].StateName.IsEqual(StateName))
 		{
 			LeaveState(CurrentIndex.StateIndex);
-			EnterState(i, EnterTime, bPause);
+			EnterState(i);
 			break;
 		}
 	}
@@ -144,7 +142,7 @@ void UPersistEffectWithState::OnRep_CurrentStateIndexInfo(const FActivityStateRe
 	}
 	UE_LOG(LogTemp, Log, TEXT("---UPersistEffectWithState:OnRep_CurrentStateIndexInfo PreIndex[%d] CurrentIndex=[%d]"), PreIndex.StateIndex, CurrentIndex.StateIndex);
 	LeaveState(LocalPreIndex);
-	EnterState(CurrentIndex.StateIndex, CurrentIndex.EnterTime, CurrentIndex.bPause);
+	EnterState(CurrentIndex.StateIndex);
 }
 void UPersistEffectWithState::EnsureStateInfoInit()
 {

@@ -37,11 +37,8 @@ struct  FRegistPossessValue
 {
 	GENERATED_BODY()
 
-	//possess时尝试进入的状态，进入失败则possess失败
-	//当possess的时候会禁用这些状态
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "禁用人物状态"))
 	TArray<EPawnState> DisablePawnState;
-	//当监听到这些pawnstate的时候会弹出
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "打断交互的人物状态"))
 	TArray<EPawnState> RejectPawnState;
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "不能进入的人物状态"))
@@ -165,14 +162,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AMyCharacter* GetCurrentPossesser() { return CurrentPossessCharacter; };
 
-
-	//用于解决递归问题，禁止外部使用
 	FFakePossessHookDelegate PossessHook;
 	FFakePossessHookDelegate PossessHookAttach;
 	FFakeUnPossessHookDelegate UnpossessHook;
 	FFakeUnPossessHookDelegate UnpossessHookDetach;
 protected:
-	//当possess的时候会禁用这些状态
 	UPROPERTY(BlueprintReadWrite, meta = (DisplayName = "注册状态"))
 	FRegistPossessValue PossessValue;
 

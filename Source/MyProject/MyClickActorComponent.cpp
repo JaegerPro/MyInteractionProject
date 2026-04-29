@@ -69,8 +69,6 @@ void UMyClickActorComponent::CheckValid(APlayerController* PC, FClickInfo& Info)
 		FClick_ValidInfo Vaild;
 		Vaild.PC = PC;
 		Vaild.PassInfo.PassID = Info.ID;
-		Vaild.PassInfo.BeginTimeStamp = Info.UIInfo.GlobalCDBeginTimeStamp;
-		Vaild.PassInfo.EndTimeStamp = Info.UIInfo.GlobalCDEndTimeStamp;
 
 		if (Info.CheckFunction.Invoke(GetOwner(), Param))
 		{
