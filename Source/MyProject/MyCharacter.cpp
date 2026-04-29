@@ -22,6 +22,13 @@ AMyCharacter::AMyCharacter()
 
 	// 创建 AttributeSet（不是组件，是普通 UObject，但必须是 ASC 所在 Actor 的 SubObject）
 	AttributeSet = CreateDefaultSubobject<UGASLearnAttributeSet>(TEXT("AttributeSet"));
+
+	HealthBarWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidgetComp"));
+	HealthBarWidgetComp->SetupAttachment(GetMesh()); // 或 RootComponent，看你想不想跟动画
+	HealthBarWidgetComp->SetRelativeLocation(FVector(0.f, 0.f, 220.f)); // 头顶上方
+	HealthBarWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);          // 永远面向相机
+	HealthBarWidgetComp->SetDrawSize(FVector2D(180.f, 24.f));
+	HealthBarWidgetComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 UAbilitySystemComponent* AMyCharacter::GetAbilitySystemComponent() const
@@ -83,6 +90,8 @@ void AMyCharacter::GiveDefaultAbilities()
 
 void AMyCharacter::InitAbilitySystem()
 {
+	if (!AbilitySystemComponent || !AttributeSet) return;
+
 	if (AbilitySystemComponent)
 	{
 		// OwnerActor 和 AvatarActor 都是自己
@@ -92,9 +101,35 @@ void AMyCharacter::InitAbilitySystem()
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 		// 初始化完 ASC 后，立即应用默认属性 Effect
 		ApplyInitialEffects();
-		GiveDefaultAbilities();   
+		GiveDefaultAbilities();  
+		if (!bInitAbilitySystem)
+		{
+			AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetHealthAttribute())
+				.AddLambda([this](const FOnAttributeChangeData&) { RefreshHealthBar(); });
+			AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+				UGASLearnAttributeSet::GetMaxHealthAttribute())
+				.AddLambda([this](const FOnAttributeChangeData&) { RefreshHealthBar(); });
+			bInitAbilitySystem = true;
+		}
+		RefreshHealthBar();
 	}
 }
+void AMyCharacter::RefreshHealthBar()
+{
+	if (!HealthBarWidgetComp || !AttributeSet) return;
+
+	// 懒加载拿到 UserWidget 实例
+	if (!HealthBarWidget)
+	{
+		HealthBarWidget = Cast<UHealthBarWidget>(HealthBarWidgetComp->GetUserWidgetObject());
+	}
+	if (!HealthBarWidget) return;
+
+	HealthBarWidget->SetHealthPercent(
+		AttributeSet->GetHealth(),
+		AttributeSet->GetMaxHealth());
+}
+
 void AMyCharacter::ApplyInitialEffects()
 {
 	if (!AbilitySystemComponent || !DefaultAttributesEffect) return;
@@ -125,7 +160,13 @@ void AMyCharacter::OnRep_PlayerState()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (HealthBarWidgetComp && HealthBarWidgetClass)
+	{
+		HealthBarWidgetComp->SetWidgetClass(HealthBarWidgetClass);
+		HealthBarWidgetComp->InitWidget(); // 立即实例化 UserWidget
+	}
+
+	RefreshHealthBar();
 }
 
 // Called every frame

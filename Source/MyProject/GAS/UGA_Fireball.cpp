@@ -85,7 +85,7 @@ void UGA_Fireball::OnInputReleased(float TimeHeld)
     }
 
     // 根据蓄力比算伤害：[BaseDamage, MaxDamage]
-    CachedChargedDamage = FMath::Lerp(BaseDamage, MaxDamage, ChargeRatio);
+    CachedChargedDamage = -FMath::Lerp(BaseDamage, MaxDamage, ChargeRatio);
 
     // 播释放动画
     if (ReleaseMontage)
@@ -152,6 +152,10 @@ void UGA_Fireball::SpawnFireball()
     AFireballProjectile* Fireball = GetWorld()->SpawnActor<AFireballProjectile>(FireballClass, MuzzleLoc, MuzzleRot, Params);
     if (Fireball)
     {
+        if (UPrimitiveComponent* Root = Cast<UPrimitiveComponent>(Fireball->GetRootComponent()))
+        {
+            Root->IgnoreActorWhenMoving(Avatar, true);
+        }
         // 把伤害 Effect 塞给火球，让它命中后施加
         Fireball->DamageEffectClass = DamageEffect;
         // 记录施法者 ASC，后面命中时制作 EffectContext 用

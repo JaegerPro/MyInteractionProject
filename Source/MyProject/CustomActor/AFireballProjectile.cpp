@@ -40,7 +40,7 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
 {
     if (!HasAuthority()) { Destroy(); return; }   // 伤害逻辑只在服务器
     if (!OtherActor || OtherActor == GetInstigator()) { Destroy(); return; }
-
+    if (bHit) { Destroy(); return; }
     // 找目标 ASC
     UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor);
     if (TargetASC && DamageEffectClass )
@@ -63,8 +63,7 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
             FGameplayEffectSpecHandle Spec = SourceASC->MakeOutgoingSpec(DamageEffectClass, /*Level=*/1.f, Ctx);
             if (Spec.IsValid())
             {
-                static const FGameplayTag DamageTag = FGameplayTag::RequestGameplayTag(FName("Data.Damage"));
-                UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Spec, DamageTag, DamageAmount);
+                UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Spec, GASTags::Data_Damage, DamageAmount);
                 // SourceASC 对 TargetASC 应用伤害 —— 标准姿势
                 SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), TargetASC);
             }
@@ -75,6 +74,7 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
             Mgr->HandleGameplayCue(OtherActor, GASTags::Cue_Fireball_Explode,
                 EGameplayCueEvent::Executed, CueParams);
         }
+        bHit = true;
     }
 
 

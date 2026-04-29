@@ -8,8 +8,9 @@
 #include "PersistBaseComponent.h"
 #include "AbilitySystemInterface.h"
 #include "GAS/GASLearnAttributeSet.h"
+#include <Components/WidgetComponent.h>
+#include "UMG/HealthBarWidget.h"
 #include "MyCharacter.generated.h"
-
 
 UCLASS()
 class MYPROJECT_API AMyCharacter : public ACharacter, public IAbilitySystemInterface
@@ -28,10 +29,11 @@ public:
 	virtual void OnRep_PlayerState() override;
 
 protected:
+	bool bInitAbilitySystem = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS")
+	UPROPERTY(Transient,BlueprintReadOnly)
 	TObjectPtr<UGASLearnAttributeSet> AttributeSet;
 	UPROPERTY(EditDefaultsOnly, Category = "GAS|Init")
 	TSubclassOf<class UGameplayEffect> DefaultAttributesEffect;
@@ -48,13 +50,22 @@ protected:
 	// 统一的初始化入口
 	virtual void InitAbilitySystem();
 	virtual void ApplyInitialEffects();
+
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+	TObjectPtr<UWidgetComponent> HealthBarWidgetComp;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UHealthBarWidget> HealthBarWidgetClass;
+
+	UPROPERTY(Transient)
+	TObjectPtr<UHealthBarWidget> HealthBarWidget;
+
+	void RefreshHealthBar();
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 public:	
 	// Called every frame

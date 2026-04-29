@@ -12,7 +12,6 @@ void UGASLearnAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribu
     if (Attribute == GetHealthAttribute())
     {
         NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
-        UE_LOG(LogTemp, Log, TEXT("[GAS] %f HP"),NewValue);
     }
     else if (Attribute == GetMaxHealthAttribute())
     {
