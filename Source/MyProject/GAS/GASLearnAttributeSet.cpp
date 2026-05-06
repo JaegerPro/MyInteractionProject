@@ -52,6 +52,10 @@ UGASLearnAttributeSet::UGASLearnAttributeSet()
 {
     InitMaxHealth(100.f);
     InitHealth(100.f);
+    InitAttackPower(20.f);   // ← 新增：默认攻击力 20
+    InitArmor(5.f);          // ← 新增：默认护甲 5
+    InitCritChance(0.1f);       // 默认 10%
+    InitCritMultiplier(2.0f);   // 默认 2 倍
 }
 
 void UGASLearnAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -62,6 +66,11 @@ void UGASLearnAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
     // 这是 GAS 的"规矩"，必须这么写，否则联机表现层会丢事件
     DOREPLIFETIME_CONDITION_NOTIFY(UGASLearnAttributeSet, Health, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UGASLearnAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
+    DOREPLIFETIME_CONDITION_NOTIFY(UGASLearnAttributeSet, AttackPower, COND_None, REPNOTIFY_Always);
+    DOREPLIFETIME_CONDITION_NOTIFY(UGASLearnAttributeSet, Armor, COND_None, REPNOTIFY_Always);
+    DOREPLIFETIME_CONDITION_NOTIFY(UGASLearnAttributeSet, CritChance, COND_None, REPNOTIFY_Always);
+    DOREPLIFETIME_CONDITION_NOTIFY(UGASLearnAttributeSet, CritMultiplier, COND_None, REPNOTIFY_Always);
+
 }
 
 void UGASLearnAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth)
@@ -83,4 +92,21 @@ void UGASLearnAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana)
 void UGASLearnAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana)
 {
     GAMEPLAYATTRIBUTE_REPNOTIFY(UGASLearnAttributeSet, MaxMana, OldMaxMana);
+}
+void UGASLearnAttributeSet::OnRep_AttackPower(const FGameplayAttributeData& OldAttackPower)
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGASLearnAttributeSet, AttackPower, OldAttackPower);
+}
+
+void UGASLearnAttributeSet::OnRep_Armor(const FGameplayAttributeData& OldArmor)
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGASLearnAttributeSet, Armor, OldArmor);
+}
+void UGASLearnAttributeSet::OnRep_CritChance(const FGameplayAttributeData& Old)
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGASLearnAttributeSet, CritChance, Old);
+}
+void UGASLearnAttributeSet::OnRep_CritMultiplier(const FGameplayAttributeData& Old)
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGASLearnAttributeSet, CritMultiplier, Old);
 }

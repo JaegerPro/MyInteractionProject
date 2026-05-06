@@ -1,110 +1,207 @@
-# GAS Ñ§Ï°±Ê¼Ç ¡¤ ×Ü¸Ù£¨ÌåÏµ»¯ÊáÀí£©
+# GAS å­¦ä¹ ç¬”è®° Â· æ€»çº²ï¼ˆä½“ç³»åŒ–æ¢³ç†ï¼‰
 
-> ´´½¨ÈÕÆÚ£º2026-04-28  
-> ¹¤³Ì£º`D:\UnrealProjects\MyProject`  
-> Ä¿µÄ£º°ÑÖ®Ç°»á»°ÀïÉ¢ÂäµÄ GAS ÖªÊ¶µã°´**Ö÷ÏßÂöÂç**ÖØĞÂ´®ÆğÀ´£¬×÷ÎªÕûÕÅ"µØÍ¼"¡£  
-> ÅäÌ×£º`GASÑ§Ï°±Ê¼Ç_Day01.md`£¨ËÙ²é / ²È¿Ó£©£¬±¾ÎÄ¼ş£¨ÌåÏµ / ĞÄÖÇÍ¼£©¡£
-
----
-
-## 0. È«¾ÖĞÄÖÇÍ¼£¨ÏÈ¼ÇÕâÕÅÍ¼£©
-
-```
-                    ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-                    ©¦   GameplayAbilitySystem ©¦
-                    ©¦      £¨GAS ×ÜÈë¿Ú£©      ©¦
-                    ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-                                ©¦
-        ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©à©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-        ©¦                       ©¦                       ©¦
-   ©°©¤©¤©¤©¤¨‹©¤©¤©¤©¤©´            ©°©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©´           ©°©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©´
-   ©¦ Êı¾İ²ã   ©¦            ©¦ ĞĞÎª²ã     ©¦           ©¦ ±íÏÖ²ã     ©¦
-   ©¦Attribute©¦            ©¦ Ability   ©¦           ©¦ Cue        ©¦
-   ©¦ Effect  ©¦            ©¦ Task      ©¦           ©¦ Animation  ©¦
-   ©¦ Tag     ©¦            ©¦           ©¦           ©¦ Montage    ©¦
-   ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼            ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼           ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-        ©¦                       ©¦                       ©¦
-        ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©Ø©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-                        ©¦
-                  ©°©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©¤©´
-                  ©¦  ÍøÂç²ã     ©¦
-                  ©¦Replication ©¦
-                  ©¦Prediction  ©¦
-                  ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-```
-
-**¼ÇÒä¿Ú¾÷**£º**Êı¾İÊÇµ×£¬ĞĞÎªÊÇ¹Ç£¬±íÏÖÊÇÆ¤£¬ÍøÂçÊÇÑª**¡£
+> åˆ›å»ºæ—¥æœŸï¼š2026-04-28ã€€ä¿®è®¢ï¼š2026-05-06  
+> å·¥ç¨‹ï¼š`D:\UnrealProjects\MyProject`  
+> ç›®çš„ï¼šæŠŠæ•£è½åœ¨ Day ç¬”è®°é‡Œçš„ GAS çŸ¥è¯†ç‚¹æŒ‰**ä¸»çº¿è„‰ç»œ**ä¸²æˆä¸€å¼ åœ°å›¾ã€‚  
+> é…å¥—ï¼š`GASå­¦ä¹ ç¬”è®°_DayXX.md`ï¼ˆé€ŸæŸ¥ / è¸©å‘ï¼‰ï¼Œæœ¬æ–‡ä»¶ï¼ˆä½“ç³» / å¿ƒæ™ºå›¾ï¼‰ã€‚
 
 ---
 
-## 1. Êı¾İ²ã£ºAttribute & AttributeSet
+## 0. å…¨å±€å¿ƒæ™ºå›¾ï¼ˆå…ˆè®°è¿™å¼ å›¾ï¼‰
 
-### 1.1 Èı¸öºËĞÄ×Ö¶Î£¨±Ø±³£©
+```
+                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                    â”‚   GameplayAbilitySystem â”‚
+                    â”‚      ï¼ˆGAS æ€»å…¥å£ï¼‰      â”‚
+                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                                â”‚
+        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+        â”‚                       â”‚                       â”‚
+   â”Œâ”€â”€â”€â”€â–¼â”€â”€â”€â”€â”            â”Œâ”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”           â”Œâ”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”
+   â”‚ æ•°æ®å±‚   â”‚            â”‚ è¡Œä¸ºå±‚     â”‚           â”‚ è¡¨ç°å±‚     â”‚
+   â”‚Attributeâ”‚            â”‚ Ability   â”‚           â”‚ Cue        â”‚
+   â”‚ Effect  â”‚            â”‚ Task      â”‚           â”‚ Animation  â”‚
+   â”‚         â”‚            â”‚           â”‚           â”‚ Montage    â”‚
+   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜            â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜           â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+        â”‚                       â”‚                       â”‚
+        â”‚   â—„â”€â”€â”€ GameplayTag è´¯ç©¿ä¸‰å±‚ï¼ˆç²˜åˆå‰‚ï¼‰ â”€â”€â”€â–º    â”‚
+        â”‚                       â”‚                       â”‚
+        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                        â”‚
+                  â”Œâ”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”
+                  â”‚  ç½‘ç»œå±‚     â”‚
+                  â”‚Replication â”‚
+                  â”‚Prediction  â”‚
+                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+```
 
-| ×Ö¶Î | º¬Òå | Ë­»á¸ÄËü |
+**è®°å¿†å£è¯€**ï¼š**æ•°æ®æ˜¯åº•ï¼Œè¡Œä¸ºæ˜¯éª¨ï¼Œè¡¨ç°æ˜¯çš®ï¼Œç½‘ç»œæ˜¯è¡€ï¼ŒTag æ˜¯è„‰ç»œ**ã€‚
+
+> âš ï¸ **å…³äº Tag**ï¼šGameplayTag ä¸æ˜¯å•ç‹¬çš„"ä¸€å±‚"ï¼Œè€Œæ˜¯**è·¨å±‚è¿æ¥çº¿**â€”â€”å±æ€§ã€æ•ˆæœã€æŠ€èƒ½ã€åŠ¨ç”»ã€Cue éƒ½é å®ƒå¯¹è¯ã€‚æ‰€ä»¥ä¸‹æ–‡æ¯ä¸ªç« èŠ‚éƒ½ä¼šå‡ºç° Tag ç›¸å…³å­—æ®µï¼Œæœ¬æ–‡ä¸å†å•è®¾"Tag å±‚"ã€‚
+
+---
+
+## 1. æ•°æ®å±‚ï¼šAttribute & AttributeSet
+
+### 1.1 ä¸‰ä¸ªæ ¸å¿ƒå­—æ®µï¼ˆå¿…èƒŒï¼‰
+
+| å­—æ®µ | å«ä¹‰ | è°ä¼šæ”¹å®ƒ |
 |------|------|----------|
-| `BaseValue` | »ù´¡Öµ£¨³Ö¾Ã£© | `Instant` / `Periodic` GE |
-| `CurrentValue` | µ±Ç°Öµ£¨Ë²Ê±£© | `Duration` / `Infinite` GE ¼Ó Modifier |
-| `Modifier` | ĞŞÊÎÆ÷£¨µş¼Ó²ã£© | Buff / Debuff |
+| `BaseValue` | åŸºç¡€å€¼ï¼ˆæŒä¹…ï¼‰ | `Instant` / `Periodic` GE |
+| `CurrentValue` | å½“å‰å€¼ï¼ˆç¬æ—¶ï¼‰ | `Duration` / `Infinite` GE åŠ  Modifier |
+| `Modifier` | ä¿®é¥°å™¨ï¼ˆå åŠ å±‚ï¼‰ | Buff / Debuff |
 
-> **¹Ø¼üÀí½â**£º`CurrentValue = BaseValue + ËùÓĞ¼¤»î Modifier µÄµş¼Ó½á¹û`¡£  
-> Buff ÏûÊ§ ¡ú Modifier ÒÆ³ı ¡ú CurrentValue ×Ô¶¯»ØÂä£¬**²»ĞèÒªÄãÊÖ¶¯¼õ**¡£
+> **å…³é”®ç†è§£**ï¼š`CurrentValue = BaseValue + æ‰€æœ‰æ¿€æ´» Modifier çš„å åŠ ç»“æœ`ã€‚  
+> Buff æ¶ˆå¤± â†’ Modifier ç§»é™¤ â†’ CurrentValue è‡ªåŠ¨å›è½ï¼Œ**ä¸éœ€è¦ä½ æ‰‹åŠ¨å‡**ã€‚
 
-### 1.2 ÊôĞÔ³õÊ¼»¯µÄÁ½ÖÖ·½Ê½
+### 1.2 å±æ€§åˆå§‹åŒ–çš„ä¸¤ç§æ–¹å¼
 
-| ·½Ê½ | ÊÊÓÃ³¡¾° | ¿Ó |
+| æ–¹å¼ | é€‚ç”¨åœºæ™¯ | å‘ |
 |------|----------|-----|
-| **DataTable + InitStats** | ¶à½ÇÉ«¡¢¶àµÈ¼¶£¬ÊıÖµ±íÅäÖÃ | ±íÍ·ÁĞÃûÒªºÍÊôĞÔÃûÍêÈ«Ò»ÖÂ |
-| **Instant GE£¨ÍÆ¼ö£©** | Í¨ÓÃ³¡¾°¡¢Áé»î | `PossessedBy` Ê± Apply Ò»´Î `GE_InitAttributes` |
+| **DataTable + InitStats** | å¤šè§’è‰²ã€å¤šç­‰çº§ï¼Œæ•°å€¼è¡¨é…ç½® | è¡¨å¤´åˆ—åè¦å’Œå±æ€§åå®Œå…¨ä¸€è‡´ |
+| **Instant GEï¼ˆæ¨èï¼‰** | é€šç”¨åœºæ™¯ã€çµæ´» | `PossessedBy` æ—¶ Apply ä¸€æ¬¡ `GE_InitAttributes` |
 
-? ²»ÒªÔÚ¹¹Ôìº¯ÊıÀï `InitHealth(100)` È»ºóÒÔÎª¾ÍÓĞ 100 Ñª£¬ÄÇÖ»ÊÇ¸³Ä¬ÈÏÖµ£¬²»×ß GE Á÷Ë®Ïß¡£
+âš ï¸ ä¸è¦åœ¨æ„é€ å‡½æ•°é‡Œ `InitHealth(100)` ç„¶åä»¥ä¸ºå°±æœ‰ 100 è¡€â€”â€”é‚£åªæ˜¯èµ‹é»˜è®¤å€¼ï¼Œ**ä¸èµ° GE æµæ°´çº¿**ï¼Œæ— æ³•è¢«ç›‘å¬ã€æ— æ³•è¢«å¤åˆ¶ã€‚
 
-### 1.3 Meta Attribute Ä£Ê½£¨ÉËº¦×î¼ÑÊµ¼ù£©
+### 1.3 Meta Attribute æ¨¡å¼ï¼ˆä¼¤å®³æœ€ä½³å®è·µï¼‰
 
 ```
-Damage(Meta)  ©¤©¤PostGameplayEffectExecute©¤©¤?  Health -= Damage
+Damage(Meta)  â”€â”€PostGameplayEffectExecuteâ”€â”€â–¶  Health -= Damage
                                               SetDamage(0)
 ```
 
-**ÎªÊ²Ã´ÒªÓĞ Meta**£º
-- ½âñîÉËº¦¼ÆËãÓëÑªÁ¿¿Û¼õ
-- Î´À´¼Ó»¤¶Ü/±©»÷/ÎüÑªÖ»¸Ä `PostGameplayEffectExecute`
-- `Coefficient` ÌîÕıÊı£¬ÓïÒåÇåÎú
+**ä¸ºä»€ä¹ˆè¦æœ‰ Meta**ï¼š
+- è§£è€¦ä¼¤å®³è®¡ç®—ä¸è¡€é‡æ‰£å‡
+- æœªæ¥åŠ æŠ¤ç›¾/æš´å‡»/å¸è¡€åªæ”¹ `PostGameplayEffectExecute`
+- `Coefficient` å¡«æ­£æ•°ï¼Œè¯­ä¹‰æ¸…æ™°
 
-Ïê¼û Day01 ¿¨Æ¬ 2¡£
+è¯¦è§ Day01 å¡ç‰‡ 2ã€‚
 
-### 1.4 Clamp µÄÁ½ÖÖÎ»ÖÃ
+### 1.4 Clamp çš„ä¸¤ç§ä½ç½®
 
-| Î»ÖÃ | Ê±»ú | ÊÊÓÃ |
+| ä½ç½® | æ—¶æœº | é€‚ç”¨ |
 |------|------|------|
-| `PreAttributeChange` | ĞŞ¸Ä CurrentValue Ç° | ¼òµ¥ Clamp£¨HP ²»³¬ MaxHP£© |
-| `PostGameplayEffectExecute` | GE Êµ¼ÊÖ´ĞĞºó | ¸´ÔÓÂß¼­£¨ÉËº¦×ªÑªÁ¿¡¢ËÀÍöÅĞ¶¨£© |
+| `PreAttributeChange` | ä¿®æ”¹ CurrentValue å‰ | ç®€å• Clampï¼ˆHP ä¸è¶… MaxHPï¼‰ |
+| `PostGameplayEffectExecute` | GE å®é™…æ‰§è¡Œå | å¤æ‚é€»è¾‘ï¼ˆä¼¤å®³è½¬è¡€é‡ã€æ­»äº¡åˆ¤å®šï¼‰ |
 
-? `PreAttributeChange` Àï¶Á `MaxHealth` Ê±Èç¹ûËüÒ²ÔÚ±»Í¬Ò»¸ö GE ¸Ä£¬¿ÉÄÜ¶Áµ½¾ÉÖµ¡£
+âš ï¸ `PreAttributeChange` é‡Œè¯» `MaxHealth` æ—¶ï¼Œå¦‚æœå®ƒæ­£åœ¨è¢«åŒä¸€ä¸ª GE ä¿®æ”¹ï¼Œå¯èƒ½è¯»åˆ°æ—§å€¼ã€‚
 
 ---
 
-## 2. Êı¾İ²ã£ºGameplayTag
+## 2. è¡Œä¸ºå±‚ï¼šGameplayEffect (GE)
 
-### 2.1 Tag ÊÇ GAS µÄ"Í¨ÓÃÓïÑÔ"
+### 2.1 GE çš„ä¸‰ç§ Duration
 
-Tag ´®ÆğÁËËùÓĞÄ£¿é£º
-- **Ability**£º`AbilityTags` / `ActivationOwnedTags` / `BlockedTags` / `RequiredTags`
-- **Effect**£º`GrantedTags` / `OngoingTagRequirements`
-- **AnimBP**£ºÍ¨¹ı `FGameplayTagBlueprintPropertyMap` °Ñ Tag Ó³Éä³É bool
-- **Cue**£º`GameplayCue.XXX` ¶¨Î»ÌØĞ§
+| ç±»å‹ | è¡Œä¸º | å…¸å‹ç”¨é€” |
+|------|------|----------|
+| `Instant` | ç«‹åˆ»æ”¹ BaseValueï¼Œä¸ç•™ Modifier | ä¼¤å®³ã€å›è¡€ã€åˆå§‹åŒ–å±æ€§ |
+| `Duration` | æŒç»­ N ç§’ï¼ŒæœŸé—´æŒ‚ Modifier | Buffã€Debuff |
+| `Infinite` | æ°¸ä¹…æŒ‚ Modifierï¼Œç›´åˆ°æ‰‹åŠ¨ç§»é™¤ | è£…å¤‡åŠ æˆã€å…‰ç¯ |
+| + `Period` | æ¯éš” X ç§’è§¦å‘ä¸€æ¬¡ Instant | DOTã€HOT |
 
-### 2.2 ÈıÖÖ´ò Tag µÄ·½Ê½
+### 2.2 Magnitude è®¡ç®—å…¬å¼
 
-| ·½Ê½ | ºÎÊ±¼Ó / ÒÆ | ÍøÂçÍ¬²½ |
-|------|-------------|----------|
-| `ActivationOwnedTags`£¨C++ Ä¬ÈÏÖµ£© | Ability ¼¤»î/½áÊø×Ô¶¯ | ? ×Ô¶¯ |
-| `AddLooseGameplayTag` | ÊÖ¶¯¿ØÖÆ | ? ²»Í¬²½ |
-| `AddReplicatedLooseGameplayTag` | ÊÖ¶¯¿ØÖÆ | ? Í¬²½ |
+```
+Final = (CoefficientBase + PreMul) * Coefficient + PostMul
+```
 
-?? **CDO ¸²¸Ç¿Ó**£ºC++ ÀïÉèÁË `ActivationOwnedTags`£¬À¶Í¼×ÓÀàµÄ Class Defaults Ãæ°å»á**¸²¸Ç**Ëü£¬ÒªÃ´À¶Í¼ÀïÒ²¼ÓÒ»±é£¬ÒªÃ´×ß Loose Tag¡£
+å››ç§ Magnitude ç±»å‹ï¼š
+- **ScalableFloat**ï¼šæ›²çº¿è¡¨ï¼ŒæŒ‰ç­‰çº§ç¼©æ”¾
+- **AttributeBased**ï¼šåŸºäºå…¶ä»–å±æ€§ç®—ï¼ˆæ”»å‡»åŠ› Ã— 1.5ï¼‰
+- **CustomCalculation**ï¼šè‡ªå®šä¹‰ç±»ï¼ˆ**MMC** / **ExecCalc**ï¼Œè¯¦è§ Day03ï¼‰
+- **SetByCaller**ï¼ˆæœ€å¸¸ç”¨ï¼‰ï¼šè¿è¡Œæ—¶å¡æ•°å€¼
 
-### 2.3 Native Tag ÍÆ¼öĞ´·¨
+### 2.3 SetByCaller ä¸‰æ­¥èµ°
+
+```cpp
+// 1. æ‹¿åˆ° SpecHandle
+FGameplayEffectSpecHandle Spec =
+    Source->MakeOutgoingSpec(DamageGE, 1.f, Source->MakeEffectContext());
+
+// 2. å¡æ•°å€¼
+UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(
+    Spec, GASTags::Data_Damage, DamageAmount);
+
+// 3. Apply
+Source->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), Target);
+```
+
+GE èµ„äº§é‡Œ Modifier é…ï¼š`Magnitude Calculation Type = SetByCaller`ï¼Œ`Data Tag = Data.Damage`ã€‚
+
+### 2.4 GE ä¸Šçš„ Tagï¼ˆTag åœ¨ GE é‡Œçš„å«ä¹‰ï¼‰
+
+| å­—æ®µ | ä½œç”¨ |
+|------|------|
+| `Asset Tags` | æ ‡è¯† GE è‡ªå·±ï¼ˆç”¨äº"æˆ‘æœ‰æ²¡æœ‰è¿™æ¡ GE" æŸ¥è¯¢ï¼‰ |
+| `Granted Tags` | GE æ¿€æ´»æœŸé—´ï¼ŒOwner è‡ªåŠ¨è·å¾—è¿™äº› Tagï¼ˆè‡ªåŠ¨å¤åˆ¶ï¼‰ |
+| `Ongoing Tag Requirements` | Target å¿…é¡»æœ‰/ä¸èƒ½æœ‰çš„ Tagï¼Œå¦åˆ™ Modifier ä¸ç”Ÿæ•ˆ |
+| `Application Tag Requirements` | Apply æ—¶çš„å‡†å…¥æ¡ä»¶ |
+| `Removal Tag Requirements` | è¢«å¼ºåˆ¶ç§»é™¤çš„æ¡ä»¶ |
+
+> ğŸ’¡ å®æˆ˜å¸¸ç”¨ï¼šç”¨ Infinite GE çš„ `Granted Tags` è¡¨è¾¾"é˜¶æ®µçŠ¶æ€"ï¼ˆDay02 è¡¥ä¸ A æ–¹æ¡ˆ Bï¼‰â€”â€”Tag è‡ªåŠ¨åŒæ­¥ã€è‡ªåŠ¨æ¸…ç†ã€‚
+
+---
+
+## 3. è¡Œä¸ºå±‚ï¼šGameplayAbility (GA)
+
+### 3.1 ç”Ÿå‘½å‘¨æœŸ
+
+```
+CanActivate â†’ ActivateAbility â†’ [AbilityTask ç­‰å¾…] â†’ CommitAbility â†’ EndAbility
+                     â†“                                                  â†‘
+                  å¤±è´¥ / å–æ¶ˆ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+```
+
+| é’©å­ | ç”¨é€” |
+|------|------|
+| `CanActivateAbility` | è‡ªå®šä¹‰é‡Šæ”¾æ¡ä»¶ |
+| `ActivateAbility` | ä¸»é€»è¾‘å…¥å£ |
+| `CommitAbility` | çœŸæ­£æ‰£ Cost / å¯åŠ¨ CD |
+| `EndAbility` | æ¸…ç†ï¼ˆç§» Tagã€åœ Taskï¼‰ |
+| `CancelAbility` | è¢«ä¸­æ–­ |
+
+### 3.2 InstancingPolicyï¼ˆå®ä¾‹ç­–ç•¥ï¼‰
+
+| ç­–ç•¥ | è¯´æ˜ | å…¸å‹ |
+|------|------|------|
+| `NonInstanced` | å…¨å±€å…±äº«ä¸€ä¸ª CDO | æç®€ã€æ— çŠ¶æ€æŠ€èƒ½ |
+| `InstancedPerActor` â­ | æ¯ä¸ª Actor ä¸€ä¸ªå®ä¾‹ | **å¤§å¤šæ•°æƒ…å†µ** |
+| `InstancedPerExecution` | æ¯æ¬¡æ¿€æ´»ä¸€ä¸ªå®ä¾‹ | å¤šæ¬¡å¹¶å‘é‡Šæ”¾ |
+
+### 3.3 NetExecutionPolicyï¼ˆç½‘ç»œç­–ç•¥ï¼‰
+
+| ç­–ç•¥ | å«ä¹‰ | åœºæ™¯ |
+|------|------|------|
+| `LocalOnly` | ä»…æœ¬åœ° | UIã€çº¯è¡¨ç° |
+| `LocalPredicted` â­ | å®¢æˆ·ç«¯é¢„æµ‹ + æœåŠ¡å™¨æ ¡éªŒ | å¤§å¤šæ•°ä¸»åŠ¨æŠ€èƒ½ |
+| `ServerInitiated` | æœåŠ¡å™¨å‘èµ· | è¢«åŠ¨è§¦å‘ |
+| `ServerOnly` | ä»…æœåŠ¡å™¨ | æ‰£è¡€ã€ç»™ Buff |
+
+âš ï¸ `BlueprintAuthorityOnly` èŠ‚ç‚¹åœ¨ `LocalPredicted` å®¢æˆ·ç«¯ä¼šé™é»˜å¤±è´¥ï¼Œæ‰£è¡€èµ°æ ‡å‡† ASC æ¥å£ã€‚
+
+### 3.4 Cost / Cooldown ä¹Ÿæ˜¯ GE
+
+- **Cost GE**ï¼šInstantï¼Œæ‰£è“
+- **Cooldown GE**ï¼šDurationï¼Œç»™ä¸€ä¸ª `Cooldown.XXX` Tagï¼ŒCanActivate æ£€æŸ¥è¿™ä¸ª Tag
+
+### 3.5 GA ä¸Šçš„ Tagï¼ˆTag åœ¨ GA é‡Œçš„å«ä¹‰ï¼‰
+
+| å­—æ®µ | ä½œç”¨ |
+|------|------|
+| `AbilityTags` | æ ‡è¯†æŠ€èƒ½æœ¬èº«ï¼ˆ"æˆ‘æ˜¯ç«çƒæœ¯"ï¼‰ |
+| `ActivationOwnedTags` | æ¿€æ´»æœŸé—´ Owner è·å¾—çš„ Tagï¼ˆè‡ªåŠ¨åŠ /è‡ªåŠ¨ç§»ï¼‰ |
+| `ActivationBlockedTags` | Owner æœ‰è¿™äº› Tag æ—¶ä¸èƒ½é‡Šæ”¾ï¼ˆçœ©æ™•ã€æ²‰é»˜ï¼‰ |
+| `ActivationRequiredTags` | Owner å¿…é¡»æœ‰è¿™äº› Tag æ‰èƒ½é‡Šæ”¾ |
+| `BlockAbilitiesWithTag` | æ¿€æ´»æœŸé—´ï¼Œå±è”½å…¶ä»–å¸¦è¿™äº› Tag çš„æŠ€èƒ½ |
+| `CancelAbilitiesWithTag` | æ¿€æ´»æ—¶ï¼Œå–æ¶ˆå…¶ä»–å¸¦è¿™äº› Tag çš„æŠ€èƒ½ |
+| `SourceRequired/BlockedTags` | æ¥æº Actor çš„ Tag å‡†å…¥ |
+| `TargetRequired/BlockedTags` | ç›®æ ‡ Actor çš„ Tag å‡†å…¥ |
+
+âš ï¸ **CDO è¦†ç›–å‘**ï¼šC++ é‡Œè®¾äº† `ActivationOwnedTags`ï¼Œè“å›¾å­ç±»çš„ Class Defaults é¢æ¿ä¼š**è¦†ç›–**å®ƒï¼Œè¦ä¹ˆè“å›¾é‡Œä¹ŸåŠ ä¸€éï¼Œè¦ä¹ˆèµ° Loose Tagã€‚
+
+âš ï¸ **ç²’åº¦é”™ä½å‘**ï¼ˆDay02 è¡¥ä¸ Aï¼‰ï¼š`ActivationOwnedTags` æ˜¯"æ•´ä¸ª Ability æ´»ç€"çš„ç²—ç²’åº¦å¼€å…³ã€‚è¡¨è¾¾"è“„åŠ›ä¸­â†’é‡Šæ”¾ä¸­â†’ä½™éŸµ"è¿™ç§**é˜¶æ®µ**è¦ç”¨ `AddLooseGameplayTag` æˆ– Infinite GE åŒ…è£¹ã€‚
+
+### 3.6 Native Tag æ¨èå†™æ³•
 
 ```cpp
 // GASLearnGameplayTags.h
@@ -122,130 +219,45 @@ namespace GASTags
 }
 ```
 
-ºÃ´¦£º±àÒëÆÚ¼ì²é¡¢IDE Ìø×ª¡¢²»ÅÂÆ´´í¡£
+å¥½å¤„ï¼šç¼–è¯‘æœŸæ£€æŸ¥ã€IDE è·³è½¬ã€ä¸æ€•æ‹¼é”™ã€‚
 
 ---
 
-## 3. ĞĞÎª²ã£ºGameplayEffect (GE)
+## 4. è¡Œä¸ºå±‚ï¼šAbilityTask
 
-### 3.1 GE µÄÈıÖÖ Duration
+### 4.1 å¸¸ç”¨ Task
 
-| ÀàĞÍ | ĞĞÎª | µäĞÍÓÃÍ¾ |
-|------|------|----------|
-| `Instant` | Á¢¿Ì¸Ä BaseValue£¬²»Áô Modifier | ÉËº¦¡¢»ØÑª¡¢³õÊ¼»¯ÊôĞÔ |
-| `Duration` | ³ÖĞø N Ãë£¬ÆÚ¼ä¹Ò Modifier | Buff¡¢Debuff |
-| `Infinite` | ÓÀ¾Ã¹Ò Modifier£¬Ö±µ½ÊÖ¶¯ÒÆ³ı | ×°±¸¼Ó³É¡¢¹â»· |
-| + `Period` | Ã¿¸ô X Ãë´¥·¢Ò»´Î Instant | DOT¡¢HOT |
-
-### 3.2 Magnitude ¼ÆËã¹«Ê½
-
-```
-Final = (CoefficientBase + PreMul) * Coefficient + PostMul
-```
-
-ËÄÖÖ Magnitude ÀàĞÍ£º
-- **ScalableFloat**£ºÇúÏß±í£¬°´µÈ¼¶Ëõ·Å
-- **AttributeBased**£º»ùÓÚÆäËûÊôĞÔËã£¨¹¥»÷Á¦ ¡Á 1.5£©
-- **CustomCalculation**£º×Ô¶¨ÒåÀà£¨MMC/ExecCalc£©
-- **SetByCaller** ?£ºÔËĞĞÊ±ÈûÊıÖµ£¨×î³£ÓÃ£©
-
-### 3.3 SetByCaller Èı²½×ß
-
-```cpp
-// 1. ÄÃµ½ SpecHandle
-FGameplayEffectSpecHandle Spec =
-    Source->MakeOutgoingSpec(DamageGE, 1.f, Source->MakeEffectContext());
-
-// 2. ÈûÊıÖµ
-UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(
-    Spec, GASTags::Data_Damage, DamageAmount);
-
-// 3. Apply
-Source->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), Target);
-```
-
-GE ×Ê²úÀï Modifier Åä£º`Magnitude Calculation Type = SetByCaller`£¬`Data Tag = Data.Damage`¡£
-
----
-
-## 4. ĞĞÎª²ã£ºGameplayAbility (GA)
-
-### 4.1 ÉúÃüÖÜÆÚ
-
-```
-CanActivate ¡ú ActivateAbility ¡ú [AbilityTask µÈ´ı] ¡ú CommitAbility ¡ú EndAbility
-                     ¡ı                                                  ¡ü
-                  Ê§°Ü / È¡Ïû ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-```
-
-| ¹³×Ó | ÓÃÍ¾ |
+| Task | ä½œç”¨ |
 |------|------|
-| `CanActivateAbility` | ×Ô¶¨ÒåÊÍ·ÅÌõ¼ş |
-| `ActivateAbility` | Ö÷Âß¼­Èë¿Ú |
-| `CommitAbility` | ÕæÕı¿Û Cost / Æô¶¯ CD |
-| `EndAbility` | ÇåÀí£¨ÒÆ Tag¡¢Í£ Task£© |
-| `CancelAbility` | ±»ÖĞ¶Ï |
+| `WaitInputPress / Release` | ç­‰è¾“å…¥ï¼ˆè“„åŠ›æ¾æ‰‹ï¼‰ |
+| `WaitGameplayEvent` | ç­‰äº‹ä»¶ï¼ˆåŠ¨ç”»é€šçŸ¥è§¦å‘ï¼‰ |
+| `PlayMontageAndWait` | æ’­ Montage ç›‘å¬ç»“æŸ |
+| `WaitDelay` | ç­‰æ—¶é—´ |
+| `WaitTargetData` | ç­‰ç›®æ ‡é€‰æ‹©ï¼ˆç‚¹é€‰ã€AOEï¼‰ |
+| `WaitGameplayTagAdded/Removed` | ç­‰ Tag å˜åŒ– |
+| `WaitAttributeChange` | ç­‰å±æ€§å˜åŒ–ï¼ˆHP < 30% è§¦å‘ï¼‰ |
 
-### 4.2 InstancingPolicy£¨ÊµÀı²ßÂÔ£©
+### 4.2 Task é»„é‡‘æ³•åˆ™
 
-| ²ßÂÔ | ËµÃ÷ | µäĞÍ |
-|------|------|------|
-| `NonInstanced` | È«¾Ö¹²ÏíÒ»¸ö CDO | ¼«¼ò¡¢ÎŞ×´Ì¬¼¼ÄÜ |
-| `InstancedPerActor` ? | Ã¿¸ö Actor Ò»¸öÊµÀı | **´ó¶àÊıÇé¿ö** |
-| `InstancedPerExecution` | Ã¿´Î¼¤»îÒ»¸öÊµÀı | ¶à´Î²¢·¢ÊÍ·Å |
+> **ä¸€ä¸ª Ability åŒä¸€æ—¶åˆ»åªæŒ‚ä¸€ä¸ªä¸»çº¿ Task**ï¼Œ`OnCompleted / OnCancelled / OnInterrupted` ä¸‰ä¸ªå‡ºå£éƒ½è¦æ¥åˆ° `EndAbility`ï¼Œå¦åˆ™ Ability ä¼šå¡æ­»ã€‚
 
-### 4.3 NetExecutionPolicy£¨ÍøÂç²ßÂÔ£©
+### 4.3 PlayMontageAndWait ä¸èƒ½å¾ªç¯
 
-| ²ßÂÔ | º¬Òå | ³¡¾° |
-|------|------|------|
-| `LocalOnly` | ½ö±¾µØ | UI¡¢´¿±íÏÖ |
-| `LocalPredicted` ? | ¿Í»§¶ËÔ¤²â + ·şÎñÆ÷Ğ£Ñé | ´ó¶àÊıÖ÷¶¯¼¼ÄÜ |
-| `ServerInitiated` | ·şÎñÆ÷·¢Æğ | ±»¶¯´¥·¢ |
-| `ServerOnly` | ½ö·şÎñÆ÷ | ¿ÛÑª¡¢¸ø Buff |
-
-? `BlueprintAuthorityOnly` ½ÚµãÔÚ `LocalPredicted` ¿Í»§¶Ë»á¾²Ä¬Ê§°Ü£¬¿ÛÑª×ß±ê×¼ ASC ½Ó¿Ú¡£
-
-### 4.4 Cost / Cooldown Ò²ÊÇ GE
-
-- **Cost GE**£ºInstant£¬¿ÛÀ¶
-- **Cooldown GE**£ºDuration£¬¸øÒ»¸ö `Cooldown.XXX` Tag£¬CanActivate ¼ì²éÕâ¸ö Tag
+è¯¦è§ Day01 å¡ç‰‡ 4ï¼šå¾ªç¯åŠ¨ç”»èµ° **Tag é©±åŠ¨ AnimBP çŠ¶æ€æœº**ï¼Œä¸è¦èµ° Montageã€‚
 
 ---
 
-## 5. ĞĞÎª²ã£ºAbilityTask
+## 5. è¡¨ç°å±‚ï¼ˆä¸€ï¼‰ï¼šAnimation è”åŠ¨
 
-### 5.1 ³£ÓÃ Task
+### 5.1 ä¸‰ç§åŠ¨ç”»é©±åŠ¨æ–¹å¼
 
-| Task | ×÷ÓÃ |
-|------|------|
-| `WaitInputPress / Release` | µÈÊäÈë£¨ĞîÁ¦ËÉÊÖ£© |
-| `WaitGameplayEvent` | µÈÊÂ¼ş£¨¶¯»­Í¨Öª´¥·¢£© |
-| `PlayMontageAndWait` | ²¥ Montage ¼àÌı½áÊø |
-| `WaitDelay` | µÈÊ±¼ä |
-| `WaitTargetData` | µÈÄ¿±êÑ¡Ôñ |
-| `WaitGameplayTagAdded/Removed` | µÈ Tag ±ä»¯ |
-
-### 5.2 Task »Æ½ğ·¨Ôò
-
-> **Ò»¸ö Ability Í¬Ò»Ê±¿ÌÖ»¹ÒÒ»¸öÖ÷Ïß Task**£¬`OnCompleted / OnCancelled / OnInterrupted` Èı¸ö³ö¿Ú¶¼Òª½Óµ½ `EndAbility`£¬·ñÔò Ability »á¿¨ËÀ¡£
-
-### 5.3 PlayMontageAndWait ²»ÄÜÑ­»·
-
-Ïê¼û Day01 ¿¨Æ¬ 4£ºÑ­»·¶¯»­×ß **Tag Çı¶¯ AnimBP ×´Ì¬»ú**£¬²»Òª×ß Montage¡£
-
----
-
-## 6. ±íÏÖ²ã£ºAnimation Áª¶¯
-
-### 6.1 ÈıÖÖ¶¯»­Çı¶¯·½Ê½
-
-| ·½Ê½ | ÊÊÓÃ | ÌØµã |
+| æ–¹å¼ | é€‚ç”¨ | ç‰¹ç‚¹ |
 |------|------|------|
-| **Montage**£¨Ò»´ÎĞÔ£© | ¹¥»÷¡¢Ê©·¨¶¯×÷ | ÓÃ `PlayMontageAndWait`£¬¼àÌı `OnCompleted` |
-| **Tag Çı¶¯×´Ì¬»ú** ? | ĞîÁ¦¡¢±¼ÅÜ¡¢°ÔÌå | "×´Ì¬"ÓïÒå£¬²»ÊÇ"¶¯×÷" |
-| **AnimNotify ¡ú GameplayEvent** | ¶¯»­¹Ø¼üÖ¡´¥·¢Âß¼­ | ±ÈÈç»Ó½£µ½Ò»°ëÊ±Éú³ÉÅĞ¶¨ºĞ |
+| **Montage**ï¼ˆä¸€æ¬¡æ€§ï¼‰ | æ”»å‡»ã€æ–½æ³•åŠ¨ä½œ | ç”¨ `PlayMontageAndWait`ï¼Œç›‘å¬ `OnCompleted` |
+| **Tag é©±åŠ¨çŠ¶æ€æœº** â­ | è“„åŠ›ã€å¥”è·‘ã€éœ¸ä½“ | "çŠ¶æ€"è¯­ä¹‰ï¼Œä¸æ˜¯"åŠ¨ä½œ" |
+| **AnimNotify â†’ GameplayEvent** | åŠ¨ç”»å…³é”®å¸§è§¦å‘é€»è¾‘ | æ¯”å¦‚æŒ¥å‰‘åˆ°ä¸€åŠæ—¶ç”Ÿæˆåˆ¤å®šç›’ |
 
-### 6.2 Tag ¡ú AnimBP ÇÅ½Ó£¨ÖØÒª£©
+### 5.2 Tag â†’ AnimBP æ¡¥æ¥
 
 ```cpp
 // AnimInstance.h
@@ -259,49 +271,92 @@ if (auto* ASI = Cast<IAbilitySystemInterface>(TryGetPawnOwner()))
 }
 ```
 
-È»ºóÔÚ AnimBP Class Defaults Àï°Ñ `State.Charging` Ó³Éäµ½ bool ±äÁ¿ `bIsCharging`£¬×´Ì¬»ú Transition Ö±½ÓÓÃÕâ¸ö bool¡£
+ç„¶ååœ¨ AnimBP Class Defaults é‡ŒæŠŠ `State.Charging` æ˜ å°„åˆ° bool å˜é‡ `bIsCharging`ï¼ŒçŠ¶æ€æœº Transition ç›´æ¥ç”¨è¿™ä¸ª boolã€‚
 
-? Èç¹ûÏëÈÆ¹ı PropertyMap£¬×´Ì¬»ú Transition ÀïÓÃ**´¿º¯Êı°æ**£º
+ğŸ’¡ å¦‚æœæƒ³ç»•è¿‡ PropertyMapï¼ŒçŠ¶æ€æœº Transition é‡Œç”¨**çº¯å‡½æ•°ç‰ˆ**ï¼š
 ```
 AbilitySystemBlueprintLibrary::HasMatchingGameplayTag(ASC, State.Charging)
 ```
 
-### 6.3 ×´Ì¬»ú Transition µ¥/Ë«Ïò
+### 5.3 çŠ¶æ€æœº Transition å•/åŒå‘
 
-- Ò»ÌõÏßÖ»ÄÜµ¥Ïò£¬ĞèÒªË«Ïò»­Á½Ìõ
-- ¶àÈë¶à³öÓÃ **Conduit ½Úµã**£¨ÁâĞÎ£©
+- ä¸€æ¡çº¿åªèƒ½å•å‘ï¼Œéœ€è¦åŒå‘ç”»ä¸¤æ¡
+- å¤šå…¥å¤šå‡ºç”¨ **Conduit èŠ‚ç‚¹**ï¼ˆè±å½¢ï¼‰
 
----
+### 5.4 AnimNotify â†’ GameplayEvent
 
-## 7. ±íÏÖ²ã£ºGameplayCue£¨´ıÑ§£©
-
-> Day01 Ä©Î²µÄ"Ã÷ÈÕ¿ÉÑ¡·½Ïò B"¡£
-
-**ºËĞÄË¼Ïë**£º°Ñ VFX/SFX ´Ó Ability Àï½âñî³öÈ¥£¬Ability Ö»¸ºÔğ"º°Ò»Éù"£¬ÓÉ CueManager ¾ö¶¨²¥Ê²Ã´¡£
+åŠ¨ç”»å…³é”®å¸§ï¼ˆæŒ¥å‰‘åˆ°ä¸€åŠï¼‰è§¦å‘ Ability å†…é€»è¾‘ï¼š
 
 ```cpp
-// Ability Àï
-ASC->ExecuteGameplayCue(GASTags::Cue_Fireball_Hit, Context); // Ò»´ÎĞÔ
-ASC->AddGameplayCue(GASTags::Cue_Buff_Burning, Context);     // ³ÖĞø
-ASC->RemoveGameplayCue(GASTags::Cue_Buff_Burning);
+// Ability å†…
+UAbilityTask_WaitGameplayEvent* Task =
+    UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, GASTags::Event_Montage_Hit);
+Task->EventReceived.AddDynamic(this, &UMyAbility::OnHitFrame);
+Task->ReadyForActivation();
 ```
 
-Cue Notify ×Ê²ú¹ÒÔÚ `GameplayCue.XXX` Tag ÉÏ£¬×Ô¶¯ÏìÓ¦¡£
+åŠ¨ç”»é‡ŒåŠ  `AnimNotify_PlayMontageNotify` æˆ–è‡ªå®šä¹‰ Notify è°ƒ `SendGameplayEventToActor`ã€‚
 
 ---
 
-## 8. ÍøÂç²ã£ºReplication & Prediction
+## 6. è¡¨ç°å±‚ï¼ˆäºŒï¼‰ï¼šGameplayCue
 
-### 8.1 ASC ÔÚÄÄÀï
+> è¯¦è§ Day02 å…¨ç¯‡ã€‚
 
-| ½ÇÉ« | ASC ¹ÒÔÚÄÄ |
+### 6.1 æ ¸å¿ƒæ€æƒ³
+
+æŠŠ VFX/SFX ä» Ability é‡Œè§£è€¦å‡ºå»ï¼ŒAbility åªè´Ÿè´£"å–Šä¸€å£°"ï¼Œç”± CueManager å†³å®šæ’­ä»€ä¹ˆã€‚
+
+### 6.2 å››ç§è§¦å‘æ–¹å¼
+
+| è§¦å‘æ–¹å¼ | API | åœ¨ Notify é‡Œçš„å›è°ƒ | ç”¨é€” |
+|---------|-----|------------------|------|
+| **Execute**ï¼ˆä¸€æ¬¡æ€§ï¼‰ | `ExecuteGameplayCue` | `OnExecute` | çˆ†ç‚¸ã€å‘½ä¸­é—ªå…‰ã€é£˜å­— |
+| **Active**ï¼ˆé¦–æ¬¡æ¿€æ´»ï¼‰ | `AddGameplayCue`ï¼ˆé¦–æ¬¡ï¼‰| `OnActive` | Looping Cue ç¬¬ä¸€æ¬¡å‡ºç° |
+| **WhileActive**ï¼ˆåŒæ­¥åœ¨çº¿ï¼‰ | `AddGameplayCue`ï¼ˆå·²æ¿€æ´»ï¼‰| `WhileActive` | **ååŠ å…¥å®¢æˆ·ç«¯**é¦–æ¬¡çœ‹åˆ° |
+| **Remove**ï¼ˆç»“æŸï¼‰ | `RemoveGameplayCue` | `OnRemove` | Looping ç»“æŸæ¸…ç† |
+
+âš ï¸ Looping Cue å¿…é¡»**åŒæ—¶å®ç° `OnActive` å’Œ `WhileActive`**ï¼Œå¦åˆ™åè¿›ç©å®¶çœ‹ä¸åˆ°ã€‚
+
+### 6.3 ä¸‰æ¡è§¦å‘é€šè·¯
+
+| é€šè·¯ | é€‚ç”¨ |
+|------|------|
+| **ä»£ç ç›´è°ƒ**ï¼ˆ`ExecuteGameplayCue`ï¼‰ | ä¸´æ—¶è¡¨ç° |
+| **æŒ‚åœ¨ GE ä¸Š**ï¼ˆGE èµ„äº§ â†’ Display â†’ Gameplay Cuesï¼‰â­ | æ¨èï¼šé›¶èƒ¶æ°´ |
+| **GameplayCueManager é™æ€å…¥å£** | æ—  ASC ç›®æ ‡ï¼ˆå¢™å£ï¼‰ |
+
+### 6.4 Cue Tag å‘½åè§„èŒƒ
+
+```
+GameplayCue.<å¤§ç±»>.<å°ç±»>[.<å˜ä½“>]
+```
+
+âš ï¸ å‰ç¼€**å¿…é¡»æ˜¯** `GameplayCue.`ï¼Œå¦åˆ™ CueManager ä¸æ‰«æã€‚
+
+### 6.5 è·Ÿéšç©å®¶çš„å…³é”®
+
+Looping Cue è¦è·Ÿéšç©å®¶ï¼š
+1. Notify çˆ¶ç±»å¿…é¡»æ˜¯ **`GameplayCueNotify_Actor`**ï¼ˆä¸æ˜¯ Staticï¼‰
+2. `Attach to Owner = true`
+3. è°ƒç”¨æ—¶ä¼  `Params.Instigator = Avatar`
+
+è¯¦è§ Day02 è¡¥ä¸ Bã€‚
+
+---
+
+## 7. ç½‘ç»œå±‚ï¼šReplication & Prediction
+
+### 7.1 ASC åœ¨å“ªé‡Œ
+
+| è§’è‰² | ASC æŒ‚åœ¨å“ª |
 |------|-----------|
-| **Íæ¼Ò½ÇÉ«** | `PlayerState`£¨ÍÆ¼ö£¬ÖØÉú²»¶ª£© |
-| **AI / ¹ÖÎï** | `Pawn` / `Character` |
+| **ç©å®¶è§’è‰²** | `PlayerState`ï¼ˆæ¨èï¼Œé‡ç”Ÿä¸ä¸¢ï¼‰ |
+| **AI / æ€ªç‰©** | `Pawn` / `Character` |
 
-`MyCharacter` ÊµÏÖ `IAbilitySystemInterface::GetAbilitySystemComponent()` ÈÃ¿ò¼ÜÕÒµ½¡£
+`MyCharacter` å®ç° `IAbilitySystemInterface::GetAbilitySystemComponent()` è®©æ¡†æ¶æ‰¾åˆ°ã€‚
 
-### 8.2 ÊôĞÔ Replication
+### 7.2 å±æ€§ Replication
 
 ```cpp
 UPROPERTY(BlueprintReadOnly, ReplicatedUsing=OnRep_Health)
@@ -313,114 +368,185 @@ void OnRep_Health(const FGameplayAttributeData& Old)
 }
 ```
 
-`GetLifetimeReplicatedProps` ÀïÒ²ÒªµÇ¼Ç¡£
+`GetLifetimeReplicatedProps` é‡Œä¹Ÿè¦ç™»è®°ã€‚
 
-### 8.3 Prediction£¨Ô¤²â£©
+### 7.3 Predictionï¼ˆæ™®é€šé¢„æµ‹ï¼‰
 
-- `LocalPredicted` Ability ×Ô´øÔ¤²â
-- ¿Í»§¶ËÁ¢¿Ì²¥¶¯»­ / ¿Û±¾µØÑª
-- ·şÎñÆ÷Ğ£Ñéºó£¬´íÁË»á"»Ø¹ö"
-- **Ô¤²â´°¿Ú**£º`CommitAbility` Ö®Ç°
-- **²»¿ÉÔ¤²âµÄÊÂ**£ºËæ»úÊı¡¢ÒÀÀµ·şÎñÆ÷×´Ì¬µÄÅĞ¶¨
+- `LocalPredicted` Ability è‡ªå¸¦é¢„æµ‹
+- å®¢æˆ·ç«¯ç«‹åˆ»æ’­åŠ¨ç”» / æ‰£æœ¬åœ°è¡€
+- æœåŠ¡å™¨æ ¡éªŒåï¼Œé”™äº†ä¼š"å›æ»š"
+- **é¢„æµ‹çª—å£**ï¼š`CommitAbility` ä¹‹å‰
+- **ä¸å¯é¢„æµ‹çš„äº‹**ï¼šéšæœºæ•°ã€ä¾èµ–æœåŠ¡å™¨çŠ¶æ€çš„åˆ¤å®š
+
+### 7.4 Scoped Predictionï¼ˆä½œç”¨åŸŸé¢„æµ‹ï¼‰â­
+
+æ™®é€š Prediction è§£å†³"å®¢æˆ·ç«¯å…ˆåŠ¨æ‰‹"çš„é—®é¢˜ï¼Œ**Scoped Prediction** è§£å†³"å®¢æˆ·ç«¯å‘èµ·çš„å‰¯ä½œç”¨å¦‚ä½•è¢«æœåŠ¡å™¨è®¤å¯ã€ä¸”èƒ½åœ¨æ ¡éªŒå¤±è´¥æ—¶æ•´ä½“å›æ»š"ã€‚
+
+| æ¦‚å¿µ | è§£é‡Š |
+|------|------|
+| `FPredictionKey` | é¢„æµ‹ä¼šè¯çš„"ç¥¨å·"ï¼Œæ ‡è¯†ä¸€æ®µé¢„æµ‹çª—å£ |
+| `ScopedPredictionWindow` | C++ é‡Œ RAII é£æ ¼çš„ä½œç”¨åŸŸï¼Œä½œç”¨åŸŸå†… Apply çš„ GE / åŠ çš„ Tag éƒ½è¢«è¿™æŠŠ Key ç®¡ |
+| **å›æ»š** | æœåŠ¡å™¨æ‹’ç» â†’ æ•´ä¸ª Scope å†…çš„å‰¯ä½œç”¨å…¨éƒ¨æ’¤é”€ |
+
+**å…¸å‹åœºæ™¯**ï¼šæŠ€èƒ½ A åœ¨å®¢æˆ·ç«¯é¢„æµ‹é‡Œ `Apply GE_Slow â†’ Slow Buff ç«‹åˆ»ç”Ÿæ•ˆ â†’ æœåŠ¡å™¨ç®—äº†ä¸€éå‘ç° A æ—©å°±æ­»äº† â†’ Slow Buff è‡ªåŠ¨æ’¤é”€**ï¼Œä¸éœ€è¦å†™ä¸€è¡Œå›æ»šä»£ç **ã€‚
+
+**å†™æ³•ï¼ˆåœ¨ GA é‡Œï¼‰**ï¼š
+```cpp
+// åœ¨ ActivateAbility å†…
+FScopedPredictionWindow PredictionWindow(GetAbilitySystemComponentFromActorInfo(),
+                                         CurrentActivationInfo.GetActivationPredictionKey());
+// è¿™ä¸€æ®µé‡Œ Apply çš„ GE éƒ½è¢« Key ç®¡
+```
+
+âš ï¸ **å¯é¢„æµ‹çš„å‰¯ä½œç”¨**ï¼šApply GEã€åŠ  Tagã€ç”Ÿæˆé¢„æµ‹ Spawn Actorã€‚  
+âš ï¸ **ä¸å¯é¢„æµ‹**ï¼šéšæœºæ•°ã€è¯»æœåŠ¡å™¨çŠ¶æ€åˆ¤å®šã€æ°¸ä¹… Spawnã€‚
+
+### 7.5 GA ä¹‹é—´çš„ Prediction åä½œ
+
+- GA-A `LocalPredicted`ï¼Œé‡Œé¢ç”¨ `WaitGameplayEvent` è§¦å‘ GA-B â†’ GA-B ä¹Ÿä¼šè‡ªåŠ¨è·å¾— A çš„ Prediction Key
+- è·¨ GA ä¼  Keyï¼š`SendGameplayEvent` æ—¶é™„å¸¦ `EventData.PredictionKey`
 
 ---
 
-## 9. ÕûÌåÊı¾İÁ÷£¨Ò»´ÎÍêÕûÉËº¦µÄÂÃ³Ì£©
+## 8. æ•´ä½“æ•°æ®æµï¼ˆä¸€æ¬¡å®Œæ•´ä¼¤å®³çš„æ—…ç¨‹ï¼‰
 
 ```
-Íæ¼Ò°´ÏÂ 1 ¼ü
-   ©¦
-   ¨‹
-[Input] ¡ú AbilitySystemComponent::TryActivateAbility
-   ©¦
-   ¨‹
-[Client]  GA_Fireball::ActivateAbility   ?©¤©¤ LocalPredicted
-   ©¦      ©À©¤ ¼Ó ActivationOwnedTags(State.Charging)
-   ©¦      ©À©¤ AnimBP ¼ì²âµ½ Tag ¡ú ½øÈëĞîÁ¦×´Ì¬»ú
-   ©¦      ©¸©¤ AbilityTask::WaitInputRelease
-   ©¦
-   ¨‹ (ËÉÊÖ)
-   ©À©¤ CommitAbility£¨¿ÛÀ¶¡¢CD£©
-   ©À©¤ SpawnActor(FireballProjectile)
-   ©¸©¤ EndAbility ¡ú ÒÆ³ı State.Charging Tag
-   ©¦
-   ¨‹
+ç©å®¶æŒ‰ä¸‹ 1 é”®
+   â”‚
+   â–¼
+[Input] â†’ AbilitySystemComponent::TryActivateAbility
+   â”‚
+   â–¼
+[Client]  GA_Fireball::ActivateAbility   â—„â”€â”€ LocalPredicted
+   â”‚      â”œâ”€ AddLooseGameplayTag(State.Charging)ï¼ˆé˜¶æ®µ Tagï¼‰
+   â”‚      â”œâ”€ AddGameplayCue(Cue.Fireball.Charging, Params)ï¼ˆè“„åŠ›å…‰ç¯ï¼‰
+   â”‚      â”œâ”€ AnimBP æ£€æµ‹åˆ° Tag â†’ è¿›å…¥è“„åŠ›çŠ¶æ€æœº
+   â”‚      â””â”€ AbilityTask::WaitInputRelease
+   â”‚
+   â–¼ (æ¾æ‰‹)
+   â”œâ”€ RemoveLooseGameplayTag(State.Charging)
+   â”œâ”€ RemoveGameplayCue(Cue.Fireball.Charging)
+   â”œâ”€ CommitAbilityï¼ˆæ‰£è“ã€CDï¼‰
+   â”œâ”€ SpawnActor(FireballProjectile)
+   â””â”€ EndAbility
+   â”‚
+   â–¼
 [Projectile] OnHit
-   ©¦
-   ¨‹
+   â”‚
+   â–¼
 MakeOutgoingSpec(GE_Damage) + AssignSetByCaller(Data.Damage, 50)
-   ©¦
-   ¨‹
+   â”‚
+   â–¼
 ApplyGameplayEffectSpecToTarget
-   ©¦
-   ¨‹
-[Target ASC] PreAttributeChange(Damage)
-             ¡ı
+   â”‚
+   â–¼
+[Target ASC] ExecCalc è®¡ç®—ï¼ˆæ”»å‡» Ã— ç³»æ•° - æŠ¤ç”²ï¼Œå«æš´å‡»ï¼‰
+             â†“
+             PreAttributeChange(Damage)
+             â†“
              PostGameplayEffectExecute:
                 Health -= Damage
                 SetDamage(0)
-   ©¦
-   ¨‹
-OnRep_Health ¡ú UI Ë¢ĞÂÑªÌõ
-ExecuteGameplayCue(Cue.Fireball.Hit) ¡ú VFX/SFX
+   â”‚
+   â–¼
+OnRep_Health â†’ UI åˆ·æ–°è¡€æ¡
+GE è‡ªå¸¦çš„ Cue.Character.Hit â†’ é—ªçº¢é£˜å­—ï¼ˆé›¶èƒ¶æ°´ï¼‰
 ```
 
-°ÑÕâÕÅÍ¼Ó¡ÔÚÄÔ×ÓÀï£¬ËùÓĞ GAS ÎÊÌâ¶¼ÄÜ¶¨Î»µ½"ÊÇÄÄÒ»¶Î³öÎÊÌâ"¡£
+æŠŠè¿™å¼ å›¾å°åœ¨è„‘å­é‡Œï¼Œæ‰€æœ‰ GAS é—®é¢˜éƒ½èƒ½å®šä½åˆ°"æ˜¯å“ªä¸€æ®µå‡ºé—®é¢˜"ã€‚
 
 ---
 
-## 10. Ñ§Ï°Â·ÏßÍ¼
+## 9. ASC é«˜é¢‘ API é€ŸæŸ¥
+
+| API | ç”¨é€” |
+|-----|------|
+| `GetGameplayAttributeValue(Attr, bFound)` | è¯»å±æ€§ CurrentValue |
+| `GetNumericAttribute(Attr)` | è¯» BaseValueï¼ˆä¸èµ° Modifierï¼‰ |
+| `HasMatchingGameplayTag(Tag)` | æ˜¯å¦æ‹¥æœ‰æŸ Tag |
+| `HasAnyMatchingGameplayTags(Container)` | æ˜¯å¦æ‹¥æœ‰ä»»æ„ |
+| `HasAllMatchingGameplayTags(Container)` | æ˜¯å¦å…¨éƒ¨æ‹¥æœ‰ |
+| `AddLooseGameplayTag / Remove...` | æ‰‹åŠ¨ Tagï¼ˆæœ¬åœ°ï¼‰ |
+| `AddReplicatedLooseGameplayTag / Remove...` | æ‰‹åŠ¨ Tagï¼ˆåŒæ­¥ï¼‰ |
+| `TryActivateAbilityByTag / ByClass` | æ‰‹åŠ¨æ¿€æ´»æŠ€èƒ½ |
+| `CancelAbilities(WithTags, WithoutTags, Ignore)` | æ‰¹é‡å–æ¶ˆ |
+| `MakeOutgoingSpec(GE, Level, Context)` | æ„é€  GE Spec |
+| `ApplyGameplayEffectSpecToSelf / ToTarget` | åº”ç”¨ GE |
+| `RemoveActiveGameplayEffect(Handle)` | æŒ‰ Handle ç§»é™¤ |
+| `GetActiveEffectsTimeRemaining(Query)` | æŸ¥ GE å‰©ä½™æ—¶é—´ï¼ˆCD UIï¼‰ |
+| `ExecuteGameplayCue / Add / Remove` | Cue è§¦å‘ |
+
+---
+
+## 10. è°ƒè¯•å·¥å…·ç®±
+
+| å·¥å…· / å‘½ä»¤ | ä½œç”¨ |
+|------------|------|
+| `showdebug abilitysystem` | åœ¨ PIE é‡Œå åŠ  ASC çŠ¶æ€ï¼ˆå±æ€§ã€æ¿€æ´»çš„ GEã€Tagã€Cueï¼‰ |
+| `AbilitySystem.DebugAbilityTags 1` | Tag å˜åŒ–æ‰“ Log |
+| `AbilitySystem.GameplayCue.PrintWarning 1` | Cue é™é»˜å¤±è´¥æ—¶æ‰“ Warning |
+| `gas dumpasc` *(éƒ¨åˆ†ç‰ˆæœ¬)* | æŠŠ ASC çŠ¶æ€ dump åˆ° Log |
+| `AbilitySystem.AlwaysConvertGESpecToGCParams 1` | Cue è°ƒè¯• |
+| ç¼–è¾‘å™¨ â†’ Window â†’ Developer Tools â†’ **Gameplay Debugger** | F1 æ‰“å¼€ï¼Œå¯è§†åŒ–æŠ€èƒ½/Cue/Tag |
+| `RefreshGameplayCueNotifyData()` | æ”¹å®Œ Cue Notify ä¸é‡å¯ PIE ä¹Ÿèƒ½ç”Ÿæ•ˆ |
+| æ–­ç‚¹ `UAbilitySystemComponent::ApplyGameplayEffectSpecToSelf` | çœ‹æ¯æ¡ GE è¿›å…¥æµç¨‹ |
+
+---
+
+## 11. å­¦ä¹ è·¯çº¿å›¾
 
 ```
-? ÒÑÑ§£º
-   ©À©¤ AttributeSet »ù´¡£¨Health/MaxHealth/Damage£©
-   ©À©¤ GE ÈıÖÖÀàĞÍ + SetByCaller
-   ©À©¤ Ability ÉúÃüÖÜÆÚ + LocalPredicted
-   ©À©¤ AbilityTask£¨PlayMontageAndWait / WaitInputRelease£©
-   ©À©¤ Tag Çı¶¯ AnimBP£¨ĞîÁ¦×´Ì¬»ú£©
-   ©¸©¤ Native Tag
+âœ… å·²å­¦ï¼š
+   â”œâ”€ AttributeSet åŸºç¡€ï¼ˆHealth/MaxHealth/Damageï¼‰
+   â”œâ”€ GE ä¸‰ç§ç±»å‹ + SetByCaller
+   â”œâ”€ Ability ç”Ÿå‘½å‘¨æœŸ + LocalPredicted
+   â”œâ”€ AbilityTaskï¼ˆPlayMontageAndWait / WaitInputReleaseï¼‰
+   â”œâ”€ Tag é©±åŠ¨ AnimBPï¼ˆè“„åŠ›çŠ¶æ€æœºï¼‰
+   â”œâ”€ Native Tag
+   â”œâ”€ GameplayCueï¼ˆBurst / Loopingï¼ŒDay02ï¼‰
+   â””â”€ é˜¶æ®µ Tag vs Ability Tagï¼ˆDay02 è¡¥ä¸ Aï¼‰
 
-? ½øĞĞÖĞ£º
-   ©À©¤ ActivationOwnedTags CDO ¸²¸ÇÅÅ²é
-   ©¸©¤ AnimBP ×´Ì¬»ú¾«ĞŞ
+ğŸ”œ è¿›è¡Œä¸­ï¼ˆDay03ï¼‰ï¼š
+   â””â”€ MMC / ExecCalcï¼šæš´å‡»ã€æŠ¤ç”²ã€å¸è¡€ã€ç­‰çº§ç¼©æ”¾
 
-? ÏÂÒ»²½½¨Òé£¨°´ÓÅÏÈ¼¶£©£º
-   1. GameplayCue£¨±íÏÖ²ã½âñî£©
-   2. MMC / ExecCalc£¨¸´ÔÓÉËº¦¹«Ê½£º±©»÷/»¤¼×/ÎüÑª£©
-   3. ¶àÈËÍøÂç×¨Ìâ£¨Prediction Key¡¢»Ø¹ö¡¢RPC£©
-   4. TargetData£¨AOE¡¢Ä¿±êÉ¸Ñ¡£©
-   5. AbilitySet / Loadout£¨¼¼ÄÜ×°ÅäÏµÍ³£©
+ğŸ“‹ ä¸‹ä¸€æ­¥ï¼ˆæŒ‰ä¼˜å…ˆçº§ï¼‰ï¼š
+   1. MMC / ExecCalcï¼ˆä¼¤å®³å…¬å¼æ˜¯å¤§å¤šæ•°æ¸¸æˆçš„åˆšéœ€ï¼‰   â† Day03
+   2. TargetDataï¼ˆAOEã€æ‰‡å½¢ã€ç›®æ ‡ç­›é€‰ï¼‰
+   3. AbilitySet / Loadoutï¼ˆæŠ€èƒ½è£…é…ç³»ç»Ÿï¼‰
+   4. å¤šäººç½‘ç»œä¸“é¢˜ï¼ˆPrediction Keyã€Scopedã€å›æ»šã€RPCï¼‰
+   5. é«˜çº§ä¸»é¢˜ï¼šDA æ•°æ®é©±åŠ¨ / GE èµ„äº§åˆå¹¶ / è°ƒè¯•å·¥å…·æ·±æŒ–
 ```
 
 ---
 
-## 11. ¹Ø¼üÎÄ¼şË÷Òı£¨Óë Day01 Í¬²½£©
+## 12. å…³é”®æ–‡ä»¶ç´¢å¼•
 
-| ÎÄ¼ş | ×÷ÓÃ |
+| æ–‡ä»¶ | ä½œç”¨ |
 |------|------|
-| `Source/MyProject/GASLearnAttributeSet.h/cpp` | ÊôĞÔ¼¯£¬HP/MaxHealth/Damage |
-| `Source/MyProject/UGA_Fireball.h/cpp` | »ğÇò¼¼ÄÜ£¨º¬ĞîÁ¦£© |
-| `Source/MyProject/AFireballProjectile.cpp` | µ¯µÀ£¬µ÷ SetByCaller |
-| `Source/MyProject/MyCharacter.h/cpp` | ÊµÏÖ IAbilitySystemInterface |
-| `Source/MyProject/MyAnimInstance.h/cpp` | AnimBP C++ »ùÀà |
-| `Source/MyProject/GASLearnGameplayTags.h/cpp` | Native Tag |
-| `Source/MyProject/MyProject.Build.cs` | Ä£¿éÒÀÀµ |
+| `Source/MyProject/GAS/GASLearnAttributeSet.h/cpp` | å±æ€§é›†ï¼ŒHP/MaxHealth/Damage |
+| `Source/MyProject/GAS/UGA_Fireball.h/cpp` | ç«çƒæŠ€èƒ½ï¼ˆå«è“„åŠ›ï¼‰ |
+| `Source/MyProject/CustomActor/AFireballProjectile.cpp` | å¼¹é“ï¼Œè°ƒ SetByCaller |
+| `Source/MyProject/MyCharacter.h/cpp` | å®ç° IAbilitySystemInterface |
+| `Source/MyProject/MyAnimInstance.h/cpp` | AnimBP C++ åŸºç±» |
+| `Source/MyProject/GAS/GASLearnGameplayTags.h/cpp` | Native Tag |
+| `Source/MyProject/MyProject.Build.cs` | æ¨¡å—ä¾èµ– |
 
 ---
 
-## 12. Ê¹ÓÃËµÃ÷£¨ÔõÃ´ÈÃ±Ê¼ÇÔ½¼ÇÔ½Á¬¹á£©
+## 13. ä½¿ç”¨è¯´æ˜ï¼ˆæ€ä¹ˆè®©ç¬”è®°è¶Šè®°è¶Šè¿è´¯ï¼‰
 
-**±Ê¼ÇÈı²ã½á¹¹**£º
+**ç¬”è®°ä¸‰å±‚ç»“æ„**ï¼š
 
 ```
-GASÑ§Ï°±Ê¼Ç_×Ü¸Ù.md       ¡û ±¾ÎÄ¼ş£¬ÌåÏµµØÍ¼£¨ºÜÉÙ¸Ä£¬ĞÂÖ÷ÌâÑ§Íê×·¼ÓÕÂ½Ú£©
-GASÑ§Ï°±Ê¼Ç_Day01.md      ¡û µ±ÌìËÙ²é + ²È¿Ó£¨Ã¿ÌìÒ»·İ£©
-GASÑ§Ï°±Ê¼Ç_Day02.md      ¡û ...
+GASå­¦ä¹ ç¬”è®°_æ€»çº².md       â† æœ¬æ–‡ä»¶ï¼Œä½“ç³»åœ°å›¾ï¼ˆå°‘æ”¹ï¼Œæ–°ä¸»é¢˜å­¦å®Œè¿½åŠ ç« èŠ‚ï¼‰
+GASå­¦ä¹ ç¬”è®°_Day01.md      â† å½“å¤©é€ŸæŸ¥ + è¸©å‘ï¼ˆæ¯å¤©ä¸€ä»½ï¼‰
+GASå­¦ä¹ ç¬”è®°_Day02.md      â† ...
+GASå­¦ä¹ ç¬”è®°_Day03.md      â† MMC / ExecCalc
 ```
 
-**ĞÂ»á»°¿ªÍ·¸ø AI µÄ"×îĞ¡ÉÏÏÂÎÄ"**£º
-1. `GASÑ§Ï°±Ê¼Ç_×Ü¸Ù.md` µÄ **0/9/10 ½Ú**£¨ĞÄÖÇÍ¼ + Êı¾İÁ÷ + Â·ÏßÍ¼£©
-2. ÉÏÒ»·İ Day ±Ê¼ÇµÄ **²È¿ÓËÙ²é±í + ¹Ø¼üÎÄ¼şË÷Òı**
-3. ½ñÌìÏëÑ§/Ïë½â¾öµÄÎÊÌâ
+**æ–°ä¼šè¯å¼€å¤´ç»™ AI çš„"æœ€å°ä¸Šä¸‹æ–‡"**ï¼š
+1. `GASå­¦ä¹ ç¬”è®°_æ€»çº².md` çš„ **0/8/11 èŠ‚**ï¼ˆå¿ƒæ™ºå›¾ + æ•°æ®æµ + è·¯çº¿å›¾ï¼‰
+2. ä¸Šä¸€ä»½ Day ç¬”è®°çš„ **è¸©å‘é€ŸæŸ¥è¡¨ + å…³é”®æ–‡ä»¶ç´¢å¼•**
+3. ä»Šå¤©æƒ³å­¦/æƒ³è§£å†³çš„é—®é¢˜
 
-ÕâÑù¼È²»¶ªÉÏÏÂÎÄ£¬ÓÖ²»»áÈû±¬ token¡£
+è¿™æ ·æ—¢ä¸ä¸¢ä¸Šä¸‹æ–‡ï¼Œåˆä¸ä¼šå¡çˆ† tokenã€‚

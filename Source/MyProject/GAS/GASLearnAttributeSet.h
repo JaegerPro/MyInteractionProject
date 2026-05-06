@@ -50,6 +50,25 @@ public:
     UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MaxMana)
     FGameplayAttributeData MaxMana;
     ATTRIBUTE_ACCESSORS(UGASLearnAttributeSet, MaxMana)
+        // ───────── 攻击力（Source 用） ─────────
+    UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_AttackPower)
+    FGameplayAttributeData AttackPower;
+    ATTRIBUTE_ACCESSORS(UGASLearnAttributeSet, AttackPower)
+
+        // ───────── 护甲（Target 用） ─────────
+    UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Armor)
+    FGameplayAttributeData Armor;
+    ATTRIBUTE_ACCESSORS(UGASLearnAttributeSet, Armor)
+        // ───────── 暴击率（0~1） ─────────
+    UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_CritChance)
+    FGameplayAttributeData CritChance;
+    ATTRIBUTE_ACCESSORS(UGASLearnAttributeSet, CritChance)
+
+        // ───────── 暴击倍率（默认 2.0） ─────────
+    UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_CritMultiplier)
+    FGameplayAttributeData CritMultiplier;
+    ATTRIBUTE_ACCESSORS(UGASLearnAttributeSet, CritMultiplier)
+
         // Effect 即将修改属性前调用（你有机会 Clamp 输入值）
     virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
@@ -68,4 +87,16 @@ protected:
 
     UFUNCTION()
     virtual void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana);
+    UFUNCTION()
+    virtual void OnRep_AttackPower(const FGameplayAttributeData& OldAttackPower);
+
+    UFUNCTION()
+    virtual void OnRep_Armor(const FGameplayAttributeData& OldArmor);
+    UFUNCTION()
+    virtual void OnRep_CritChance(const FGameplayAttributeData& Old);
+
+    UFUNCTION()
+    virtual void OnRep_CritMultiplier(const FGameplayAttributeData& Old);
+
+
 };

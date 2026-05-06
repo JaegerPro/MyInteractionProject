@@ -63,7 +63,6 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
             FGameplayEffectSpecHandle Spec = SourceASC->MakeOutgoingSpec(DamageEffectClass, /*Level=*/1.f, Ctx);
             if (Spec.IsValid())
             {
-                UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Spec, GASTags::Data_Damage, DamageAmount);
                 // SourceASC 对 TargetASC 应用伤害 —— 标准姿势
                 SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), TargetASC);
             }

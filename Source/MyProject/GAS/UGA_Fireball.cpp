@@ -85,7 +85,7 @@ void UGA_Fireball::OnInputReleased(float TimeHeld)
     }
 
     // 根据蓄力比算伤害：[BaseDamage, MaxDamage]
-    CachedChargedDamage = -FMath::Lerp(BaseDamage, MaxDamage, ChargeRatio);
+    CachedChargedDamage = FMath::Lerp(BaseDamage, MaxDamage, ChargeRatio);
 
     // 播释放动画
     if (ReleaseMontage)
@@ -160,7 +160,6 @@ void UGA_Fireball::SpawnFireball()
         Fireball->DamageEffectClass = DamageEffect;
         // 记录施法者 ASC，后面命中时制作 EffectContext 用
         Fireball->SourceASC = CachedActorInfo->AbilitySystemComponent.Get();
-        Fireball->DamageAmount = CachedChargedDamage;
     }
 }
 float UGA_Fireball::CalculateDamage() const

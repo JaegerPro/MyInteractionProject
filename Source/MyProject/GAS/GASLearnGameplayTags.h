@@ -21,8 +21,11 @@ namespace GASTags
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(Event_Fireball_Launch);
 
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(Data_Damage);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(Data_Heal);
+    
     //Cue
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(Cue_Fireball_Charging);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(Cue_Fireball_Explode);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(Cue_Character_Hit);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(Cue_Damage_Critical);
 }

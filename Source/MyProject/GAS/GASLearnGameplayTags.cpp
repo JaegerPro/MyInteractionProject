@@ -15,9 +15,10 @@ namespace GASTags
     UE_DEFINE_GAMEPLAY_TAG(Cooldown_Fireball, "Cooldown.Fireball");
 
     UE_DEFINE_GAMEPLAY_TAG(Data_Damage, "Data.Damage");
+    UE_DEFINE_GAMEPLAY_TAG(Data_Heal, "Data.Heal");
 
     UE_DEFINE_GAMEPLAY_TAG(Cue_Fireball_Charging, "GameplayCue.Fireball.Charging");
     UE_DEFINE_GAMEPLAY_TAG(Cue_Fireball_Explode, "GameplayCue.Fireball.Explode");
     UE_DEFINE_GAMEPLAY_TAG(Cue_Character_Hit, "GameplayCue.Character.Hit");
-    
+    UE_DEFINE_GAMEPLAY_TAG(Cue_Damage_Critical, "GameplayCue.Damage.Critical");
 }
