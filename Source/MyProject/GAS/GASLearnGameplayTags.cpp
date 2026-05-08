@@ -11,6 +11,9 @@ namespace GASTags
     UE_DEFINE_GAMEPLAY_TAG(State_Dead, "State.Dead");
     UE_DEFINE_GAMEPLAY_TAG(State_Stunned, "State.Stunned");
     UE_DEFINE_GAMEPLAY_TAG(State_Charging, "State.Charging");
+    UE_DEFINE_GAMEPLAY_TAG(State_Debuff_Stun, "State.Debuff.Stun");
+    UE_DEFINE_GAMEPLAY_TAG(State_Debuff_Burn, "State.Debuff.Burn");
+    UE_DEFINE_GAMEPLAY_TAG(State_Immune_Control, "State.Immune.Control");
 
     UE_DEFINE_GAMEPLAY_TAG(Cooldown_Fireball, "Cooldown.Fireball");
 

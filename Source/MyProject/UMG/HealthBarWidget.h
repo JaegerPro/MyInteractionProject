@@ -23,4 +23,9 @@ public:
     // C++ 统一入口，内部会调上面的 BIE
     UFUNCTION(BlueprintCallable, Category = "HealthBar")
     void SetHealthPercent(float CurrentHealth, float MaxHealth);
+    UFUNCTION(BlueprintImplementableEvent, Category = "Debuff")
+    void OnBurnChanged(int32 StackCount, float RemainingTime);
+
+    UFUNCTION(BlueprintCallable, Category = "Debuff")
+    void SetBurnInfo(int32 StackCount, float RemainingTime);
 };

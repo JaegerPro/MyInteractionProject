@@ -42,10 +42,23 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "GAS|Input")
 	TObjectPtr<class UInputAction> Ability1Action;
 	UPROPERTY(EditDefaultsOnly, Category = "GAS|Input")
+	TObjectPtr<class UInputAction> Ability2Action;
+	UPROPERTY(EditDefaultsOnly, Category = "GAS|Input")
 	TObjectPtr<class UInputAction> CancelAction;
+	// MyCharacter.h 的 protected 段加上
+	UPROPERTY(EditDefaultsOnly, Category = "GAS|Input")
+	TObjectPtr<class UInputAction> ConfirmAction;    // 新增：绑到 LMB
+
+	// 新增：触发 ASC 的 Local Confirm / Cancel
+	void OnConfirmPressed();
 	void OnAbility1Pressed();
 	void OnAbility1Released();
+	void OnAbility2Pressed();
+	void OnAbility2Released();
 	void OnCancelPressed();
+	UFUNCTION()
+	void OnStunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
 	virtual void GiveDefaultAbilities();
 	// 统一的初始化入口
 	virtual void InitAbilitySystem();
@@ -63,6 +76,7 @@ protected:
 	TObjectPtr<UHealthBarWidget> HealthBarWidget;
 
 	void RefreshHealthBar();
+	void OnBurnTagChanged(const FGameplayTag Tag, int32 NewCount);
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();

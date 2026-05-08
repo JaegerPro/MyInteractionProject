@@ -7,6 +7,7 @@
 #include "GAS/GASLearnGameplayTags.h"
 #include "GameplayTagContainer.h"
 #include "EnhancedInputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -59,14 +60,46 @@ void AMyCharacter::OnAbility1Released()
 		AbilitySystemComponent->AbilityLocalInputReleased(static_cast<int32>(EGASLearnAbilityInputID::Ability1));
 	}
 }
+void AMyCharacter::OnAbility2Pressed()
+{
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(EGASLearnAbilityInputID::Ability2));
+	}
+}
+
+void AMyCharacter::OnAbility2Released()
+{
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->AbilityLocalInputReleased(static_cast<int32>(EGASLearnAbilityInputID::Ability2));
+	}
+}
 void AMyCharacter::OnCancelPressed()
 {
 	if (!AbilitySystemComponent) return;
-
+	// 优先取消 Targeting
+	AbilitySystemComponent->LocalInputCancel();
 	// 取消所有带 Ability.Fireball 标签的 Ability
 	FGameplayTagContainer CancelTags(GASTags::Ability_Fireball);
 	AbilitySystemComponent->CancelAbilities(&CancelTags);
 }
+void AMyCharacter::OnStunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+	{
+		if (NewCount > 0)
+		{
+			MoveComp->StopMovementImmediately();
+			MoveComp->DisableMovement();
+		}
+		else
+		{
+			MoveComp->SetMovementMode(MOVE_Walking);
+		}
+	}
+}
+
 void AMyCharacter::GiveDefaultAbilities()
 {
 	// 只在服务器授予（Ability 会自动同步到客户端）
@@ -109,6 +142,10 @@ void AMyCharacter::InitAbilitySystem()
 			AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 				UGASLearnAttributeSet::GetMaxHealthAttribute())
 				.AddLambda([this](const FOnAttributeChangeData&) { RefreshHealthBar(); });
+			AbilitySystemComponent->RegisterGameplayTagEvent(GASTags::State_Debuff_Stun, EGameplayTagEventType::NewOrRemoved)
+				.AddUObject(this, &AMyCharacter::OnStunTagChanged);
+			AbilitySystemComponent->RegisterGameplayTagEvent(GASTags::State_Debuff_Burn, EGameplayTagEventType::AnyCountChange)
+				.AddUObject(this, &AMyCharacter::OnBurnTagChanged);
 			bInitAbilitySystem = true;
 		}
 		RefreshHealthBar();
@@ -128,6 +165,22 @@ void AMyCharacter::RefreshHealthBar()
 	HealthBarWidget->SetHealthPercent(
 		AttributeSet->GetHealth(),
 		AttributeSet->GetMaxHealth());
+}
+void AMyCharacter::OnBurnTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	if (!AbilitySystemComponent || !HealthBarWidget) return;
+
+	const FGameplayEffectQuery Query = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(FGameplayTagContainer(GASTags::State_Debuff_Burn));
+
+	float MaxRemain = 0.f;
+
+	TArray<float> Remains = AbilitySystemComponent->GetActiveEffectsTimeRemaining(Query);
+	for (float T : Remains)
+	{
+		MaxRemain = FMath::Max(MaxRemain, T);
+	}
+
+	HealthBarWidget->SetBurnInfo(NewCount, MaxRemain);
 }
 
 void AMyCharacter::ApplyInitialEffects()
@@ -189,10 +242,27 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 			EIC->BindAction(Ability1Action, ETriggerEvent::Started, this, &AMyCharacter::OnAbility1Pressed);
 			EIC->BindAction(Ability1Action, ETriggerEvent::Completed, this, &AMyCharacter::OnAbility1Released);
 		}
+		if (Ability2Action)
+		{
+			EIC->BindAction(Ability2Action, ETriggerEvent::Started, this, &AMyCharacter::OnAbility2Pressed);
+			EIC->BindAction(Ability2Action, ETriggerEvent::Completed, this, &AMyCharacter::OnAbility2Released);
+		}
 		if (CancelAction)
 		{
 			EIC->BindAction(CancelAction, ETriggerEvent::Started, this, &AMyCharacter::OnCancelPressed);
 		}
+		if (ConfirmAction)
+		{
+			EIC->BindAction(ConfirmAction, ETriggerEvent::Started, this, &AMyCharacter::OnConfirmPressed);
+		}
+	}
+}
+void AMyCharacter::OnConfirmPressed()
+{
+	if (AbilitySystemComponent)
+	{
+		// 这一行就是 Target Actor 在等的信号
+		AbilitySystemComponent->LocalInputConfirm();
 	}
 }
 

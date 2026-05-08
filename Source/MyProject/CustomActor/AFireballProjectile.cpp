@@ -41,16 +41,18 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
     if (!HasAuthority()) { Destroy(); return; }   // 伤害逻辑只在服务器
     if (!OtherActor || OtherActor == GetInstigator()) { Destroy(); return; }
     if (bHit) { Destroy(); return; }
+    FGameplayCueParameters CueParams;
+    CueParams.Location = Hit.ImpactPoint;
+    CueParams.Normal = Hit.ImpactNormal;
+    CueParams.Instigator = GetInstigator();
+    CueParams.EffectCauser = this;
+    CueParams.SourceObject = this;
     // 找目标 ASC
     UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor);
+
     if (TargetASC && DamageEffectClass )
     {
-        FGameplayCueParameters CueParams;
-        CueParams.Location = Hit.ImpactPoint;
-        CueParams.Normal = Hit.ImpactNormal;
-        CueParams.Instigator = GetInstigator();
-        CueParams.EffectCauser = this;
-        CueParams.SourceObject = this;
+
         if (SourceASC.IsValid())
         {
             SourceASC->ExecuteGameplayCue(GASTags::Cue_Fireball_Explode, CueParams);
@@ -67,15 +69,14 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
                 SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), TargetASC);
             }
         }
-        else
-        {
-            UGameplayCueManager* Mgr = UAbilitySystemGlobals::Get().GetGameplayCueManager();
-            Mgr->HandleGameplayCue(OtherActor, GASTags::Cue_Fireball_Explode,
-                EGameplayCueEvent::Executed, CueParams);
-        }
-        bHit = true;
     }
-
+    else
+    {
+        UGameplayCueManager* Mgr = UAbilitySystemGlobals::Get().GetGameplayCueManager();
+        Mgr->HandleGameplayCue(OtherActor, GASTags::Cue_Fireball_Explode,
+            EGameplayCueEvent::Executed, CueParams);
+    }
+    bHit = true;
 
     Destroy();
 }

@@ -1,6 +1,6 @@
 # GAS 学习笔记 · 总纲（体系化梳理）
 
-> 创建日期：2026-04-28　修订：2026-05-06  
+> 创建日期：2026-04-28　修订：2026-05-08  
 > 工程：`D:\UnrealProjects\MyProject`  
 > 目的：把散落在 Day 笔记里的 GAS 知识点按**主线脉络**串成一张地图。  
 > 配套：`GAS学习笔记_DayXX.md`（速查 / 踩坑），本文件（体系 / 心智图）。
@@ -495,27 +495,98 @@ GE 自带的 Cue.Character.Hit → 闪红飘字（零胶水）
 
 ## 11. 学习路线图
 
+> 📌 目标调整（2026-05-08）：**先学透，不追求面试覆盖**。  
+> 当前状态：前四天的 API 大都"会用但不知道为什么"，Day05 完成了 TargetData + GroundTrace 主线。  
+> 新原则：**每个 Day 只推进一小步，优先把已经用过的东西讲清楚原理，再扩新功能**。
+
 ```
 ✅ 已学：
-   ├─ AttributeSet 基础（Health/MaxHealth/Damage）
-   ├─ GE 三种类型 + SetByCaller
-   ├─ Ability 生命周期 + LocalPredicted
-   ├─ AbilityTask（PlayMontageAndWait / WaitInputRelease）
-   ├─ Tag 驱动 AnimBP（蓄力状态机）
-   ├─ Native Tag
-   ├─ GameplayCue（Burst / Looping，Day02）
-   └─ 阶段 Tag vs Ability Tag（Day02 补丁 A）
+   ├─ Day01: AttributeSet 基础（Health/MaxHealth/Damage Meta）
+   │         GE 三种类型 + SetByCaller
+   │         Ability 生命周期 + LocalPredicted
+   │         AbilityTask（PlayMontageAndWait / WaitInputRelease）
+   │         Tag 驱动 AnimBP（蓄力状态机）
+   │         Native Tag
+   │
+   ├─ Day02: GameplayCue（Burst / Looping）
+   │         阶段 Tag vs Ability Tag（补丁 A）
+   │         Looping Cue 跟随玩家（补丁 B）
+   │
+   ├─ Day03: MMC / ExecCalc：暴击、护甲、吸血
+   │         Attribute Capture（Source/Target、Snapshot 真假）
+   │         FDamageStatics 单例、AddOutputModifier、吸血二次 GE
+   │         PassedInTags 与 SourceTags/TargetTags 区别
+   │         Period GE + Snapshot 行为
+   │         ⚠️ 跳过：ScalableFloat 等级曲线
+   │
+   ├─ Day04: Buff / Debuff 实战链路：Burn / Stun
+   │         主效果 + 子效果（Main GE 组合）
+   │         GE Tag Requirements / Immunity 数据驱动准入
+   │         Burn UI：Tag 负责显隐 + ActiveGE 负责层数与时间
+   │         属性联动 CMC：AttributeValueChangeDelegate
+   │
+   └─ Day05: TargetData + GroundTrace 地面选点火球
+             ├─ WaitTargetData Task 的使用链路
+             ├─ C++ 手动 BeginSpawningActor / FinishSpawningActor
+             ├─ GroundTrace StartLocation 默认是 LiteralTransform（必须手动配）
+             ├─ AFireballProjectile::OnHit 爆炸 Cue 要无条件播
+             └─ UserConfirmed 模式下 LocalInputConfirm 触发链
 
-🔜 进行中（Day03）：
-   └─ MMC / ExecCalc：暴击、护甲、吸血、等级缩放
+📋 后续路线（先学透，不贪多）：
 
-📋 下一步（按优先级）：
-   1. MMC / ExecCalc（伤害公式是大多数游戏的刚需）   ← Day03
-   2. TargetData（AOE、扇形、目标筛选）
-   3. AbilitySet / Loadout（技能装配系统）
-   4. 多人网络专题（Prediction Key、Scoped、回滚、RPC）
-   5. 高级主题：DA 数据驱动 / GE 资产合并 / 调试工具深挖
+   ── 补理解篇（先把已会的东西讲清楚，不加新功能）──
+
+   Day06  GA 生命周期串讲（基于现有火球技能）
+          目标：只读代码 + 加日志，不改功能
+          ├─ TryActivateAbility 到 EndAbility 的完整调用链
+          ├─ CanActivate / ActivateAbility / CommitAbility 各自负责什么
+          ├─ OwnerActor vs AvatarActor 在你项目里的具体绑定
+          └─ 产出：一张手画流程图 + 一篇"每个函数我自己的解释"
+
+   Day07  GE 数据流串讲（基于现有 GE_FireballDamage / GE_InitStats）
+          目标：把 Spec / Context / Capture / Modifier 关系吃透
+          ├─ MakeOutgoingSpec 到 ApplyGameplayEffectSpecToTarget 每一步发生什么
+          ├─ Instant 和 Duration 在 BaseValue / CurrentValue 上的不同路径
+          ├─ PreAttributeChange vs PostGameplayEffectExecute 各自干什么
+          └─ 产出：一张"一次伤害从 Spec 到 Health 扣减"的调用链图
+
+   ── 扩功能篇（每 Day 一个新能力，但都带原理复盘）──
+
+   Day08  Cooldown / Cost 正式化
+          ├─ 用 GE 实现 CD，而不是 Timer（讲清为什么）
+          ├─ UI 显示 CD：GetCooldownTimeRemainingAndDuration
+          └─ CheckCooldown / CheckCost 的重写时机
+
+   Day09  技能互斥与状态规则（Tag 架构专题）
+          ├─ ActivationBlockedTags / BlockAbilitiesWithTag / CancelAbilitiesWithTag
+          ├─ 眩晕 / 沉默 / 霸体用 Tag 怎么表达
+          └─ 和 Day04 的 Immunity 打通
+
+   Day10  动画阶段化（Montage + AnimNotify → GameplayEvent）
+          ├─ 前摇 / 释放 / 后摇三段
+          ├─ Montage 被打断的清理流程
+          └─ 在"正确的那一帧"生成投射物
+
+   ── 深水区（学到 Day10 再决定要不要碰）──
+
+   Day11+ 备选方向（视兴趣选一个，不必全做）：
+          ├─ A. 网络预测观察（PredictionKey 日志实验 + ScopedPrediction 小 demo）
+          ├─ B. AbilitySet 资产化（把火球这套打包成可配置数据）
+          ├─ C. TargetingSystem 插件（UE5 新版选点系统，替代老 GroundTrace）
+          └─ D. AI 怪物接 GAS（让敌人也用 GE 扣血、用 GA 放技能）
+
+⏸ 明确暂不做（学习阶段不铺开）：
+   ├─ 多人网络深挖（Prediction 源码级）
+   ├─ GameFeature Plugin 化
+   └─ 大型项目框架重构（AbilitySet + 装备驱动整套）
 ```
+
+### 本阶段核心判断
+
+- **Day06~Day07 是最关键的两天**：不加新功能，专门回头把"会用但不知道为什么"的部分讲清楚。  
+  这一步省不得。跳过它直接冲 Day08+ 的新功能，会一直停留在"代码能跑但讲不清原理"的状态。
+- **Day08~Day10 每天只新增一个能力**，不堆叠。每做一个新功能，都配套写一段"我怎么理解这个机制"。
+- **Day11+ 的四个方向都是"加分项"**，学完 Day10 再根据兴趣选，不是必做清单。
 
 ---
 

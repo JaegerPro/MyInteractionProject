@@ -8,3 +8,8 @@ void UHealthBarWidget::SetHealthPercent(float CurrentHealth, float MaxHealth)
     const float Pct = (MaxHealth > KINDA_SMALL_NUMBER) ? (CurrentHealth / MaxHealth) : 0.f;
     OnHealthPercentChanged(FMath::Clamp(Pct, 0.f, 1.f));
 }
+
+void UHealthBarWidget::SetBurnInfo(int32 StackCount, float RemainingTime)
+{
+    OnBurnChanged(StackCount, RemainingTime);
+}

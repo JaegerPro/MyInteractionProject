@@ -15,6 +15,10 @@ namespace GASTags
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Dead);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Stunned);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Charging);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Debuff_Stun);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Debuff_Burn);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Immune_Control);
+
 
     // Cooldown
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(Cooldown_Fireball);
