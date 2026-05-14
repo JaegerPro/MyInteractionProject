@@ -16,13 +16,12 @@ class MYPROJECT_API UPersistEffectBase : public UObject
 public:
 
 protected:
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing = OnRep_Owner)
 	UPersistBaseComponent* Owner;
 	bool bHaveApplyed = false;
 public:
 	UPersistEffectBase();
 	virtual bool IsSupportedForNetworking() const override{ return true;}
-	virtual void PostNetReceive() override;
 	virtual void PreDestroyFromReplication() override;
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void Init(UPersistBaseComponent* InOwner);
@@ -47,4 +46,6 @@ protected:
 
 	UFUNCTION(BlueprintNativeEvent)
 	bool CanApply_BP(AActor* Character);
+	UFUNCTION()
+	void OnRep_Owner();
 };

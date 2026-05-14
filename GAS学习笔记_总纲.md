@@ -1,9 +1,14 @@
 # GAS 学习笔记 · 总纲（体系化梳理）
 
-> 创建日期：2026-04-28　修订：2026-05-08  
+> 创建日期：2026-04-28　修订：2026-05-12  
 > 工程：`D:\UnrealProjects\MyProject`  
 > 目的：把散落在 Day 笔记里的 GAS 知识点按**主线脉络**串成一张地图。  
 > 配套：`GAS学习笔记_DayXX.md`（速查 / 踩坑），本文件（体系 / 心智图）。
+
+> 🤖 **给 AI 的接课须知**（节省 token）：新会话接课时，**只读本总纲即可**，  
+> 不要主动打开 `GAS学习笔记_DayXX.md` 任何一篇——每日笔记是人类复习用的，  
+> 接课需要的所有状态（进度、已掌握结论、下一步、踩坑）本总纲都已沉淀。  
+> 详见 §14。
 
 ---
 
@@ -495,102 +500,108 @@ GE 自带的 Cue.Character.Hit → 闪红飘字（零胶水）
 
 ## 11. 学习路线图
 
-> 📌 目标调整（2026-05-08）：**先学透，不追求面试覆盖**。  
-> 当前状态：前四天的 API 大都"会用但不知道为什么"，Day05 完成了 TargetData + GroundTrace 主线。  
-> 新原则：**每个 Day 只推进一小步，优先把已经用过的东西讲清楚原理，再扩新功能**。
+> 📌 阶段切换（2026-05-12）：**GAS 主干学习已结束，转入面试场景化演练**。  
+> 当前判断：剩余 GAS 知识点（Tag 互斥、动画阶段化等）均为 API 级组合，  
+> 机制级理解已通过 Day06（PredictionKey）/ Day03（ExecCalc）/ Day05（TargetData）覆盖。  
+> 继续补 GAS 知识点对面试 / 工作的边际收益已经很低。
 
 ```
-✅ 已学：
-   ├─ Day01: AttributeSet 基础（Health/MaxHealth/Damage Meta）
-   │         GE 三种类型 + SetByCaller
-   │         Ability 生命周期 + LocalPredicted
-   │         AbilityTask（PlayMontageAndWait / WaitInputRelease）
-   │         Tag 驱动 AnimBP（蓄力状态机）
-   │         Native Tag
+✅ 已学（详细结论见对应每日笔记）：
+   ├─ Day01: AttributeSet / GE 三种类型 / Ability 生命周期 / AbilityTask / Tag 驱动 AnimBP / Native Tag   → `GAS学习笔记_Day01.md`
+   ├─ Day02: GameplayCue（Burst / Looping） / 阶段 Tag vs Ability Tag / Looping Cue 跟随玩家              → `GAS学习笔记_Day02.md`
+   ├─ Day03: MMC / ExecCalc（暴击、护甲、吸血） / Attribute Capture / Period GE + Snapshot               → `GAS学习笔记_Day03.md`
+   ├─ Day04: Buff/Debuff 实战（Burn / Stun） / GE Tag Requirements / Immunity / 属性联动 CMC            → `GAS学习笔记_Day04.md`
+   ├─ Day05: TargetData + GroundTrace 地面选点火球                                                        → `GAS学习笔记_Day05.md`
+   ├─ Day06: PredictionKey 深啃（理论 + 日志实验）                                                        → `GAS学习笔记_Day06.md`
+   ├─ Day07: GA 生命周期 + GE 数据流 双串讲（纯理解篇，未改代码）                                         → `GAS学习笔记_Day07.md`
+   └─ Day08: Cooldown 正式化（Duration GE + Cooldown Tag 组合，无新机制）                                  ← 2026-05-12 早
+
+⏭️ 评估后跳过（不是"待学"，是"主动放弃"）：
+   ├─ Day09  Tag 互斥规则
+   │         理由：ActivationBlockedTags / BlockAbilitiesWithTag / CancelAbilitiesWithTag
+   │         本质是字段组合，API 级。机制理解已通过 Day06 PredictionKey 覆盖，
+   │         回头学性价比低。
    │
-   ├─ Day02: GameplayCue（Burst / Looping）
-   │         阶段 Tag vs Ability Tag（补丁 A）
-   │         Looping Cue 跟随玩家（补丁 B）
-   │
-   ├─ Day03: MMC / ExecCalc：暴击、护甲、吸血
-   │         Attribute Capture（Source/Target、Snapshot 真假）
-   │         FDamageStatics 单例、AddOutputModifier、吸血二次 GE
-   │         PassedInTags 与 SourceTags/TargetTags 区别
-   │         Period GE + Snapshot 行为
-   │         ⚠️ 跳过：ScalableFloat 等级曲线
-   │
-   ├─ Day04: Buff / Debuff 实战链路：Burn / Stun
-   │         主效果 + 子效果（Main GE 组合）
-   │         GE Tag Requirements / Immunity 数据驱动准入
-   │         Burn UI：Tag 负责显隐 + ActiveGE 负责层数与时间
-   │         属性联动 CMC：AttributeValueChangeDelegate
-   │
-   └─ Day05: TargetData + GroundTrace 地面选点火球
-             ├─ WaitTargetData Task 的使用链路
-             ├─ C++ 手动 BeginSpawningActor / FinishSpawningActor
-             ├─ GroundTrace StartLocation 默认是 LiteralTransform（必须手动配）
-             ├─ AFireballProjectile::OnHit 爆炸 Cue 要无条件播
-             └─ UserConfirmed 模式下 LocalInputConfirm 触发链
+   └─ Day10  动画阶段化（Montage 三段 + AnimNotify 关键帧）
+             理由：(1) 缺合适的动画资源，硬学就是看文档背 API；
+                   (2) 火球代码里其实已经做了 Charge.Active Tag + Cue 跟随，
+                       要系统化也只是命名 + 模板抽取，没有新机制；
+                   (3) API 级组合，对面试边际收益低。
 
-📋 后续路线（先学透，不贪多）：
+🔄 备选方向（如果将来想拓展，但不是当前重心）：
+   ├─ A. 网络预测进阶（ScopedPrediction 小 demo / 回滚可视化）
+   ├─ B. AbilitySet 资产化
+   ├─ C. UE5 TargetingSystem 插件
+   └─ D. AI 怪物接 GAS
 
-   ── 补理解篇（先把已会的东西讲清楚，不加新功能）──
-
-   Day06  GA 生命周期串讲（基于现有火球技能）
-          目标：只读代码 + 加日志，不改功能
-          ├─ TryActivateAbility 到 EndAbility 的完整调用链
-          ├─ CanActivate / ActivateAbility / CommitAbility 各自负责什么
-          ├─ OwnerActor vs AvatarActor 在你项目里的具体绑定
-          └─ 产出：一张手画流程图 + 一篇"每个函数我自己的解释"
-
-   Day07  GE 数据流串讲（基于现有 GE_FireballDamage / GE_InitStats）
-          目标：把 Spec / Context / Capture / Modifier 关系吃透
-          ├─ MakeOutgoingSpec 到 ApplyGameplayEffectSpecToTarget 每一步发生什么
-          ├─ Instant 和 Duration 在 BaseValue / CurrentValue 上的不同路径
-          ├─ PreAttributeChange vs PostGameplayEffectExecute 各自干什么
-          └─ 产出：一张"一次伤害从 Spec 到 Health 扣减"的调用链图
-
-   ── 扩功能篇（每 Day 一个新能力，但都带原理复盘）──
-
-   Day08  Cooldown / Cost 正式化
-          ├─ 用 GE 实现 CD，而不是 Timer（讲清为什么）
-          ├─ UI 显示 CD：GetCooldownTimeRemainingAndDuration
-          └─ CheckCooldown / CheckCost 的重写时机
-
-   Day09  技能互斥与状态规则（Tag 架构专题）
-          ├─ ActivationBlockedTags / BlockAbilitiesWithTag / CancelAbilitiesWithTag
-          ├─ 眩晕 / 沉默 / 霸体用 Tag 怎么表达
-          └─ 和 Day04 的 Immunity 打通
-
-   Day10  动画阶段化（Montage + AnimNotify → GameplayEvent）
-          ├─ 前摇 / 释放 / 后摇三段
-          ├─ Montage 被打断的清理流程
-          └─ 在"正确的那一帧"生成投射物
-
-   ── 深水区（学到 Day10 再决定要不要碰）──
-
-   Day11+ 备选方向（视兴趣选一个，不必全做）：
-          ├─ A. 网络预测观察（PredictionKey 日志实验 + ScopedPrediction 小 demo）
-          ├─ B. AbilitySet 资产化（把火球这套打包成可配置数据）
-          ├─ C. TargetingSystem 插件（UE5 新版选点系统，替代老 GroundTrace）
-          └─ D. AI 怪物接 GAS（让敌人也用 GE 扣血、用 GA 放技能）
-
-⏸ 明确暂不做（学习阶段不铺开）：
+⏸ 明确暂不做：
    ├─ 多人网络深挖（Prediction 源码级）
    ├─ GameFeature Plugin 化
    └─ 大型项目框架重构（AbilitySet + 装备驱动整套）
 ```
 
-### 本阶段核心判断
+### 11.1 阶段总结（给未来的自己 / 下次接课的 AI 看）
 
-- **Day06~Day07 是最关键的两天**：不加新功能，专门回头把"会用但不知道为什么"的部分讲清楚。  
-  这一步省不得。跳过它直接冲 Day08+ 的新功能，会一直停留在"代码能跑但讲不清原理"的状态。
-- **Day08~Day10 每天只新增一个能力**，不堆叠。每做一个新功能，都配套写一段"我怎么理解这个机制"。
-- **Day11+ 的四个方向都是"加分项"**，学完 Day10 再根据兴趣选，不是必做清单。
+Day01~Day08 已完成 GAS 核心闭环：
+- **数据层**：Attribute / AttributeSet / Meta Attribute / Clamp 两种位置
+- **行为层**：GE 三种 Duration / SetByCaller / GA 生命周期 / Cost & Cooldown / AbilityTask 黄金法则
+- **表现层**：Tag 驱动 AnimBP / Montage / GameplayCue 四种触发方式 / Looping Cue 跟随
+- **网络层**：Replication / Prediction / **ScopedPrediction（机制级，不是 API 级）**
+- **数值计算**：MMC / ExecCalc / Attribute Capture / Period GE + Snapshot
+- **目标系统**：TargetData / GroundTrace / 两段式 Spawn
+
+**没学但已主动评估放弃的**：Day09 Tag 互斥、Day10 动画阶段化。理由见上。
+
+**这个状态不是"GAS 没学完"，是"GAS 主干学透了，转入下一阶段"。**  
+未来回看本笔记如果又焦虑"是不是还有什么没学"——回到这一节读一遍。
 
 ---
 
-## 12. 关键文件索引
+## 12. 接下来做什么（面试演练阶段）
+
+> 📌 当前阶段（2026-05-12 起）：**不再补 GAS 知识点，转入"把已掌握的东西讲出来"**。
+
+### 12.1 主线：「卡 + 图」面试演练
+
+**形式**：每张卡一个 GAS 主题，正面是面试官的问法，背面是 60 秒口述版本 + 一张机制图。
+AI 出题 → 用户答 → AI 打分 + 给改进点。
+
+**优先出题方向**（按"面试出现频率 × 用户素材充足度"排）：
+
+| 序号 | 主题 | 素材所在 | 难度 |
+|------|------|----------|------|
+| 1 | GameplayCue 怎么用、为什么要分 Burst / Looping | Day02 + UGA_Fireball | 中 |
+| 2 | GAS 网络预测怎么理解（PredictionKey / ScopedPrediction） | Day06 | 高（用户最强项） |
+| 3 | 伤害怎么算（MMC / ExecCalc / Meta Attribute） | Day03 + ExecCalc_Damage | 中 |
+| 4 | TargetData 流程 / 为什么要两段式 Spawn | Day05 + UGA_FireballGround | 中 |
+| 5 | GA 的 Commit 机制 / Cost 和 Cooldown 为什么是 GE | Day08 + UGA_Fireball | 低 |
+| 6 | Ability 之间怎么协作 / Ability 怎么取消 | 综合 | 低 |
+| 7 | GAS 适合什么项目 / 不适合什么 | 综合 + PawnState 对比 | 高（差异化加分点） |
+
+### 12.2 次线：「读代码方」讲法定调
+
+用户工作中读过但**未参与设计**的项目代码：
+- `PawnState / PawnStateComponent`：uint64 位掩码 + 互斥矩阵 + 引用计数 disable
+- `PersistEffectBase / PersistEffectWithState`：网络复制的"持久效果"系统（轻量级 GE 替代品）
+- `FakePossessComponent / FakePossessInterface`：伪 Possess 系统
+- `MyClickActorComponent / MyActivityActor`：交互系统
+
+**讲法原则**：
+- **不能**说"我自己写了一套 X"——会被追问设计决策时穿帮
+- **应该**说"项目里有这套 X，我作为交互物开发需要用到，所以读懂了它的实现 + 和 GAS 做过横向对比"
+- **加分点**：读代码方 + 横向对比 = "能读懂复杂系统 + 有技术判断力"，比"会用 GAS"稀缺
+
+具体每套系统的"60 秒讲法模板"在演练阶段按需产出，不预先全写。
+
+### 12.3 不做什么
+
+- ❌ 不再按"补 GAS 知识点"的思路推进（Day09 / Day10 已评估放弃）
+- ❌ 不写长篇背诵稿（用户风格抗拒长背书，走"机制图 + 短口述"路线）
+- ❌ 不主动让用户写"项目外资产"的故事（PawnState 不是用户写的，硬讲会穿帮）
+
+---
+
+## 13. 关键文件索引
 
 | 文件 | 作用 |
 |------|------|
@@ -604,20 +615,60 @@ GE 自带的 Cue.Character.Hit → 闪红飘字（零胶水）
 
 ---
 
-## 13. 使用说明（怎么让笔记越记越连贯）
+## 14. 使用说明（怎么让笔记越记越连贯）
 
 **笔记三层结构**：
 
 ```
-GAS学习笔记_总纲.md       ← 本文件，体系地图（少改，新主题学完追加章节）
-GAS学习笔记_Day01.md      ← 当天速查 + 踩坑（每天一份）
-GAS学习笔记_Day02.md      ← ...
-GAS学习笔记_Day03.md      ← MMC / ExecCalc
+GAS学习笔记_总纲.md       ← 本文件，体系地图 + 进度状态（每节课后追加/修订）
+GAS学习笔记_DayXX.md      ← 每日笔记（速查 + 踩坑 + 自检），人类复习用
 ```
 
-**新会话开头给 AI 的"最小上下文"**：
-1. `GAS学习笔记_总纲.md` 的 **0/8/11 节**（心智图 + 数据流 + 路线图）
-2. 上一份 Day 笔记的 **踩坑速查表 + 关键文件索引**
-3. 今天想学/想解决的问题
+### 14.1 🤖 AI 接课规则（省 token 的关键）
 
-这样既不丢上下文，又不会塞爆 token。
+**新会话开窗口后，AI 应当遵守**：
+
+1. **只读本总纲，不要主动打开任何 `GAS学习笔记_DayXX.md`**。  
+   每日笔记是写给人类复习用的，里面有大量口语化复述和例题，AI 接课不需要。  
+   接课需要的所有信息（进度、已掌握结论、下一步、关键踩坑）本总纲都已沉淀——  
+   §11 路线图看进度，§12 看下一步做什么，§0~§10 看体系，§13 看代码文件索引。
+
+2. **需要读源码时，直接按 §13 索引读**，不要靠翻每日笔记来定位文件。
+
+3. **用户主动提到"Day05 那里怎么做的"之类具体问题**，再按需打开对应 `GAS学习笔记_DayXX.md`。  
+   没明确指向时不要预防性翻阅。
+
+4. **课后只更新总纲的"进度指针"，不要往总纲塞知识点**。  
+   每讲完一节课，只改两处：  
+   （a）§11 "已学"列表追加一行 `Day0X: 主题简述 → GAS学习笔记_Day0X.md`  
+   （b）§11 "后续路线" 把 `◄── 下一节` 标记挪到下一个 Day  
+   具体知识点、踩坑、代码片段**一律写进每日笔记**，不写进总纲。  
+   每日笔记由用户自己写（手写过程本身就是学习），AI 不代劳。  
+   > ⚠️ 反例：把"PredictionKey 两种生成时机"、"ctor 不能碰 ASC"这种细节塞进 §11——  
+   > 总纲会越长越难读，违背"只作为体系地图 + 接课指引"的定位。
+
+5. **总纲里的体系章节（§0~§10）只在发现错误/不精确时才改**，不要每节课都追加。  
+   如果某节课学到的新东西和 §0~§10 某条结论冲突，直接修订那条；  
+   否则不要扩写（要扩写也先问用户是否同意）。
+
+6. **用户说"继续上课"时的标准动作**：
+   - ⚠️ **先看 §11 顶部的"阶段切换"——2026-05-12 起已经不是"上课"阶段，是面试演练阶段**
+   - 如果用户说"继续"、"接着来"之类——默认是要继续 §12 的面试演练，不是要上新 Day 的课
+   - 只有用户**明确**说"想学 X 知识点"才开新课
+
+7. **关于"下一节讲啥"的判断**：
+   - Day08 之后**没有 Day09**（见 §11，评估后跳过）
+   - 如果用户问"接下来学什么"——不要默认回答"Day09"，要按 §12 的方向回答（面试演练 / 读代码方讲法）
+   - 这个笔记体系已经从"补知识"切换到"整理输出"，AI 要识别这个阶段切换
+
+8. **关于用户的学习风格（重要）**：
+   - 抗拒长篇背诵稿——走"机制图 + 短口述（60 秒内）"路线
+   - 喜欢自己推导 + 踩坑复盘，不喜欢被直接喂答案
+   - 能区分"API 级"和"机制级"，不要用 API 级内容充数
+   - 项目里 `PawnState / PersistEffect / FakePossess` 等代码**不是用户写的**，是工作里读过学习的——不要当作"用户的自研作品"讲
+
+### 14.2 用户自己的使用方法
+
+- 每节课结束后写一篇 `GAS学习笔记_DayXX.md`，结构建议：一句话速记 / 自己重新讲一遍 / 自检题答案 / 与此前内容的串联。
+- 写笔记这件事**不要让 AI 代劳**——用自己的话重新组织一遍，才是学习发生的那一刻。
+- 写完笔记后，如果发现总纲里哪条结论不对 / 不够精确，直接让 AI 改总纲。

@@ -64,6 +64,10 @@ void UGA_Fireball::ActivateAbility(
 
 void UGA_Fireball::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
+    if (UAbilitySystemComponent* ASC = ActorInfo->AbilitySystemComponent.Get())
+    {
+        ASC->RemoveGameplayCue(GASTags::Cue_Fireball_Charging);
+    }
     Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
@@ -128,6 +132,7 @@ void UGA_Fireball::OnMontageInterrupted()
 
 void UGA_Fireball::SpawnFireball()
 {
+    if (!IsActive()) return;
     if (!CachedActorInfo || !FireballClass) return;
     if (!HasAuthority(&CachedActivationInfo)) return;
 

@@ -9,22 +9,7 @@
 UPersistEffectBase::UPersistEffectBase()
 {
 }
-void UPersistEffectBase::PostNetReceive()
-{
-	Super::PostNetReceive();
 
-	// 模拟“复制创建完成”回调：仅客户端、仅一次
-	if (!HasAuthority()&& !bHaveApplyed)
-	{
-		UPersistBaseComponent* OwnerComp = GetOwnerSafety();
-		if (OwnerComp)
-		{
-			OwnerComp->AddReference(this);
-			Init(GetOwnerSafety());
-			OnApply(GetNetOwnerActor());
-		}
-	}
-}
 void UPersistEffectBase::PreDestroyFromReplication()
 {
 	if (bHaveApplyed)
@@ -155,4 +140,13 @@ UPersistBaseComponent* UPersistEffectBase::GetOwnerSafety() const
 	}
 
 	return Owner;
+}
+void UPersistEffectBase::OnRep_Owner()
+{
+	if (!HasAuthority() && !bHaveApplyed && Owner)
+	{
+		Owner->AddReference(this);
+		Init(GetOwnerSafety());
+		OnApply(GetNetOwnerActor());
+	}
 }
