@@ -9,7 +9,7 @@ AMyActivityActor::AMyActivityActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	NetRelevantComponent = CreateDefaultSubobject<UCustomNetRelevantComponent>(TEXT("NetRelevantComponent"));
 }
 void AMyActivityActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
@@ -17,6 +17,18 @@ void AMyActivityActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	// 
 	DOREPLIFETIME(AMyActivityActor, CurrentIndex);
 	// 	DOREPLIFETIME(AActivityBaseActor, ServeEnterSequenceTime);
+}
+bool AMyActivityActor::IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation) const
+{
+	// 设计选择：白名单优先，**完全替换** Super 的距离/Owner 等默认逻辑。
+	// 原因：本 Actor 想表达的是"逻辑可见性"——只有交互参与者才该看到，
+	// 不应再被距离剔除等默认规则推翻。如果将来需要"白名单 AND 距离"，
+	// 把下一行改成: return Super::IsNetRelevantFor(...) && NetRelevancyComponent->IsViewerRelevant(RealViewer);
+	if (NetRelevantComponent)
+	{
+		return NetRelevantComponent->IsViewerRelevant(RealViewer);
+	}
+	return Super::IsNetRelevantFor(RealViewer, ViewTarget, SrcLocation);
 }
 void AMyActivityActor::EnsureStateInfoInit()
 {

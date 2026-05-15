@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "ActivityStateInterface.h"
+#include "MyProject/CustomActor/CustomNetRelevantComponent.h"
 #include "MyActivityActor.generated.h"
 
 UCLASS()
@@ -58,4 +59,12 @@ public:
 	virtual void RestoreCurrentState() {};
 	UFUNCTION(BlueprintCallable)
 	void JumpToState(FName StateName, float EnterTime = 0.0f, bool bPause = false);
+	virtual bool IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation) const override;
+
+	UCustomNetRelevantComponent* GetNetRelevantComponent() const { return NetRelevantComponent; }
+
+protected:
+	// 组件作为子对象由本 Actor 拥有。EditAnywhere 让蓝图实例可以看到（只是查看，配置走运行时接口）。
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "NetRelevancy")
+	TObjectPtr<UCustomNetRelevantComponent> NetRelevantComponent;
 };
