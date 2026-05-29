@@ -69,7 +69,8 @@ struct FActivityState
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	bool bStateMachineEntry = false;
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General", meta = (AllowedClasses = "/Script/LevelSequence.LevelSequence"))
+	FSoftObjectPath LevelSequencePath;
 };
 
 USTRUCT()
@@ -79,7 +80,14 @@ struct FActivityStateRep
 
 	UPROPERTY()
 	int32 StateIndex = NullStateIndex;
+	UPROPERTY()
+	float EnterTime = 0;
 
+	UPROPERTY()
+	float ServeEnterSequenceTime = 0;
+
+	UPROPERTY()
+	bool bPause = false;
 	UPROPERTY()
 	int32 PredictID = 0;
 

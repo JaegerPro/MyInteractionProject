@@ -3,6 +3,9 @@
 
 #include "MyActivityActor.h"
 #include <Net/UnrealNetwork.h>
+#include "Engine/AssetManager.h"
+#include "Engine/StreamableManager.h"
+#include <GameFramework/GameState.h>
 
 // Sets default values
 AMyActivityActor::AMyActivityActor()
@@ -30,6 +33,104 @@ bool AMyActivityActor::IsNetRelevantFor(const AActor* RealViewer, const AActor* 
 	}
 	return Super::IsNetRelevantFor(RealViewer, ViewTarget, SrcLocation);
 }
+ULevelSequencePlayer* AMyActivityActor::GetLevelSequencePlayer()
+{
+	SequenceWrapper.Init(this);
+	return SequenceWrapper.GetLevelSequencePlayer();
+}
+void AMyActivityActor::ChangeCurrentSequence(const FActivityState& StateInfo, bool bEnter)
+{
+	FString PreName = SequenceWrapper.GetCurrentName();
+	SequenceWrapper.Stop();
+
+	if (bEnter)
+	{
+		if (HasAuthority())
+		{
+			SequenceWrapper.ChangeSequence(Cast<ULevelSequence>(StateInfo.LevelSequencePath.TryLoad()));
+		}
+		else
+		{
+			UObject* SequenceAsset = StateInfo.LevelSequencePath.ResolveObject();
+			if (SequenceAsset)
+			{
+				SequenceWrapper.ChangeSequence(Cast<ULevelSequence>(SequenceAsset));
+			}
+			else
+			{
+				FStreamableManager& Streamable = UAssetManager::GetStreamableManager();
+				PendingSequenceHandle = Streamable.RequestAsyncLoad(
+					StateInfo.LevelSequencePath,
+					FStreamableDelegate::CreateUObject(this, &AMyActivityActor::OnSequenceRequestBack, StateInfo.LevelSequencePath, StateInfo.StateName),
+					FStreamableManager::AsyncLoadHighPriority);
+			}
+		}
+	}
+	else
+	{
+		SequenceWrapper.ChangeSequence();
+	}
+
+
+	FString CurrentName = SequenceWrapper.GetCurrentName();
+
+	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:ChangeCurrentSequnce, PreSequence[%s] CurrentSequence=[%s]"),
+			*PreName, *CurrentName);
+}
+void AMyActivityActor::AddBinding(const FMovieSceneObjectBindingID& Binding, AActor* Actor)
+{
+	SequenceWrapper.Init(this);
+	SequenceWrapper.AddBinding(Binding, Actor);
+}
+FName AMyActivityActor::GetCurrentStateName()
+{
+	if (!StateMachineInfo.IsValidIndex(CurrentIndex.StateIndex))
+	{
+		return FName(TEXT("NullState"));
+	}
+	return StateMachineInfo[CurrentIndex.StateIndex].StateName;
+}
+
+void AMyActivityActor::OnSequenceRequestBack(FSoftObjectPath SequncePath, FName StateName)
+{
+
+	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:OnSequenceRequestBack CurrentSequence=[%s] "), *SequncePath.ToString());
+
+	if (GetCurrentStateName() != StateName)
+	{
+		UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:OnSequenceRequestBack GetCurrentStateName=[%s] != State [%s]"), *GetCurrentStateName().ToString(), *StateName.ToString());
+		return;
+	}
+
+	SequenceWrapper.ChangeSequence(Cast<ULevelSequence>(SequncePath.ResolveObject()));
+	FActivityStateRep StateRep = CurrentIndex;
+
+	SequenceWrapper.StartPlay(StateRep.EnterTime);
+
+}
+float AMyActivityActor::GetTimeStamp()
+{
+	AGameState* GS = GetWorld() ? GetWorld()->GetGameState<AGameState>() : nullptr;
+	if (GS)
+	{
+		return GS->GetServerWorldTimeSeconds();
+	}
+	else
+	{
+		//理论上这个调用都是在beginplay之后，如果没有gamestate，那么一定有问题
+#if !UE_EDITOR
+		UE_LOG(LogTemp, Warning, TEXT("---AActivityBaseActor:GetTimeStamp, bNetStartup=[%d] Role=[%d] ActorFullName=[%s]"),
+			(int32)bNetStartup, (int32)Role, *GetFullName());
+		if (GetWorld() == nullptr || !GetWorld()->IsPlayingReplay())
+		{
+			ensure(false);
+		}
+#endif
+	}
+
+	return 0;
+}
+
 void AMyActivityActor::EnsureStateInfoInit()
 {
 	if (bInit)
@@ -43,6 +144,7 @@ void AMyActivityActor::EnsureStateInfoInit()
 	}
 
 	bInit = true;
+	SequenceWrapper.Init(this);
 	UClass* Class = GetClass();
 	check(Class);
 	for (FActivityState& Var : StateMachineInfo)
@@ -60,8 +162,8 @@ void AMyActivityActor::EnterState(const FActivityStateRep& IndexInfo)
 		UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:EnterState ActorName = [%s]"), *GetFullName());
 		return;
 	}
-	const FActivityState& StatInfo = StateMachineInfo[Index];
-
+	const FActivityState& StateInfo = StateMachineInfo[Index];
+	ChangeCurrentSequence(StateInfo, true);
 	if (HasAuthority())
 	{
 		CurrentIndex.StateIndex = Index;
@@ -73,20 +175,21 @@ void AMyActivityActor::EnterState(const FActivityStateRep& IndexInfo)
 	{
 		if (LocalPreIndex != NullStateIndex && StateMachineInfo.IsValidIndex(LocalPreIndex))
 		{
-			OnActivityActorChangeState.Broadcast(StateMachineInfo[LocalPreIndex].StateName, StatInfo.StateName);
+			OnActivityActorChangeState.Broadcast(StateMachineInfo[LocalPreIndex].StateName, StateInfo.StateName);
 		}
 		else
 		{
-			OnActivityActorChangeState.Broadcast(TEXT(""), StatInfo.StateName);
+			OnActivityActorChangeState.Broadcast(TEXT(""), StateInfo.StateName);
 		}
 	}
 
 	LocalPreIndex = Index;
-	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:EnterState ActorName [%s], StateName[%s]"), *GetFullName(), *StatInfo.StateName.ToString());
+	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:EnterState ActorName [%s], StateName[%s]"), *GetFullName(), *StateInfo.StateName.ToString());
 
-	if (StatInfo.StateEnterFunction)
+	SequenceWrapper.StartPlay(IndexInfo.EnterTime);
+	if (StateInfo.StateEnterFunction)
 	{
-		ProcessEvent(StatInfo.StateEnterFunction, nullptr);
+		ProcessEvent(StateInfo.StateEnterFunction, nullptr);
 	}
 }
 
@@ -110,7 +213,7 @@ void AMyActivityActor::LeaveState(int32 Index)
 	{
 		StateName = StateMachineInfo[Index].StateName;
 	}
-
+	ChangeCurrentSequence(StateMachineInfo[Index], false);
 	//调整leave逻辑到切sequence前
 	const FActivityState& StatInfo = StateMachineInfo[Index];
 	if (StatInfo.StateLeaveFunction)
@@ -125,9 +228,8 @@ void AMyActivityActor::OnRep_CurrentTransform()
 
 void AMyActivityActor::OnRep_CurrentStateIndexInfo(const FActivityStateRep& PreCurrentIndex)
 {
-
+	EnsureStateInfoInit();
 	UE_LOG(LogTemp, Log, TEXT("---AActivityBaseActor:OnRep_CurrentStateIndexInfo PreIndex[%d] CurrentIndex=[%d]"), PreCurrentIndex.StateIndex, CurrentIndex.StateIndex);
-
 	LeaveState(LocalPreIndex);
 	EnterState(CurrentIndex);
 

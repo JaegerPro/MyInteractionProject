@@ -11,7 +11,9 @@ public class MyProject : ModuleRules
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG" ,"ActorSequence", "LevelSequence", 
 			"GameplayAbilities",
             "GameplayTags",
-            "GameplayTasks"});
+            "GameplayTasks",
+			"MovieScene",            // ← 新增：UMovieSceneSequencePlayer 的归属模块
+			"MovieSceneTracks", });
 
 
         PrivateDependencyModuleNames.AddRange(new string[] {  });

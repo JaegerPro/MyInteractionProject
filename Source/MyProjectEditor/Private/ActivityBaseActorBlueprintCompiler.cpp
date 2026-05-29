@@ -211,8 +211,6 @@ void FActivityBaseActorBlueprintCompilerContext::DecorateFunctionCategory(UEdGra
 void FActivityBaseActorBlueprintCompilerContext::ReAssignPropertyToInstance(class IActivityStateInterface* CDO, FCompilerResultsLog& Results)
 {
 
-	// 	UClass* Class = CDO->GetClass();
-	// 	UProperty* Property = Class->FindPropertyByName(FName(TEXT("StateMachineInfo"))	check(Property);
 	TArray<FActivityState>& CDOState = CDO->GetStateMachineInfo();
 	TArray<UObject*> Instances;
 	UObject* Object = Cast<UObject>(CDO);
@@ -237,7 +235,6 @@ void FActivityBaseActorBlueprintCompilerContext::ReAssignPropertyToInstance(clas
 				}
 				//拷贝所有自动生成的东西，其他编辑器操作部分不需要拷贝
 				CopyAutoStatePropetyToInstance(CDOState[i], TmpState[i], Results);
-
 			}
 		}
 	}
