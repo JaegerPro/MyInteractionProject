@@ -144,7 +144,10 @@ void UActivityFakePossessCore::FakeUnPossess(EUnPossessReason Reason /*= EUnPoss
 			CurrentPossessCharacter->StateComponent->SetStateDisabled(Var, false);
 		}
 
+		CurrentPossessCharacter->GetAbilitySystemComponent()->UnBlockAbilitiesWithTags(PossessValue.DisableDynamicState);
+
 		CurrentPossessCharacter->StateComponent->OnStateEnter.RemoveAll(this);
+		CurrentPossessCharacter->GetAbilitySystemComponent()->RegisterGenericGameplayTagEvent().RemoveAll(this);
 
 		AMyPlayerController* PC = CurrentPossessCharacter->GetController<AMyPlayerController>();
 
@@ -209,7 +212,18 @@ bool UActivityFakePossessCore::CanBePossess(AMyCharacter* Character)
 			return false;
 		}
 	}
+	for (const FGameplayTag& Var : PossessValue.CantPossessDynamicState)
+	{
 
+		if (Character->GetAbilitySystemComponent()->HasMatchingGameplayTag(Var))
+		{
+			if (ActivityFakePossessCoreCVars::ShowActivityFakePossessLog)
+			{
+				UE_LOG(LogActivityFakePossessCore, Log, TEXT("---UActivityFakePossessCore:CanBePossess Ret By %s"), *Var.GetTagName().ToString());
+			}
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -270,12 +284,12 @@ bool UActivityFakePossessCore::FakePossess_Inner(AController* PC)
 	if (CurrentPossessCharacter)
 	{
 		CurrentPossessCharacter->StateComponent->OnStateEnter.AddDynamic(this, &UActivityFakePossessCore::OnPawnStateEnter);
-
+		CurrentPossessCharacter->GetAbilitySystemComponent()->RegisterGenericGameplayTagEvent().AddUObject(this, &UActivityFakePossessCore::OnDynamicPawnStateEnter);
 		for (auto& Var : PossessValue.DisablePawnState)
 		{
 			CurrentPossessCharacter->StateComponent->SetStateDisabled(Var, true);
 		}
-
+		CurrentPossessCharacter->GetAbilitySystemComponent()->BlockAbilitiesWithTags(PossessValue.DisableDynamicState);
 
 		if (OnPossess.IsBound())
 		{
@@ -302,8 +316,11 @@ void UActivityFakePossessCore::FakeUnpossessByOuter(EUnPossessReason Reason)
 {
 	if (IFakePossessInterface* PossessInterface = Cast<IFakePossessInterface>(GetOuter()))
 	{
-		AController* PC = CurrentPossessCharacter->GetController();
-		PossessInterface->QuitPossess(PC, Reason);
+		if (CurrentPossessCharacter)
+		{
+			AController* PC = CurrentPossessCharacter->GetController();
+			PossessInterface->QuitPossess(PC, Reason);
+		}
 	}
 	else
 	{
@@ -318,6 +335,19 @@ void UActivityFakePossessCore::OnPawnStateEnter(EPawnState State)
 		if (ActivityFakePossessCoreCVars::ShowActivityFakePossessLog)
 		{
 			UE_LOG(LogActivityFakePossessCore, Log, TEXT("---UActivityFakePossessCore::OnPawnStateEnter  RejectPawnState "));
+		}
+
+		FakeUnpossessByOuter(EUnPossessReason::Interrupt);
+	}
+}
+
+void UActivityFakePossessCore::OnDynamicPawnStateEnter(FGameplayTag GameplayTag,int32 Count)
+{
+	if (Count>0 && PossessValue.RejectDynamicState.HasTag(GameplayTag))
+	{
+		if (ActivityFakePossessCoreCVars::ShowActivityFakePossessLog)
+		{
+			UE_LOG(LogActivityFakePossessCore, Log, TEXT("---UActivityFakePossessCore::OnPawnStateEnter  RejectDynamicPawnState "));
 		}
 
 		FakeUnpossessByOuter(EUnPossessReason::Interrupt);

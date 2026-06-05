@@ -78,7 +78,7 @@ void UFakePossessComponent::InitFakePossessContainer()
 	{
 		FakepossessCore = NewObject<UActivityFakePossessCore>(this);
 		check(FakepossessCore);
-		FRegistPossessValue Value = FRegistPossessValue(DisablePawnState, RejectPawnState, CantPossessState);
+		FRegistPossessValue Value = FRegistPossessValue(DisablePawnState, RejectPawnState, CantPossessState, DisableDynamicState, RejectDynamicState, CantPossessDynamicState);
 		FakepossessCore->Init(Value);
 		FakepossessCore->PossessHook.BindUObject(this, &UFakePossessComponent::OnPossessAction);
 		FakepossessCore->UnpossessHook.BindUObject(this, &UFakePossessComponent::OnUnpossessAction);

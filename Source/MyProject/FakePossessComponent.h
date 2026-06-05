@@ -107,6 +107,12 @@ protected:
 	TArray<EPawnState> RejectPawnState;
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (DisplayName = "不能进入的人物状态"))
 	TArray<EPawnState> CantPossessState;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "禁用动态状态"))
+	FGameplayTagContainer DisableDynamicState;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "打断交互的动态状态"))
+	FGameplayTagContainer RejectDynamicState;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (DisplayName = "不能进入的动态状态"))
+	FGameplayTagContainer CantPossessDynamicState;
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(Transient)
