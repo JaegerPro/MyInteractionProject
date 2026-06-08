@@ -82,6 +82,11 @@ void AMyActivityActor::AddBinding(const FMovieSceneObjectBindingID& Binding, AAc
 	SequenceWrapper.Init(this);
 	SequenceWrapper.AddBinding(Binding, Actor);
 }
+void AMyActivityActor::RemoveBinding(const FMovieSceneObjectBindingID& Binding, AActor* Actor)
+{
+	SequenceWrapper.Init(this);
+	SequenceWrapper.RemoveBinding(Binding, Actor);
+}
 FName AMyActivityActor::GetCurrentStateName()
 {
 	if (!StateMachineInfo.IsValidIndex(CurrentIndex.StateIndex))

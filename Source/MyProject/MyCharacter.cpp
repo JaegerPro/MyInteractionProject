@@ -8,6 +8,8 @@
 #include "GameplayTagContainer.h"
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "CustomActor/CustomNetRelevantInterface.h"
+#include <Net/UnrealNetwork.h>
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -30,6 +32,29 @@ AMyCharacter::AMyCharacter()
 	HealthBarWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);          // 永远面向相机
 	HealthBarWidgetComp->SetDrawSize(FVector2D(180.f, 24.f));
 	HealthBarWidgetComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void AMyCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+}
+
+void AMyCharacter::AddCustomNetRelevantInterface(TScriptInterface<ICustomNetRelevantInterface> Interface)
+{
+	 if (Interface)
+	{
+		AddtiveCustomNetRelevant.Add(Interface);
+		Interface->OnRegisterTo(this);
+	}
+}
+
+void AMyCharacter::RemoveCustomNetRelevantInterface(TScriptInterface<ICustomNetRelevantInterface> Interface)
+{
+	if (Interface)
+	{
+		AddtiveCustomNetRelevant.Remove(Interface);
+		Interface->OnUnRegisterTo(this);
+	}
 }
 
 UAbilitySystemComponent* AMyCharacter::GetAbilitySystemComponent() const
@@ -227,6 +252,18 @@ void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+bool AMyCharacter::IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation) const
+{
+	bool Ret = Super::IsNetRelevantFor(RealViewer, ViewTarget, SrcLocation);
+	for (const TScriptInterface<ICustomNetRelevantInterface>& Var : AddtiveCustomNetRelevant)
+	{
+		if (Var.GetObject())
+		{
+			Ret = (Ret && Var->IsNetRelevantFor(RealViewer, ViewTarget, SrcLocation, this));
+		}
+	}
+	return Ret;
 }
 
 // Called to bind functionality to input

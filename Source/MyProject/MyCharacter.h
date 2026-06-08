@@ -16,6 +16,9 @@ UCLASS()
 class MYPROJECT_API AMyCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
+private:
+	UPROPERTY(Transient)
+	TArray<TScriptInterface<ICustomNetRelevantInterface>> AddtiveCustomNetRelevant;
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UPawnStateComponent* StateComponent;
@@ -81,10 +84,16 @@ public:
 	// Sets default values for this character's properties
 	AMyCharacter();
 
-public:	
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps)const override;
+	UFUNCTION(BlueprintCallable)
+	void AddCustomNetRelevantInterface(TScriptInterface<ICustomNetRelevantInterface> Interface);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveCustomNetRelevantInterface(TScriptInterface<ICustomNetRelevantInterface> Interface);
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual bool IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation) const override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

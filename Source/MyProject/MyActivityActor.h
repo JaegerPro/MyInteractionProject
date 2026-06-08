@@ -79,4 +79,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void AddBinding(const FMovieSceneObjectBindingID& Binding, AActor* Actor);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveBinding(const FMovieSceneObjectBindingID& Binding, AActor* Actor);
 };

@@ -47,6 +47,10 @@ void FActivitySequenceWrapper::AddBinding(const FMovieSceneObjectBindingID& Bind
 {
 	SequenceActor->AddBinding(Binding, Actor);
 }
+void FActivitySequenceWrapper::RemoveBinding(const FMovieSceneObjectBindingID& Binding, AActor* Actor)
+{
+	SequenceActor->RemoveBinding(Binding, Actor);
+}
 void FActivitySequenceWrapper::StartPlay(float Time)
 {
 	InitLevelSequencePlayer();

@@ -6,6 +6,7 @@
 #include "Engine/NetConnection.h"
 #include "Engine/NetDriver.h"
 #include "Engine/ActorChannel.h"
+#include <MyProject/MyCharacter.h>
 
 UCustomNetRelevantComponent::UCustomNetRelevantComponent()
 {
@@ -14,7 +15,30 @@ UCustomNetRelevantComponent::UCustomNetRelevantComponent()
     PrimaryComponentTick.bCanEverTick = false;
     SetIsReplicatedByDefault(false);
 }
+//把相关的actor加进来
+void UCustomNetRelevantComponent::OnRegisterTo(AActor* Actor)
+{
+    RegistActor.Add(Actor);
+}
 
+void UCustomNetRelevantComponent::OnUnRegisterTo(AActor* Actor)
+{
+    RegistActor.Remove(Actor);
+}
+bool UCustomNetRelevantComponent::IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation, const AActor* const SelfActor)
+{
+    const APlayerController* ThePlayerController = Cast<APlayerController>(RealViewer);
+    if (ThePlayerController)
+    {
+        APawn* CurCharacter = ThePlayerController->GetPawn();
+
+        if (RelevantPawns.Contains(CurCharacter))
+        {
+            return true;
+        }
+    }
+    return false;
+}
 void UCustomNetRelevantComponent::AddRelevantPawn(APawn* Pawn)
 {
     // 客户端调用本接口没有意义（白名单只在服务器读），直接挡掉避免误用。
@@ -144,6 +168,13 @@ void UCustomNetRelevantComponent::RefreshRelevancyForAllConnections()
         if (UActorChannel* Channel = Conn->FindActorChannelRef(Owner))
         {
             Channel->RelevantTime = 0.f;
+        }
+        for (TWeakObjectPtr<APawn> Var : RelevantPawns)
+        {
+            if (UActorChannel* Channel = Conn->FindActorChannelRef(Var))
+            {
+                Channel->RelevantTime = 0.f;
+            }
         }
     }
 }

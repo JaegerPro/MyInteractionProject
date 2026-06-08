@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "MyProject/CustomActor/CustomNetRelevantInterface.h"
 #include "CustomNetRelevantComponent.generated.h"
 
 class APawn;
 class AActor;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class MYPROJECT_API UCustomNetRelevantComponent : public UActorComponent
+class MYPROJECT_API UCustomNetRelevantComponent : public UActorComponent,public ICustomNetRelevantInterface
 {
 	GENERATED_BODY()
 
@@ -36,7 +37,11 @@ public:
      *         如果你希望"白名单为空 = 对所有人都相关"，把 bDefaultWhenEmpty 改成 true 即可。
      */
     bool IsViewerRelevant(const AActor* RealViewer) const;
+    virtual void OnRegisterTo(AActor* Actor) override;
 
+    virtual void OnUnRegisterTo(AActor* Actor) override;
+
+    virtual bool IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation, const AActor* const SelfActor)  override;
 protected:
     /**
      * 服务器端白名单。只在服务器使用，不参与属性同步：
