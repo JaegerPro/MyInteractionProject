@@ -54,19 +54,21 @@ void FActivitySequenceWrapper::RemoveBinding(const FMovieSceneObjectBindingID& B
 void FActivitySequenceWrapper::StartPlay(float Time)
 {
 	InitLevelSequencePlayer();
-	if (LevelSequence && IsValid(Owner))
+	if (IsValid(Owner))
 	{
-		if (UMovieScene* MS = LevelSequence->GetMovieScene())
+		if (LevelSequence && SequenceActor)
 		{
-			AActor* OwnerActor = Cast<AActor>(Owner);
-			for (int32 i = 0; i < MS->GetPossessableCount(); ++i)
+			if (UMovieScene* MS = LevelSequence->GetMovieScene())
 			{
-				const FMovieScenePossessable& P = MS->GetPossessable(i);
-				if (P.GetPossessedObjectClass() &&
-					OwnerActor->GetClass()->IsChildOf(P.GetPossessedObjectClass()))
+				AActor* OwnerActor = Cast<AActor>(Owner);
+				for (int32 i = 0; i < MS->GetPossessableCount(); ++i)
 				{
-					SequenceActor->AddBinding(
-						FMovieSceneObjectBindingID(P.GetGuid()), OwnerActor);
+					const FMovieScenePossessable& P = MS->GetPossessable(i);
+					if (P.GetPossessedObjectClass() &&
+						OwnerActor->GetClass()->IsChildOf(P.GetPossessedObjectClass()))
+					{
+						SequenceActor->AddBinding(FMovieSceneObjectBindingID(P.GetGuid()), OwnerActor);
+					}
 				}
 			}
 		}
@@ -77,7 +79,14 @@ void FActivitySequenceWrapper::StartPlay(float Time)
 			Params.UpdateMethod = EUpdatePositionMethod::Jump;
 			LevelSequencePlayer->SetPlaybackPosition(Params);
 		}
-			LevelSequencePlayer->Play();
+		FTimerHandle TimerHandle;
+		Owner->GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+			{
+				LevelSequencePlayer->Play();
+				UE_LOG(LogTemp, Warning, TEXT("CurrentTime after 1 frame: %f"),
+					LevelSequencePlayer->GetCurrentTime().AsSeconds());
+			}, 0.1f, false);
+			
 	}
 }
 

@@ -83,7 +83,6 @@ protected:
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
-
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps)const override;
 	UFUNCTION(BlueprintCallable)
 	void AddCustomNetRelevantInterface(TScriptInterface<ICustomNetRelevantInterface> Interface);

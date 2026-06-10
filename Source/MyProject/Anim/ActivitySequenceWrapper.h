@@ -40,7 +40,7 @@ private:
 
 	UPROPERTY(Transient)
 	UObject* Owner;
-
+	FTransform LevelSequenceTransformOrign;
 	UPROPERTY(Transient)
 	ULevelSequence* LevelSequence;
 	UPROPERTY(Transient)

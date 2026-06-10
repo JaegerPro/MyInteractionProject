@@ -172,7 +172,7 @@ void AMyActivityActor::EnterState(const FActivityStateRep& IndexInfo)
 	if (HasAuthority())
 	{
 		CurrentIndex.StateIndex = Index;
-
+		CurrentIndex.EnterTime = IndexInfo.EnterTime;
 		ForceNetUpdate();
 	}
 
@@ -202,6 +202,7 @@ void AMyActivityActor::EnterState(int32 Index, float EnterTime, bool bPause)
 {
 	FActivityStateRep Rep;
 	Rep.StateIndex = Index;
+	Rep.EnterTime = EnterTime;
 	EnterState(Rep);
 }
 

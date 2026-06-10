@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include <MovieSceneObjectBindingID.h>
+#include <LevelSequence.h>
 #include "ActivityStateInterface.generated.h"
 
 #define  NullStateIndex 999
@@ -96,6 +98,7 @@ struct FActivityStateRep
 		return this->StateIndex == b.StateIndex;
 	}
 };
+
 // This class does not need to be modified.
 UINTERFACE()
 class UActivityStateInterface : public UInterface
