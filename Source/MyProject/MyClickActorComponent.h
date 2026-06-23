@@ -229,6 +229,10 @@ public:
 	virtual void AddRepValidInfo(UMyClickActorComponent* Compoent, FClick_ValidInfo& Vaild) {};
 	virtual void RemoveRepValidInfo(UMyClickActorComponent* Compoent, FClick_ValidInfo& Vaild) {};
 	virtual void HandleClearValidInfo(UMyClickActorComponent* Compoent) {};
+	virtual UUserWidget* GetOrCreateInteractionWidget() 
+	{
+		return nullptr;
+	};
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -248,7 +252,6 @@ protected:
 	TArray<APlayerController*> VaildPC;
 
 private:
-	UUserWidget* MainWidget = nullptr;
 	bool bHaveInitIndex = false;
 	UPROPERTY()
 	TArray<FClick_ValidInfo> LocalValidInfo;
@@ -261,8 +264,6 @@ private:
 	void HandleAddButton(FClick_ValidInfo& Valid);
 	void HandleRemoveButton(FClick_ValidInfo Valid);
 public:
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
-	TSubclassOf<UUserWidget> MainWidgetClass;
 	UPROPERTY()
 	UShapeComponent* ClickComponent;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, meta = (InteractionButton))

@@ -84,12 +84,6 @@ TArray<EPawnState> UPawnStateComponent::GetActiveStates() const
 
 bool UPawnStateComponent::CanEnterState(EPawnState State) const
 {
-    // Check if already in this state
-    if (HasState(State))
-    {
-        return true;
-    }
-
     // Check if disabled
     if (IsStateDisabled(State))
     {

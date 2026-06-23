@@ -20,8 +20,11 @@ private:
 
 	UPROPERTY()
 	TArray<FClick_ValidInfo_Rep> LocalClickRepInfo;
-
+	UPROPERTY()
+	UUserWidget* SharedInteractionWidget = nullptr;
 public:
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	TSubclassOf<UUserWidget> MainWidgetClass;
 	bool IsLocalController() const;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void AddRepValidInfo(UMyClickActorComponent* Compoent, FClick_ValidInfo& VaildInfo) override;
@@ -30,7 +33,9 @@ public:
 	void PrintAllClickValidInfo();
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ExcuteClientClickRequest(UMyClickActorComponent* Compoent, int32 ID);
-public:
+
+	// 获取共享的 MainWidget，如果不存在则创建
+	virtual UUserWidget* GetOrCreateInteractionWidget() override;
 	UFUNCTION()
 	void OnRep_ClickInfo();
 };

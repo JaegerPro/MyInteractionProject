@@ -11,6 +11,7 @@
 #include <GameplayCueManager.h>
 #include"AbilitySystemGlobals.h"
 #include "MyProject/GAS/GASLearnGameplayTags.h"
+#include "Engine/OverlapResult.h"
 
 AFireballProjectile::AFireballProjectile()
 {
@@ -50,7 +51,7 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
     // 找目标 ASC
     UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor);
 
-    if (TargetASC && DamageEffectClass )
+    if (TargetASC && DamageEffectClass)
     {
 
         if (SourceASC.IsValid())
@@ -72,11 +73,66 @@ void AFireballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
     }
     else
     {
-        UGameplayCueManager* Mgr = UAbilitySystemGlobals::Get().GetGameplayCueManager();
-        Mgr->HandleGameplayCue(OtherActor, GASTags::Cue_Fireball_Explode,
-            EGameplayCueEvent::Executed, CueParams);
-    }
-    bHit = true;
+        if (HasAuthority() && SourceASC.IsValid())
+        {
+            // 播放爆炸特效
+            SourceASC->ExecuteGameplayCue(GASTags::Cue_Fireball_Explode, CueParams);
 
+            // AOE 范围检测参数
+            const float ExplosionRadius = 300.0f;
+
+            // 进行球形范围检测
+            TArray<FOverlapResult> OverlapResults;
+            FCollisionQueryParams QueryParams;
+            QueryParams.AddIgnoredActor(this);
+            QueryParams.AddIgnoredActor(GetInstigator());
+            QueryParams.bTraceComplex = false;
+
+            bool bHasOverlaps = GetWorld()->OverlapMultiByChannel(
+                OverlapResults,
+                Hit.ImpactPoint,  // 爆炸中心：击中点的位置
+                FQuat::Identity,
+                ECC_Pawn,  // 检测 Pawn 类型的 Actor
+                FCollisionShape::MakeSphere(ExplosionRadius),
+                QueryParams
+            );
+
+            if (bHasOverlaps)
+            {
+                for (const FOverlapResult& Result : OverlapResults)
+                {
+                    AActor* OverlappedActor = Result.GetActor();
+                    if (!OverlappedActor) continue;
+
+                    // 获取目标的 ASC
+                    UAbilitySystemComponent* AOETargetASC =
+                        UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OverlappedActor);
+
+                    if (AOETargetASC && DamageEffectClass)
+                    {
+                        // 做 Context
+                        FGameplayEffectContextHandle Ctx = SourceASC->MakeEffectContext();
+                        Ctx.AddSourceObject(this);
+
+                        FHitResult AOEHit;
+                        AOEHit.ImpactPoint = OverlappedActor->GetActorLocation();
+                        AOEHit.ImpactNormal = (OverlappedActor->GetActorLocation() - Hit.ImpactPoint).GetSafeNormal();
+                        Ctx.AddHitResult(AOEHit);
+
+                        // 做 Spec
+                        FGameplayEffectSpecHandle Spec = SourceASC->MakeOutgoingSpec(
+                            DamageEffectClass, /*Level=*/1.f, Ctx);
+
+                        if (Spec.IsValid())
+                        {
+                            // 应用 AOE 伤害
+                            SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), AOETargetASC);
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
     Destroy();
 }

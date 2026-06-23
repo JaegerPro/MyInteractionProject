@@ -33,6 +33,7 @@ struct FActivitySequenceWrapper
 	void StartPlay(float Time);
 	void Stop();
 	ULevelSequencePlayer* GetLevelSequencePlayer() { return LevelSequencePlayer; }
+	bool GetCurrentSequenceIsEnd();
 private:
 
 	UPROPERTY(Transient)

@@ -46,21 +46,14 @@ enum class EPawnState : uint8
     GunADS = 12,
     MeleeAttack = 13,
 
+    Interacting = 14,
     // Vehicle states
     DriveVehicle = 20,
     InVehicle = 21,
-
     // Status states
     Dying = 30,
     Dead = 31,
-    Stun = 32,
-
-    // Custom states can be added here
-    Interacting = 40,
-    CastingSkill = 41,
-
-    // Max count
-    __MAX = 54
+    __MAX = 32,
 };
 
 /**

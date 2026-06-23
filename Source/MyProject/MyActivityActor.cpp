@@ -109,7 +109,6 @@ void AMyActivityActor::OnSequenceRequestBack(FSoftObjectPath SequncePath, FName 
 
 	SequenceWrapper.ChangeSequence(Cast<ULevelSequence>(SequncePath.ResolveObject()));
 	FActivityStateRep StateRep = CurrentIndex;
-
 	SequenceWrapper.StartPlay(StateRep.EnterTime);
 
 }
@@ -268,7 +267,15 @@ void AMyActivityActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+bool AMyActivityActor::GetCurrentSequenceIsEnd()
+{
+	if (CurrentIndex.StateIndex == NullStateIndex || !StateMachineInfo.IsValidIndex(CurrentIndex.StateIndex))
+	{
+		return true;
+	}
 
+	return SequenceWrapper.GetCurrentSequenceIsEnd();
+}
 FTransform AMyActivityActor::GetTransform_Interface()
 {
 	return FTransform();

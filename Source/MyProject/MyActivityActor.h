@@ -34,6 +34,8 @@ protected:
 	TObjectPtr<UCustomNetRelevantComponent> NetRelevantComponent;
 	UPROPERTY()
 	FActivitySequenceWrapper SequenceWrapper;
+	UFUNCTION(BlueprintCallable)
+	bool GetCurrentSequenceIsEnd();
 
 private:
 	void OnSequenceRequestBack(FSoftObjectPath SequncePath, FName StateName);
@@ -82,4 +84,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveBinding(const FMovieSceneObjectBindingID& Binding, AActor* Actor);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSequenceLoaded();
 };

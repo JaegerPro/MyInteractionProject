@@ -210,12 +210,13 @@ void UMyClickActorComponent::HandleAddButton(FClick_ValidInfo& Valid)
 			}
 			UserWidget->Init(Info.UIInfo, Valid, GetOwner());
 			UserWidget->OnClickButton.AddUniqueDynamic(this, &UMyClickActorComponent::OnButtonClick);
-			if (!MainWidget)
+			UUserWidget* MainWidget = nullptr;
+			IClickActorPCInterface* Interface = Cast<IClickActorPCInterface>(PC);
+			if (!Interface)
 			{
-				MainWidget = CreateWidget<UUserWidget>(Valid.PC, MainWidgetClass);
-				MainWidget->AddToViewport();
+				return;
 			}
-
+			MainWidget = Interface->GetOrCreateInteractionWidget();
 			UWidget* Widget = MainWidget->GetWidgetFromName(FName(TEXT("VerticalBox")));
 			UPanelWidget* Canvas = Cast<UPanelWidget>(Widget);
 			if (Canvas)

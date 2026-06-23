@@ -161,6 +161,19 @@ void AMyPlayerController::ExcuteClientClickRequest_Implementation(UMyClickActorC
 	}
 }
 
+UUserWidget* AMyPlayerController::GetOrCreateInteractionWidget()
+{
+	if (!SharedInteractionWidget && MainWidgetClass)
+	{
+		SharedInteractionWidget = CreateWidget<UUserWidget>(this, MainWidgetClass);
+		if (SharedInteractionWidget)
+		{
+			SharedInteractionWidget->AddToViewport();
+		}
+	}
+	return SharedInteractionWidget;
+}
+
 void AMyPlayerController::OnRep_ClickInfo()
 {
 #if UE_BUILD_DEVELOPMENT

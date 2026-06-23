@@ -1,5 +1,6 @@
 
 #include "ActivitySequenceWrapper.h" 
+#include <MyProject/MyActivityActor.h>
 
 FActivitySequenceWrapper::FActivitySequenceWrapper()
 {
@@ -33,6 +34,10 @@ FString FActivitySequenceWrapper::GetCurrentName()
 }
 void FActivitySequenceWrapper::InitLevelSequencePlayer()
 {
+	if (!LevelSequence)
+	{
+		return;
+	}
 	if (LevelSequencePlayer)
 	{
 		return;
@@ -45,14 +50,36 @@ void FActivitySequenceWrapper::InitLevelSequencePlayer()
 }
 void FActivitySequenceWrapper::AddBinding(const FMovieSceneObjectBindingID& Binding, AActor* Actor)
 {
-	SequenceActor->AddBinding(Binding, Actor);
+	if (SequenceActor)
+	{
+		SequenceActor->AddBinding(Binding, Actor);
+	}
 }
 void FActivitySequenceWrapper::RemoveBinding(const FMovieSceneObjectBindingID& Binding, AActor* Actor)
 {
-	SequenceActor->RemoveBinding(Binding, Actor);
+	if (SequenceActor)
+	{
+		SequenceActor->RemoveBinding(Binding, Actor);
+	}
+}
+bool FActivitySequenceWrapper::GetCurrentSequenceIsEnd()
+{
+	if (LevelSequence)
+	{
+		InitLevelSequencePlayer();
+		return !(LevelSequencePlayer->IsPlaying() || LevelSequencePlayer->IsPaused());
+	}
+
+	return true;
 }
 void FActivitySequenceWrapper::StartPlay(float Time)
 {
+	if (!LevelSequence)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("StartPlay: LevelSequence is null, skipping"));
+		return;
+	}
+
 	InitLevelSequencePlayer();
 	if (IsValid(Owner))
 	{
@@ -60,7 +87,7 @@ void FActivitySequenceWrapper::StartPlay(float Time)
 		{
 			if (UMovieScene* MS = LevelSequence->GetMovieScene())
 			{
-				AActor* OwnerActor = Cast<AActor>(Owner);
+				AMyActivityActor* OwnerActor = Cast<AMyActivityActor>(Owner);
 				for (int32 i = 0; i < MS->GetPossessableCount(); ++i)
 				{
 					const FMovieScenePossessable& P = MS->GetPossessable(i);
@@ -70,23 +97,17 @@ void FActivitySequenceWrapper::StartPlay(float Time)
 						SequenceActor->AddBinding(FMovieSceneObjectBindingID(P.GetGuid()), OwnerActor);
 					}
 				}
+				OwnerActor->OnSequenceLoaded();
 			}
-		}
-		if (Time > 0.f)
-		{
-			FMovieSceneSequencePlaybackParams Params;
-			Params.Frame = FFrameTime::FromDecimal(Time * LevelSequencePlayer->GetFrameRate().AsDecimal());
-			Params.UpdateMethod = EUpdatePositionMethod::Jump;
-			LevelSequencePlayer->SetPlaybackPosition(Params);
-		}
-		FTimerHandle TimerHandle;
-		Owner->GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+			if (Time > 0.f)
 			{
-				LevelSequencePlayer->Play();
-				UE_LOG(LogTemp, Warning, TEXT("CurrentTime after 1 frame: %f"),
-					LevelSequencePlayer->GetCurrentTime().AsSeconds());
-			}, 0.1f, false);
-			
+				FMovieSceneSequencePlaybackParams Params;
+				Params.Frame = FFrameTime::FromDecimal(Time * LevelSequencePlayer->GetFrameRate().AsDecimal());
+				Params.UpdateMethod = EUpdatePositionMethod::Jump;
+				LevelSequencePlayer->SetPlaybackPosition(Params);
+			}
+			LevelSequencePlayer->Play();
+		}
 	}
 }
 

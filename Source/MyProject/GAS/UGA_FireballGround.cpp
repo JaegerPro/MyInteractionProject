@@ -48,6 +48,8 @@ void UGA_FireballGround::ActivateAbility(
 
     // 3) 关键：手动 Spawn Target Actor
     AGameplayAbilityTargetActor* SpawnedActor = nullptr;
+    UWorld* World = GEngine->GetWorldFromContextObject(this, EGetWorldErrorMode::LogAndReturnNull);
+    // 在调用 BeginSpawningActor 之前添加调试日志
     if (!Task->BeginSpawningActor(this, TargetActorClass, SpawnedActor))
     {
         // Spawn 失败（少见）
@@ -59,15 +61,12 @@ void UGA_FireballGround::ActivateAbility(
     if (AGameplayAbilityTargetActor_GroundTrace* GroundTrace =
         Cast<AGameplayAbilityTargetActor_GroundTrace>(SpawnedActor))
     {
-        APlayerController* PC = Cast<APlayerController>(
-            ActorInfo->PlayerController.Get());
-
-        // 方式 A：用玩家摄像机 Actor（最简单，效果最接近 FPS/TPS 鼠标指向）
-        if (PC && PC->PlayerCameraManager)
+        ACharacter* Avatar = Cast<ACharacter>(ActorInfo->AvatarActor.Get());
+        if (Avatar)
         {
             GroundTrace->StartLocation.LocationType =
                 EGameplayAbilityTargetingLocationType::ActorTransform;
-            GroundTrace->StartLocation.SourceActor = PC->PlayerCameraManager;
+            GroundTrace->StartLocation.SourceActor = Avatar;
         }
     }
 
